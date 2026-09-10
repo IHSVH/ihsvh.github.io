@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>The Key of the Cosmos and Numbers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,500;0,600;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light dark;
+    --bg:#F4F1E4; --ink:#1F1F1D; --gold:#B89131; --cream:#9E9680;
+    --grey:#6A6A5F; --faint:rgba(31,31,29,.14);
+    --fig:rgba(255,255,255,.32); --glow:rgba(184,145,49,.06);
+    --ui:'Assistant',sans-serif; --display:'Cormorant Infant',serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#1F1F1D; --ink:#E8E2D0; --gold:#BC9836; --cream:#7A7464;
+      --grey:#A6A091; --faint:rgba(232,226,208,.15);
+      --fig:rgba(232,226,208,.035); --glow:rgba(212,168,74,.07);
+    }
+  }
+  /* light/dark toggle — matches The Axiom of the Heart */
+  #theme-toggle{position:fixed;right:1.5rem;bottom:1.5rem;
+    width:26px;height:26px;border-radius:50%;
+    border:1px solid var(--faint);background:var(--bg);
+    color:var(--grey);cursor:pointer;display:flex;align-items:center;
+    justify-content:center;z-index:100;
+    transition:color .2s,background .2s,border-color .2s;
+    opacity:.6;padding:0;line-height:1;-webkit-appearance:none;appearance:none}
+  #theme-toggle:hover{color:var(--gold);border-color:var(--gold);opacity:1}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);
+    font-family:'Crimson Pro',Georgia,serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    padding:12px 22px 70px;
+    background-image:radial-gradient(circle at 50% 0,var(--glow),transparent 40%)}
+  header{text-align:center;max-width:760px;margin-bottom:0}
+  .kicker{font-family:var(--ui);font-weight:600;font-size:11px;
+    letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:30px}
+  h1{font-family:var(--display);font-weight:500;font-size:clamp(32px,5.4vw,54px);
+    line-height:1.12;letter-spacing:.01em}
+  h1 em{font-style:italic;color:var(--gold)}
+  .attrib{font-style:italic;color:var(--grey);font-size:14px;
+    margin-top:32px;line-height:2.05}
+  .rule{width:54px;height:1px;background:var(--gold);margin:42px auto 0;opacity:.7}
+
+  /* utility line: back link  <->  sequence count */
+  .topbar{width:100%;max-width:1120px;display:flex;align-items:center;
+    justify-content:space-between;margin-bottom:7px}
+  .backlink{font-family:var(--ui);font-size:10.5px;
+    letter-spacing:.2em;text-transform:uppercase;background:transparent;border:none;
+    color:var(--cream);cursor:pointer;padding:0;line-height:1;transition:.2s}
+  .backlink:hover{color:var(--gold)}
+  .seq{font-family:var(--ui);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--cream);line-height:1}
+
+  /* number selector — sits below the figure box */
+  .selector{width:100%;margin:14px 0 0;
+    display:flex;flex-direction:column;align-items:center;gap:8px}
+  .track{display:flex;gap:5px;width:100%;max-width:520px}
+  .pip{flex:1 1 0;min-width:0;position:relative;height:36px;
+    border:1px solid var(--faint);
+    background:transparent;font-family:var(--display);font-size:18px;
+    color:var(--grey);cursor:pointer;transition:.26s}
+  .pip:hover{border-color:var(--gold);color:var(--ink)}
+  .pip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .navrow{display:flex;width:100%;max-width:520px;
+    border:1px solid var(--faint)}
+  .nav{flex:1 1 0;font-family:var(--ui);font-size:10px;
+    letter-spacing:.18em;text-transform:uppercase;background:transparent;
+    border:none;border-right:1px solid var(--faint);
+    color:var(--ink);padding:11px 6px;cursor:pointer;transition:.2s}
+  .nav:last-child{border-right:none}
+  .nav:hover{background:var(--ink);color:var(--bg)}
+  .nav:disabled{opacity:.3;cursor:default}
+  .nav:disabled:hover{background:transparent;color:var(--ink)}
+  .play{color:var(--gold)}
+  .play:hover{background:var(--gold);color:var(--bg)}
+
+  .stage{width:100%;max-width:1120px;display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:48px;
+    align-items:start;margin-top:4px}
+  @media(max-width:880px){.stage{grid-template-columns:1fr;gap:28px}}
+
+  .figure{position:sticky;top:24px}
+  @media(max-width:880px){.figure{position:static;grid-column:1/-1}}
+  .figbox{width:100%;border:1px solid var(--faint);
+    background:var(--fig)}
+  @media(max-width:880px){.figbox{width:100vw;position:relative;
+    left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
+    border:none;border-top:1px solid var(--faint);
+    border-bottom:1px solid var(--faint)}}
+  .figwrap{position:relative;width:100%;max-width:560px;
+    margin:0 auto;aspect-ratio:480/504}
+  #svg{width:100%;height:100%;display:block}
+  svg{width:100%;height:100%;display:block;overflow:visible}
+
+  .c-seed{fill:none;stroke:var(--ink);stroke-width:0.8;
+    stroke-dasharray:2 4;opacity:.32;transition:opacity .5s}
+  .c-star{fill:none;stroke:var(--gold);stroke-width:1;opacity:.34;transition:opacity .5s}
+  .c-work{fill:none;stroke:var(--ink);stroke-width:1;opacity:.36}
+  .c-axis{fill:none;stroke:var(--ink);stroke-width:0.8;
+    stroke-dasharray:2 5;opacity:.26}
+  .hidden{opacity:0 !important;pointer-events:none}
+
+  .node{fill:var(--bg);stroke:var(--ink);stroke-width:1.2;opacity:.5;transition:.5s}
+  .node.lit{fill:var(--gold);stroke:var(--gold);opacity:1;r:5.6}
+  .nodelabel{font-family:var(--ui);font-size:14px;
+    fill:var(--grey);opacity:.5;transition:.5s}
+  .nodelabel.lit{fill:var(--gold);opacity:1;font-weight:600}
+  .trace{fill:none;stroke:var(--gold);stroke-width:3.6;
+    stroke-linecap:round;stroke-linejoin:round;
+    filter:drop-shadow(0 0 7px rgba(184,144,48,.5));
+    pointer-events:none;
+    opacity:1;transition:opacity .6s ease}
+  .trace.dim{opacity:.2;filter:none}
+
+  .figbar{display:flex;align-items:center;justify-content:space-between;
+    gap:10px;padding:6px 16px 8px;width:100%;box-sizing:border-box}
+  .figcap{font-family:var(--ui);font-size:8.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--cream);opacity:.7}
+  .toggle{font-family:var(--ui);font-size:9px;letter-spacing:.16em;text-transform:uppercase;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--gold);opacity:.82;padding:2px 0;cursor:pointer;transition:.25s}
+  .toggle:hover{color:var(--gold);opacity:1;border-bottom-color:var(--gold)}
+  .toggle.off{opacity:.4}
+
+  .panel{position:relative}
+  .glyphrow{display:flex;align-items:center;gap:22px;
+    border-bottom:1px solid var(--faint);padding-bottom:18px}
+  .glyph{font-family:var(--display);font-weight:600;
+    font-size:clamp(78px,13vw,116px);line-height:1;color:var(--ink);
+    transition:color .8s}
+  .glyph.lit{color:var(--gold);text-shadow:0 0 26px rgba(184,144,48,.42)}
+  .titles{min-width:0}
+  .qname{font-family:var(--display);font-style:italic;
+    font-size:clamp(22px,3.6vw,31px);color:var(--ink);line-height:1.06}
+  .mode{font-family:var(--ui);font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--gold);margin-top:9px}
+
+  .section{margin-top:10px}
+  .label{font-family:var(--ui);font-size:10.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--cream);margin-bottom:8px}
+  .construct{font-style:italic;font-size:17.5px;line-height:1.62;color:var(--ink)}
+  .construct b{font-style:normal;color:var(--gold);font-weight:400}
+  .full{font-size:17px;line-height:1.7;color:var(--grey)}
+  .full p{margin-bottom:13px}
+  .full p:last-child{margin-bottom:0}
+  .full b{font-style:normal;font-weight:600;color:var(--gold)}
+  .affirm{margin-top:26px;border-left:2px solid var(--gold);padding:4px 0 4px 20px}
+  .affirm .quote{font-family:var(--display);font-size:21px;
+    font-style:italic;line-height:1.45;color:var(--ink)}
+  .affirm .src{font-family:var(--ui);font-size:10.5px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--cream);margin-top:9px}
+  .fade{animation:fade .8s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* title page + the working diagram, switched by the Enter button */
+  .view{display:none;width:100%;flex-direction:column;align-items:center}
+  .view.on{display:flex;animation:fade .7s ease both}
+  #view-title{min-height:74vh;justify-content:center;text-align:center}
+  .enter{margin-top:52px;font-family:var(--ui);font-size:12px;
+    letter-spacing:.26em;text-transform:uppercase;background:transparent;
+    border:1px solid var(--gold);color:var(--gold);
+    padding:15px 40px;cursor:pointer;transition:.25s}
+  .enter:hover{background:var(--gold);color:var(--bg)}
+  .enterrow{margin-top:40px;display:flex;flex-direction:column;
+    align-items:center;gap:14px}
+  .enterrow .enter{margin-top:0}
+  .enter.alt{border-color:var(--faint);color:var(--cream)}
+  .enter.alt:hover{border-color:var(--gold);background:transparent;color:var(--gold)}
+
+  /* the points view */
+  #view-points{max-width:1120px}
+  .pointstage{width:100%;max-width:1120px;display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:48px;
+    align-items:start;margin-top:4px}
+  @media(max-width:880px){.pointstage{grid-template-columns:1fr;gap:24px}}
+  .pointpanel{position:relative;min-height:60px}
+  .pointprompt{font-family:var(--display);font-style:italic;
+    font-size:21px;color:var(--cream);line-height:1.5;padding-top:4px}
+  .pglyph{display:flex;align-items:center;gap:20px;
+    border-bottom:1px solid var(--faint);padding-bottom:16px;margin-bottom:4px}
+  .pglyph .mk{font-family:var(--display);font-weight:600;
+    font-size:clamp(54px,8vw,76px);line-height:1;color:var(--gold)}
+  .pglyph .nm{font-family:var(--display);font-style:italic;
+    font-size:clamp(20px,3vw,27px);color:var(--ink);line-height:1.12}
+  .preg{margin-top:20px}
+  .preg .lab{font-family:var(--ui);font-size:10px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--cream);
+    margin-bottom:7px}
+  .preg .txt{font-size:16.5px;line-height:1.66;color:var(--grey)}
+  .preg .txt b{color:var(--gold);font-weight:600;font-style:normal}
+  .dual{display:grid;gap:14px;margin-top:4px}
+  .dual .one{border-left:2px solid var(--gold);padding:2px 0 2px 16px}
+  .dual .one .nm2{font-family:var(--display);font-style:italic;
+    font-size:18px;color:var(--ink);margin-bottom:3px}
+  .dual .one .bd{font-size:15.5px;line-height:1.6;color:var(--grey)}
+  .ppoint{display:none}
+  .panel.showpoint .pnum{display:none}
+  .panel.showpoint .ppoint{display:block;animation:fade .5s ease both}
+  .pback{font-family:var(--ui);font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;background:transparent;border:none;
+    color:var(--cream);padding:0 0 14px;cursor:pointer;transition:.2s}
+  .pback:hover{color:var(--gold)}
+  .node.tap{cursor:pointer}
+  .node.sel{fill:var(--gold);stroke:var(--gold);opacity:1;r:6}
+  .nodelabel.sel{fill:var(--gold);opacity:1;font-weight:600}
+  .pflag{margin-top:22px;font-family:var(--ui);font-size:11px;
+    line-height:1.6;color:var(--cream);border-top:1px solid var(--faint);
+    padding-top:14px}
+</style>
+</head>
+<body>
+
+<button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">
+  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="toggle-icon" d="M8 3a5 5 0 1 0 0 10A5 5 0 0 0 8 3z" fill="currentColor"/>
+  </svg>
+</button>
+
+<section id="view-title" class="view on">
+  <header>
+    <div class="kicker">One Figure, Every Number</div>
+    <h1>The Key of the <em>Cosmos</em><br>and Numbers</h1>
+    <p class="attrib">Six circles tangent to a central seventh.<br>
+    From this single figure every Arabic numeral, 0 through 10, is drawn<br>
+    &mdash; each numeral the path the Life-power walks through the field.</p>
+    <div class="rule"></div>
+  </header>
+  <button class="enter" id="enterBtn">Enter the Key &rarr;</button>
+</section>
+
+<section id="view-app" class="view">
+  <div class="topbar">
+    <button class="backlink" id="backBtn">&larr; Title</button>
+    <div class="seq" id="seq">Number 0 of 10</div>
+  </div>
+
+<div class="stage">
+  <div class="figure">
+    <div class="figbox">
+      <div class="figwrap">
+        <svg viewBox="0 2 480 504" id="svg"></svg>
+      </div>
+      <div class="figbar">
+        <div class="figcap" id="figcap">Tap a point to read it</div>
+        <button class="toggle" id="tg">↻  Full scaffold</button>
+      </div>
+    </div>
+    <div class="selector">
+      <div class="track" id="track"></div>
+      <div class="navrow">
+        <button class="nav" id="prev">&larr; Prev</button>
+        <button class="nav play" id="play">Walk all &#9656;</button>
+        <button class="nav" id="next">Next &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel">
+    <div class="pnum">
+      <div class="glyphrow">
+        <div class="glyph" id="glyph">0</div>
+        <div class="titles">
+          <div class="qname" id="qname"></div>
+          <div class="mode" id="mode"></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="label">The Construction &mdash; movement upon the diagram</div>
+        <div class="construct" id="construct"></div>
+      </div>
+      <div class="section">
+        <div class="label">The Number &mdash; the full reading</div>
+        <div class="full" id="full"></div>
+      </div>
+      <div class="affirm">
+        <div class="quote" id="affirm"></div>
+        <div class="src">Pattern on the Trestleboard</div>
+      </div>
+    </div>
+    <div class="ppoint" id="pointpanel"></div>
+  </div>
+</div>
+</section>
+
+<section id="view-points-removed" hidden></section>
+
+<script>
+(function(){
+  // ===== derived geometry =====
+  var R=80, S3=Math.sqrt(3), cx=240, cy=270;
+  var UC ={cx:cx,cy:cy-R,r:R};                   // upper solid circle (top cap of zero)
+  var LC ={cx:cx,cy:cy+R,r:R};                   // lower solid circle (bottom cap)
+  var RSC={cx:cx-R*S3,cy:cy,r:3*R};              // right side of zero (tangent at D,F)
+  var LSC={cx:cx+R*S3,cy:cy,r:3*R};              // left  side of zero (tangent at C,E)
+  var CIRC={UC:UC,LC:LC,RSC:RSC,LSC:LSC};
+  var WZ=R*(3-S3);                               // zero half-width
+
+  var P={
+    A:[cx,            cy-2*R     ],
+    B:[cx,            cy+2*R     ],
+    O:[cx,            cy         ],
+    C:[cx-R*S3/2,     cy-1.5*R   ],
+    D:[cx+R*S3/2,     cy-1.5*R   ],
+    E:[cx-R*S3/2,     cy+1.5*R   ],
+    F:[cx+R*S3/2,     cy+1.5*R   ],
+    G:[cx-WZ,         cy         ],   // leftmost point of the zero
+    H:[cx+WZ,         cy         ],   // rightmost point of the zero
+    I:[0,0]
+  };
+  var SV={
+    top:[cx,cy-3*R], bot:[cx,cy+3*R],
+    ul:[cx-1.5*R*S3,cy-1.5*R], ur:[cx+1.5*R*S3,cy-1.5*R],
+    ll:[cx-1.5*R*S3,cy+1.5*R], lr:[cx+1.5*R*S3,cy+1.5*R]
+  };
+  var PETAL=[
+    [cx,cy-2*R],[cx+R*S3,cy-R],[cx+R*S3,cy+R],
+    [cx,cy+2*R],[cx-R*S3,cy+R],[cx-R*S3,cy-R]
+  ];
+
+  function circInt(c1,r1,c2,r2){
+    var dx=c2[0]-c1[0],dy=c2[1]-c1[1],d=Math.sqrt(dx*dx+dy*dy);
+    var a=(d*d+r1*r1-r2*r2)/(2*d),h=Math.sqrt(Math.max(0,r1*r1-a*a));
+    var xm=c1[0]+a*dx/d,ym=c1[1]+a*dy/d;
+    return [[xm-h*dy/d,ym+h*dx/d],[xm+h*dy/d,ym-h*dx/d]];
+  }
+  var _ll=[cx-R*S3,cy+R], _lc=[LC.cx,LC.cy];
+  var _ix=circInt(_ll,R,_lc,R);
+  var _I=(_ix[0][1]<_ix[1][1])?_ix[0]:_ix[1];
+  P.I=[_I[0],_I[1]];
+  var IANG=Math.atan2(_I[1]-_lc[1],_I[0]-_lc[0])*180/Math.PI;
+  while(IANG<180) IANG+=360;
+
+  var NS="http://www.w3.org/2000/svg";
+  var svg=document.getElementById('svg');
+  function el(t,a){var e=document.createElementNS(NS,t);
+    for(var k in a)e.setAttribute(k,a[k]);return e;}
+
+  function ptC(c,deg){var a=deg*Math.PI/180;
+    return [c.cx+c.r*Math.cos(a), c.cy+c.r*Math.sin(a)];}
+  function arcPts(kind,a0,a1){
+    var c=CIRC[kind],n=Math.max(12,Math.ceil(Math.abs(a1-a0)/2.2)),out=[];
+    for(var i=0;i<=n;i++){ var a=a0+(a1-a0)*i/n; out.push(ptC(c,a)); }
+    return out;
+  }
+  // the zero: four tangent arcs, loop from A counter-clockwise
+  //   A->C  upper circle (top cap, left half)     UC 270->210
+  //   C->E  left side                              LSC 210->150
+  //   E->B  lower circle (bottom cap, left half)   LC 150->90
+  //   B->F  lower circle (bottom cap, right half)  LC 90->30
+  //   F->D  right side                             RSC 30->-30
+  //   D->A  upper circle (top cap, right half)     UC 330->270
+  var ZERO=[
+    {c:'UC',a0:270,a1:210},{c:'LSC',a0:210,a1:150},{c:'LC',a0:150,a1:90},
+    {c:'LC',a0:90,a1:30},{c:'RSC',a0:30,a1:-30},{c:'UC',a0:330,a1:270}
+  ];
+  function segPts(s){return (s.t==='line')?[P[s.from],P[s.to]]:arcPts(s.c,s.a0,s.a1);}
+  function buildD(segs){
+    var d='';
+    segs.forEach(function(s){
+      var pts=segPts(s);
+      d+=' M '+pts[0][0].toFixed(2)+' '+pts[0][1].toFixed(2);
+      for(var i=1;i<pts.length;i++) d+=' L '+pts[i][0].toFixed(2)+' '+pts[i][1].toFixed(2);
+    });
+    return d.replace(/^ /,'');
+  }
+
+  var gSeed=el('g',{});
+  PETAL.forEach(function(c){gSeed.appendChild(el('circle',
+    {'class':'c-seed',cx:c[0],cy:c[1],r:R}));});
+  gSeed.appendChild(el('circle',{'class':'c-seed',cx:cx,cy:cy,r:R}));
+  svg.appendChild(gSeed);
+
+  var gStar=el('g',{});
+  function tri(a,b,c){return el('polygon',{'class':'c-star',
+    points:a[0]+','+a[1]+' '+b[0]+','+b[1]+' '+c[0]+','+c[1]});}
+  gStar.appendChild(tri(SV.top,SV.ll,SV.lr));
+  gStar.appendChild(tri(SV.bot,SV.ur,SV.ul));
+  svg.appendChild(gStar);
+
+  // the zero as ONE continuous closed subpath (chained arcs, dedup shared
+  // endpoints) so the closing Z joins A back to A, never A to D
+  var zpts=[];
+  ZERO.forEach(function(s,i){
+    var ps=arcPts(s.c,s.a0,s.a1);
+    for(var k=(i?1:0);k<ps.length;k++) zpts.push(ps[k]);
+  });
+  var zd='M '+zpts[0][0].toFixed(2)+' '+zpts[0][1].toFixed(2);
+  for(var zi=1;zi<zpts.length;zi++)
+    zd+=' L '+zpts[zi][0].toFixed(2)+' '+zpts[zi][1].toFixed(2);
+  zd+=' Z';
+  var gWork=el('g',{});
+  gWork.appendChild(el('path',{'class':'c-work',d:zd}));
+  gWork.appendChild(el('circle',{'class':'c-work',cx:UC.cx,cy:UC.cy,r:R}));
+  gWork.appendChild(el('circle',{'class':'c-work',cx:LC.cx,cy:LC.cy,r:R}));
+  svg.appendChild(gWork);
+
+  var gAx=el('g',{});
+  gAx.appendChild(el('line',{'class':'c-axis',x1:cx,y1:cy-2*R,x2:cx,y2:cy+2*R}));
+  gAx.appendChild(el('line',{'class':'c-axis',x1:P.C[0],y1:P.C[1],x2:P.D[0],y2:P.D[1]}));
+  gAx.appendChild(el('line',{'class':'c-axis',x1:P.E[0],y1:P.E[1],x2:P.F[0],y2:P.F[1]}));
+  gAx.appendChild(el('line',{'class':'c-axis',x1:P.C[0],y1:P.C[1],x2:P.E[0],y2:P.E[1]}));
+  gAx.appendChild(el('line',{'class':'c-axis',x1:P.D[0],y1:P.D[1],x2:P.F[0],y2:P.F[1]}));
+  gAx.appendChild(el('line',{'class':'c-axis',x1:P.G[0],y1:cy,x2:P.H[0],y2:cy}));
+  svg.appendChild(gAx);
+
+  var tracePath=el('path',{'class':'trace',d:''});
+  svg.appendChild(tracePath);
+
+  var nodeEls={},labelEls={};
+  var lo={A:[0,-15],B:[0,25],C:[-15,-11],D:[15,-11],E:[-15,18],
+    F:[15,18],G:[-16,5],H:[16,5],O:[18,-9],I:[15,3]};
+  for(var k in P){
+    var x=P[k][0],y=P[k][1];
+    nodeEls[k]=el('circle',{'class':'node tap',cx:x,cy:y,r:4});
+    (function(kk){nodeEls[kk].addEventListener('click',function(){showPointDef(kk);});})(k);
+    svg.appendChild(nodeEls[k]);
+    var o=lo[k]||[14,0];
+    var t=el('text',{'class':'nodelabel tap',x:x+o[0],y:y+o[1],
+      'text-anchor':o[0]<0?'end':(o[0]===0?'middle':'start')});
+    t.textContent=k;svg.appendChild(t);labelEls[k]=t;
+    (function(kk){labelEls[kk].addEventListener('click',function(){showPointDef(kk);});})(k);
+  }
+  svg.appendChild(tracePath);   // re-append last: numeral stroke paints on top of the point indicators
+
+  function L(f,t){return {t:'line',from:f,to:t};}
+  function Aa(c,a0,a1){return {t:'arc',c:c,a0:a0,a1:a1};}
+  // Zr(i,j): arcs i..j of the ZERO loop (0=A->C,1=C->E,2=E->B,3=B->F,4=F->D,5=D->A)
+  function Zr(i,j){return ZERO.slice(i,j+1).map(function(s){return Aa(s.c,s.a0,s.a1);});}
+
+  var NUM=[
+  {n:0,name:'No&ndash;Thing &middot; The Boundless &middot; Limitless Light',
+   mode:'(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)',nodes:['A','C','G','E','B','F','H','D'],
+   segs:Zr(0,5),
+   construct:'From <b>A</b>, the height, the pen descends the left side &mdash; <b>Involution</b>, the boundless Light winding itself down into shape and substance. It passes <b>C</b>, swings to its widest reach at <b>G</b>, gathers in through <b>E</b>, and settles at <b>B</b>, the lowest point, the density of bare matter. From <b>B</b> the return begins &mdash; <b>Evolution</b>, the unwinding: <b>B&rarr;F</b>, dead matter stirring; <b>F&rarr;H</b>, life rising through plant and animal; <b>H&rarr;D</b>, the long climb to waking human awareness at <b>D</b>; and <b>D&rarr;A</b>, awareness opening at last upon its own source. The line closes where it began &mdash; nothing added, nothing lost: one motion, not two. Every life runs this curve: substance slowly waking into knowing, and knowing turning to see where it came from. You already know its beginning &mdash; the silence before any word, the blank page before the first mark, the held breath before a single thing has been chosen out of everything that could be.',
+   full:'<p>The oval is the source from which all things come. Zero is the absence of quality, quantity, and mass &mdash; and so absolute freedom from every limitation. It is the infinite and eternal Conscious Energy, itself No-Thing yet present in everything: that which was, is, and shall be, though it is nothing that can be named.</p><p>Boundless, infinitely potential, living light, it is the rootless root of all things, all activities, all modes of consciousness &mdash; holding every possibility, imaginable and unimaginable, while exceeding them all. It wears three veils &mdash; three names for one unknowable, not three stages: <em>Ain</em>, No-Thing; <em>Ain Soph</em>, the Boundless; <em>Ain Soph Aur</em>, the Limitless Light. Met only as a light beyond thought, it is Superconsciousness.</p><p>It does not proceed from a centre, for it is centreless; it concentrates one. That concentrated point is the <b>1</b> &mdash; which is why the Crown is in the Kingdom and the Kingdom in the Crown: the whole Boundless present, undivided, at the single point. Before One there is nothing to count; the figure is what there is before counting can begin. Its end is infused with its beginning, like a flame bound to the coal &mdash; which is why the line returns exactly to where it started: the non-spatial source that holds everything only as seed, itself the beginning, middle, and end of all things.</p><p>The descending arc on the left is Involution &mdash; the winding-down by which the Limitless Light clothes itself in name and form, reaching its lowest point at <b>B</b>, bare matter. The ascending arc on the right is Evolution, the unwinding: the inorganic world, then plant and animal life, then the rise to the highest human awareness, and at last a consciousness that knows itself one with its source. The descent is the passage through the four worlds &mdash; the one Light coming down through intellect, through speech, through the heart, into the body, the final receiver where the act becomes flesh &mdash; and the ascent is that same arc traced home. First the stone, then the plant, then the animal, then the human being, and at last the awareness that recognizes its own source.</p><p>Nothing is stored elsewhere; nothing waits to arrive. The whole of the Boundless is present, undivided, in this place and this moment &mdash; and so the closing words are simple fact: <em>all the power that ever was or will be is here now.</em></p>',
+   affirm:'All the power that ever was or will be is here now.'},
+
+  {n:1,name:'The Crown &middot; Admirable Intelligence',
+   mode:'I AM that I AM: the single upright',nodes:['A','B'],
+   segs:[L('A','B')],
+   construct:'A single straight descent: <b>A</b> to <b>B</b>, the extreme height joined directly to the extreme depth &mdash; no curve, no detour. The boundless field of the zero gathers itself into one upright line: the first instant anything stands apart and can say &ldquo;I.&rdquo; The Greek word &mdash; <em>monad</em> &mdash; comes from a root meaning &ldquo;to stay, to stand fast&rdquo;; one is what holds still while everything else moves. Every figure that follows runs down this column; nothing is ever expressed except through a single self, somewhere, saying it. It is the most ordinary fact of all: before any quality, any story, any name, the bare sense that <em>someone is here</em> &mdash; one flame standing in the dark, before it has lit anything.',
+   full:'<p>One is the vertical line from <b>A</b> to <b>B</b>, joining the extreme height to the extreme depth &mdash; the single column down which everything that follows must descend.</p><p>It is beginning, initiative, individualization. It is the Crown: the ruling, directing, willing point in consciousness, the Primal Will. It is the Admirable or Hidden Intelligence, because this first mode of awareness stays concealed behind every veil of name and form &mdash; the I AM, the silent Onlooker that sees through countless eyes and expresses itself through innumerable lives. Everything is its self-expression; in a human being it appears as plain waking self-consciousness, the sense of being the one who is awake.</p><p>Seen from the source side: the limitless ocean of the zero does not proceed from a centre, for it is centreless; it concentrates one &mdash; and that centre is the <b>1</b>. So the Crown is in the Kingdom and the Kingdom in the Crown: the whole Boundless wholly present at the single point. Its deepest name is Yekhidah, the Self; the height of it is <em>Ipsissimus</em>, &ldquo;one&rsquo;s very self&rdquo; &mdash; the furthest reach of what &ldquo;I AM&rdquo; can mean. The word is built in the receptive form: the single Self is also the vessel through which the Limitless Light shines, so that to stand fully as &ldquo;I&rdquo; is at the same time to be wholly given over.</p><p>This is the monad &mdash; the stable source that lends every number its identity without itself changing; one times anything leaves it itself. The upright is the first stroke of the heart&rsquo;s single act, the point from which all apprehension-and-movement issues. To be a self that can say &ldquo;I&rdquo; is already to be a place from which a will goes out &mdash; which is what the affirmation says aloud: <em>I am a centre of expression for the Primal Will-to-Good which eternally creates and sustains the universe.</em></p>',
+   affirm:'I am a center of expression for the Primal Will-to-Good which eternally creates and sustains the universe.'},
+
+  {n:2,name:'Wisdom &middot; Illuminating Intelligence',
+   mode:'I am the mirror: seeing myself',nodes:['C','D','O','E','F'],
+   segs:[Aa('UC',210,450),Aa('LC',270,150),L('E','F')],
+   construct:'From <b>C</b> the pen curves over the upper circle through <b>D</b> and bends down to the centre <b>O</b>, then through the lower circle to <b>E</b>, closing with the level line <b>E&rarr;F</b>. To <em>reflect</em> means, at root, to bend back &mdash; which is exactly what the line does at <b>O</b>. It is the moment you catch your own face in a mirror: the &ldquo;I&rdquo; you were a second ago, suddenly something seen, held, recognized. Awareness turning back and finding itself there.',
+   full:'<p>Two begins at <b>C</b>, follows the upper circle through <b>D</b> to the centre, passes through the lower circle to <b>E</b>, and closes along the level line <b>E</b> to <b>F</b>.</p><p>Two is doubling and reflection: wherever there is a one, a second arises as its mirror, its answer, sometimes its opposite. It is Wisdom &mdash; and Wisdom is exact: the one living Light knows itself perfectly, and that perfect self-knowledge is the precise doubling of the One within its own awareness. Nothing is added from outside; it is the I AM catching sight of itself, the mirror in which the One first beholds what it is.</p><p>Wisdom carries two further names. As <em>Ab</em>, the Father, it is the One knowing itself as pure originating power. As <em>Masloth</em>, the sphere of the fixed stars, it is the One knowing itself as light &mdash; the light of which every star and sun is a condensation. It is the seat of <em>Chaiah</em>, the universal life-force: the same vitality asleep in the stone and progressively more awake through plant, animal, and human life. As the Illuminating Intelligence, two is the light by which the inner workings of the Life-power become visible to the mind.</p><p>There are two kinds of seeing &mdash; sight that is partial and sight that is true &mdash; and two is the first true seeing: the One seeing what is actually there, itself. So two is also the receptive, answering side of everything: where one begins, two reflects and responds. It is the partner every initiative requires &mdash; and so the affirmation can say <em>through me its unfailing Wisdom takes form in thought and word</em>: the mirror has become a voice.</p>',
+   affirm:'Through me its unfailing Wisdom takes form in thought and word.'},
+
+  {n:3,name:'Understanding &middot; Sanctifying Intelligence',
+   mode:'I am the seed becoming actual',nodes:['C','D','O','F','B','E'],
+   segs:[Aa('UC',210,450),Aa('LC',270,510)],
+   construct:'The upper curve repeats <b>2</b> &mdash; <b>C</b> over <b>D</b> down to the centre <b>O</b> &mdash; but here it does not turn back. It pours on through <b>F</b>, down to the depth <b>B</b>, and sweeps round to <b>E</b>. Where two bent back to look, three carries what it saw forward and lets it grow. The seed becomes the tree: what was only possible, once truly held, starts taking on shape and character of its own. To <em>understand</em> is, at root, to stand among &mdash; not to watch a thing from outside, but to be inside it as it takes form.',
+   full:'<p>The upper half of three repeats the upper part of two &mdash; <b>C</b> through <b>D</b> to the centre; its lower half runs from the centre through <b>F</b> and <b>B</b> around to <b>E</b>.</p><p>Where two is reflection, three is growth. Wisdom looks back to the I AM&rsquo;s knowledge of itself; Understanding looks forward and works that knowledge out in the world. Knowing itself perfectly, the One also perceives the necessary consequences of what it is &mdash; and that perceiving, carried into shape, is three.</p><p>This is the Mother. As <em>Ama</em>, the dark and still Mother, it is the womb before a cycle of expression begins; as <em>Aima</em>, the bright and pregnant Mother, it is that same womb bringing forms to birth. It is <em>Shabbathai</em>, the sphere of Saturn, because every particular thing requires a limit &mdash; a narrowing of quantity, quality, and mass &mdash; just as birth itself comes through the contraction of the womb. This is the hard truth inside Understanding: to give a thing form is to give it a boundary. Possibility becomes actual only by becoming <em>this</em> and not everything.</p><p>It is also the Sanctifying Intelligence &mdash; &ldquo;sanctifying&rdquo; meaning to bring to completion: what lay only as seed in the Limitless Light is carried into finished form, a whole body or a matured power of mind. And because all living growth answers to three, it is the number of the subconscious &mdash; the patient, mostly unseen process that builds and ripens what was begun. To be <em>filled with Understanding of its perfect law</em> is to be guided, step by step, along the path that growth itself is walking.</p>',
+   affirm:'Filled with Understanding of its perfect law, I am guided, moment by moment, along the path of liberation.'},
+
+  {n:4,name:'Mercy &middot; Measuring Intelligence',
+   mode:'I am order: measure and memory',nodes:['A','B','G','H'],
+   segs:[L('A','B'),L('A','G'),L('G','H')],
+   construct:'First the upright of <b>1</b>: <b>A&rarr;B</b>, height to depth. Then the pen lifts &mdash; order is set down, not grown &mdash; and two lines are added, <b>A&rarr;G</b> and <b>G&rarr;H</b>: a triangle above, a builder&rsquo;s square below. <em>Order</em> means, at root, things set in rows. After the free growth of three comes the hand that gives each thing its place &mdash; the carpenter&rsquo;s square laid across the work, every part brought to true. After a season of growing wild, the day things are finally sorted, named, and put where they belong &mdash; and nothing you gained is lost.',
+   full:'<p>Four takes the upright of one (<b>A</b> to <b>B</b>) and adds two lines, <b>A</b> to <b>G</b> and <b>G</b> to <b>H</b> &mdash; a triangle above, a builder&rsquo;s square below. Triangle and square are the draughtsman&rsquo;s basic tools, the instruments of planning and exact measure; their presence says that beneath all ordered creation lies a hidden geometry.</p><p>From this come the meanings of four: order, measurement, classification, recording. This is Chesed &mdash; Mercy, also Gedulah, Greatness &mdash; the Measuring Intelligence: the power on which every adjustment, proportion, and adaptation rests. It is the sphere of Jupiter, the open-handed sky-father, the principle of generous regulation. Mercy here is not softness; it is the fairness of a measure that gives each thing exactly its due.</p><p>The hinge between mercy and measure is memory. Every regulation, every plan, is built by remembering what came before &mdash; and the One Life forgets nothing: it holds perfectly all that it is and every event of its self-expression, and human memory is one small phase of that complete record. Because that memory cannot fail, what it returns to each thing is unfailing too &mdash; so four is also Beneficence, &ldquo;good-givingness.&rdquo;</p><p>But this giving is never waste. Every gift is measured; each centre of expression receives exactly what is coming to it, always. That precise generosity is why the affirmation can be spoken without anxiety: <em>from the exhaustless riches of its Limitless Substance, I draw all things needful</em> &mdash; not more than is fitting, and never less.</p>',
+   affirm:'From the exhaustless riches of its Limitless Substance, I draw all things needful, both spiritual and material.'},
+
+  {n:5,name:'Severity &middot; Radical Intelligence',
+   mode:'I am the law, the means of change',nodes:['C','D','I','F','B','E'],
+   segs:[L('C','D'),L('C','I'),Aa('LC',IANG,510)],
+   construct:'A level line <b>C&rarr;D</b>; the pen lifts; a drop from <b>C</b> to <b>I</b>, the pivot on the lower circle; then a long arc &mdash; five-sixths of the lower circle, through <b>F</b>, down through the depth <b>B</b>, round to <b>E</b>. Five stands in the middle, between Beginning (<b>1</b>) and Completion (<b>9</b>); to <em>mediate</em> is, at root, simply to stand in the middle. The rule that first felt like a wall, later, turns out to be the road. What meets you as restriction is the very thing by which conditions change and freedom is slowly won.',
+   full:'<p>Five is drawn as a level line <b>C</b> to <b>D</b>; a drop <b>C</b> to <b>I</b>; then five-sixths of the lower circle, from <b>I</b> through <b>F</b> and the depth <b>B</b> to <b>E</b>. It stands at the exact middle, between Beginning (one) and Completion (nine): the number of process, the means by which things are actually changed. It is the living Law that grows out of the fixed Order of four.</p><p>If four is memory &mdash; the record of what has been &mdash; five is its opposite pole: will, which looks toward what is not yet and aims to change it. This is Geburah, and it has three names, each a stage of seeing. <em>Pachad</em>, Fear: the law felt as threat by those who stand against it. <em>Geburah</em>, Strength or Severity: the law felt as relentless force. <em>Deen</em>, Justice: the law seen truly &mdash; the standard by which no unjust rule is a real law, and no unjust will is true will.</p><p>This is the hard teaching at the centre of the figure. Will is not personal property. &ldquo;I have no will but to do the will of the One that sent me&rdquo; is not a pious mood but a discovery: the fountain of free will felt within is real, yet its source is not the small self. To take &ldquo;my will&rdquo; as private, disregarding others, is simply to mistake bondage for freedom.</p><p>Because it is the root from which all the Life-power&rsquo;s workings proceed, five is the Radical Intelligence &mdash; &ldquo;radical&rdquo; meaning &ldquo;of the root.&rdquo; The power to change conditions is the secret of freedom; and the affirmation states the turn from fear to sight directly: <em>I recognize the manifestation of the undeviating Justice in all the circumstances of my life</em> &mdash; the same Law, no longer feared, now read.</p>',
+   affirm:'I recognize the manifestation of the undeviating Justice in all the circumstances of my life.'},
+
+  {n:6,name:'Beauty &middot; Mediating Intelligence',
+   mode:'I am the balance that holds',nodes:['D','A','C','G','E','B'],
+   segs:[Aa('UC',330,270)].concat(Zr(0,2),[Aa('LC',90,-270)]),
+   construct:'One unbroken curve: from <b>D</b> it rises to the height <b>A</b>, then descends the whole left, <b>Involution</b> side &mdash; through <b>C</b>, the widest reach at <b>G</b>, and <b>E</b> &mdash; to the depth <b>B</b>, and closes round the lower circle. Nothing is added; everything before it is gathered and brought into proportion. It is the moment a thing comes right: the centre found, the parts no longer at war &mdash; a quiet that is not emptiness but agreement. What is true, just then, is also felt as beautiful.',
+   full:'<p>Six is one continuous curve: from <b>D</b> up to the height <b>A</b>, down the involution side of the zero to the depth <b>B</b>, and round the lower circle. Its balanced symmetry is what gives rise to the very idea of Beauty.</p><p>Six is the inevitable result of all that precedes it. A free Life-power that knows itself (one), sees itself reflected (two), works that out into expression (three), holds it all in order and memory (four), and unfolds it through a just law (five) cannot help but arrive at a whole that is balanced, symmetrical, and therefore beautiful. So six means balance, the harmony of opposites, reciprocity, and love.</p><p>This is Tiphareth, Beauty, at the exact centre of the Tree, where the two side-pillars &mdash; Mercy and Severity &mdash; are reconciled. It is the uniting Sephirah: the heart-point on which the whole pattern turns, the meeting where opposites are held without being cancelled. It is the standing self &mdash; the Ego that is never born and never dies, the one in eternal union with its Source; this centre is the Christ.</p><p>Hence its two old titles: the Mediating Intelligence, the reconciling middle, and the Intelligence that holds the separated powers together in one harmony. To stand at six is to see, as the affirmation says, <em>in all things, great and small, the Beauty of the divine expression</em> &mdash; not beauty added to things, but the proportion that was always holding them together becoming visible.</p>',
+   affirm:'In all things, great and small, I see the Beauty of the divine expression.'},
+
+  {n:7,name:'Victory &middot; Occult Intelligence',
+   mode:'I am the work assured',nodes:['C','D','E'],
+   segs:[L('C','D'),L('D','E')],
+   construct:'A single unbroken line: the level <b>C&rarr;D</b> across the summit, then &mdash; without the pen lifting &mdash; the turn at <b>D</b> and the straight descent <b>D&rarr;E</b>. One motion: the height reached, then the way down taken without hesitation. The quiet that comes not when a thing is finished, but the moment you become certain it will be &mdash; the hand does not falter on the line because the heart no longer doubts the end.',
+   full:'<p>Seven is a level line, <b>C</b> to <b>D</b>, and a diagonal, <b>D</b> to <b>E</b>. Its meanings would fill an encyclopedia &mdash; it is the great Biblical number, with whole books of both Testaments built on a plan of sevens.</p><p>Its chief meanings are rest, safety, security, and victory. To the ancients seven stood for a pause, not a final perfection. In Hebrew the word for &ldquo;seven&rdquo; is bound to the word for &ldquo;oath&rdquo;: the security of a sworn promise was figured by the number itself &mdash; rest grounded in a covenant, not in mere stopping.</p><p>This is Netzach &mdash; Firmness, Victory &mdash; the seat of the desire-nature, the sphere of Venus. And the teaching is precise: desire, at its root, is the reflection of the real Will. We desire what the One intends; only the <em>form</em> a desire takes, or the means chosen, needs correcting &mdash; the essence of any desire is always good. Venus is the victorious, <em>Victrix</em>; the same word stands behind Netzach. Longing rightly seen is not the enemy of the work but its forward force.</p><p>So seven is the assurance that the work will arrive. A perfect Life-power working in the manner of six cannot fail; the Great Work is unfinished, yet, given the nature of the Source and of the Worker, it must succeed to the smallest detail. It is the Occult Intelligence &mdash; &ldquo;occult&rdquo; only because the certainty is hidden behind present appearances. The affirmation rests exactly there: <em>supported by its unfailing Wisdom and Understanding, mine is the Victorious Life</em> &mdash; victory spoken before the end, because the end is not in doubt.</p>',
+   affirm:'Living from that Will, supported by its unfailing Wisdom and Understanding, mine is the Victorious Life.'},
+
+  {n:8,name:'Splendor &middot; Perfect Intelligence',
+   mode:'I am one breath, both ways',nodes:['A','O','B'],
+   segs:[Aa('UC',270,90),Aa('LC',270,450),Aa('LC',90,270),Aa('UC',90,-90)],
+   construct:'From <b>A</b> the pen descends in an S &mdash; left through the upper circle, crossing the centre <b>O</b>, right through the lower circle to <b>B</b> &mdash; then returns as an inverted S, back through <b>O</b> to <b>A</b>. The centre is crossed twice and the pen never lifts; laid on its side, this is the sign of endlessness. It is breathing: out and in, falling and rising, two motions that are one life. The body knows it before the mind does &mdash; nothing alive holds a single breath; the going out and the coming back are one act, continued.',
+   full:'<p>Eight is the two circles within the zero, drawn as one line: from <b>A</b> down an S to <b>B</b>, back up an inverted S to <b>A</b>. Its very shape suggests vibration, its two opposite motions suggest alternation. Except for zero it is the only figure that can be written endlessly without lifting the pen, and laid on its side it is the sign of infinity.</p><p>Its meanings are rhythm, vibration, flux and reflux, the alternating cycles of involution and evolution. It states the central law of the whole figure: every pair of opposites is the effect of a single Cause. The descending S and the ascending inverted S are not two things but one continuous motion &mdash; which is why the form never has to lift: going out and coming back are the same act.</p><p>This is Hod, Splendor &mdash; the discriminating intellect, the power that chooses the right means and brings desire to full, well-rounded realization. Where seven is the longing, eight is the intelligence that selects the way; its work succeeds exactly to the degree that it agrees with natural law. The word <em>Hod</em> traces to a root for the breast &mdash; nourishment, the satisfying of hunger &mdash; so its splendour is the glow of a need rightly fed.</p><p>It is the Perfect Intelligence &mdash; and &ldquo;perfect&rdquo; here shares its letters with a word meaning peace, health, wealth, and satisfaction: the success of seven, now actually carried out. So the affirmation looks ahead with confidence rather than back with relief: <em>I look forward with confidence to the perfect realization of the Eternal Splendor of the Limitless Light.</em></p>',
+   affirm:'I look forward with confidence to the perfect realization of the Eternal Splendor of the Limitless Light.'},
+
+  {n:9,name:'Foundation &middot; Pure (Clear) Intelligence',
+   mode:'I am completion that seeds beginning',nodes:['D','O','E'],
+   segs:[Aa('UC',330,690),Aa('RSC',-30,30),Aa('LC',30,90),Aa('LC',90,150)],
+   construct:'From <b>D</b> the pen rounds the entire upper circle &mdash; down through the centre <b>O</b> and back to <b>D</b> &mdash; a closed head, the cycle complete. Then, instead of sealing, the line opens into a tail and runs down the right side, through the depth, to <b>E</b>. It is the truth of every harvest: the ripe thing is also the seed thing. The work is finished, and the finishing is itself the start of the next &mdash; no ending, looked at closely, is ever quite the end of the road.',
+   full:'<p>Nine begins at <b>D</b>, rounds the whole upper circle through the centre and back to <b>D</b>, then runs down the right side of the zero to <b>E</b>. As the last of the numeral symbols it means completion, attainment, fulfilment &mdash; the goal of endeavour, the close of a cycle.</p><p>Yet because eight has shown rhythm to belong to the creative process, this completion never simply stops. The end of one cycle is the start of another &mdash; the basis of all real work on oneself: no one comes to the end of the tether; no one reaches a point past which nothing remains to be hoped for or done. Every ending is the seed of a fresh beginning.</p><p>This is Yesod, the Foundation &mdash; and precisely: not the foundation of what is above it, but the basis of everything <em>below</em> &mdash; the ground on which all outward, embodied, name-and-form manifestation actually stands. It is the Vital Soul, the breath of life active in plant and asleep in stone; the sphere of the Moon, which holds no light of its own but gathers and passes on the light of the Sun above it. So this completion is also a reservoir: where the whole cycle is stored and made ready to be lived out in the body.</p><p>It is the Pure or Clear Intelligence, because the completion of any process is the clear, unmixed expression of the very intention that first set it going &mdash; nothing added, nothing lost in transmission. So the affirmation does not strain forward or back; it rests: <em>in thought and word and deed, I rest my life, from day to day, upon the sure Foundation of Eternal Being.</em></p>',
+   affirm:'In thought and word and deed, I rest my life, from day to day, upon the sure Foundation of Eternal Being.'},
+
+  {n:10,name:'The Kingdom &middot; Resplendent Intelligence',
+   mode:'I am Spirit embodied in flesh',nodes:['A','B'],
+   segs:Zr(0,5).concat([L('A','B')]),
+   construct:'The whole zero is drawn once more &mdash; the full circuit, <b>Involution</b> down the left, <b>Evolution</b> up the right &mdash; and through it the single upright <b>A&rarr;B</b> of <b>1</b> is set. The boundless field and the one focused life, joined in a single figure: the limitless poured through one concentrated self, here, embodied &mdash; the Kingdom, in flesh. It is the plainest and the most demanding fact of all: whatever the whole of this is, it is meant to arrive <em>as a life</em>, in a body, where you are.',
+   full:'<p>Ten joins the oval of superconsciousness (the <b>0</b>) to the upright of self-consciousness (the <b>1</b>). It is the number of perfection and of dominion &mdash; the figure in which the whole sequence returns to where it began, the zero now containing the one.</p><p>Read together, the two figures picture the limitless Life-power pouring out through a single concentrated &ldquo;I&rdquo;: the boundless source made effective through one focused centre of will. This is Malkuth, the Kingdom &mdash; also the Bride, the Queen, and the Shekinah, the indwelling Presence. It is the body itself, the most outward aspect of a person; there is no separate body, only the place where all the higher powers come to rest and act. This is the fruit of the whole: not a rung above the world but the world itself, indwelt.</p><p>Its consciousness is the Resplendent Intelligence &mdash; brilliant, glowing, full of life and power &mdash; because when the whole pattern arrives in matter it does not dim; it shines. And there is a sober condition: this resplendence rests on Understanding, the third. To hold the glowing consciousness of mastery one must first have, as foundation, the patient organizing power of three; the share in the Kingdom of Heaven on earth is measured by how deeply one has understood.</p><p>So the sequence ends where it must: the unified act becoming flesh, the apprehended-and-moved-toward become lived continuity in matter. The affirmation says it without remainder: <em>the Kingdom of Spirit is embodied in my flesh.</em> Not promised, not elsewhere &mdash; here, now, as a life.</p>',
+   affirm:'The Kingdom of Spirit is embodied in my flesh.'}
+  ];
+
+  var idx=0, playing=false, playTimer=null;
+  function $(id){return document.getElementById(id);}
+  var glyph=$('glyph'), qname=$('qname'), mode=$('mode'),
+    construct=$('construct'), full=$('full'), affirm=$('affirm'),
+    seq=$('seq'), track=$('track'), panel=$('panel');
+
+  NUM.forEach(function(o,i){
+    var b=document.createElement('button');
+    b.className='pip';b.textContent=o.n;
+    b.addEventListener('click',function(){stopPlay();go(i);});
+    track.appendChild(b);
+  });
+  var pips=[].slice.call(track.children);
+
+  function litNodes(keys){
+    for(var k in nodeEls){
+      var on=keys.indexOf(k)>-1;
+      nodeEls[k].classList.toggle('lit',on);
+      labelEls[k].classList.toggle('lit',on);
+    }
+  }
+  // beginning + end only; closed figures (0, 8) collapse to one point
+  function nearestKey(pt){
+    var best=null,bd=1e9;
+    for(var k in P){var d=Math.hypot(P[k][0]-pt[0],P[k][1]-pt[1]);
+      if(d<bd){bd=d;best=k;}}
+    return best;
+  }
+  // every point where the pen sets down or lifts: each stroke's
+  // start and end (so pen-lift termini light too); deduped, so
+  // closed figures (0, 8) collapse to a single point
+  function endpointKeys(strokes){
+    var out=[];
+    for(var s=0;s<strokes.length;s++){
+      var st=strokes[s];
+      var k1=nearestKey(st[0]), k2=nearestKey(st[st.length-1]);
+      if(out.indexOf(k1)<0) out.push(k1);
+      if(out.indexOf(k2)<0) out.push(k2);
+    }
+    return out;
+  }
+  // a new stroke begins only at a real pen-lift (discontinuity)
+  function strokesOf(segs){
+    var EPS=0.6, out=[], cur=null;
+    segs.forEach(function(s){
+      var pts=segPts(s);
+      if(!cur){ cur=pts.slice(); return; }
+      var last=cur[cur.length-1], f=pts[0];
+      if(Math.hypot(last[0]-f[0],last[1]-f[1])<EPS){
+        for(var i=1;i<pts.length;i++) cur.push(pts[i]);
+      } else { out.push(cur); cur=pts.slice(); }
+    });
+    if(cur) out.push(cur);
+    return out;
+  }
+  function strokeLen(st){
+    var L=0;
+    for(var i=1;i<st.length;i++) L+=Math.hypot(st[i][0]-st[i-1][0],st[i][1]-st[i-1][1]);
+    return L;
+  }
+  // build path revealing the first `target` units of arc-length
+  // across the ordered strokes (each stroke its own subpath, so
+  // pen-lifts are gaps, never connecting lines)
+  function drawUpTo(strokes,target){
+    var d='', rem=target;
+    for(var s=0;s<strokes.length && rem>0;s++){
+      var st=strokes[s];
+      d+=' M '+st[0][0].toFixed(2)+' '+st[0][1].toFixed(2);
+      var room=rem;
+      for(var i=1;i<st.length;i++){
+        var sx=st[i-1][0],sy=st[i-1][1],ex=st[i][0],ey=st[i][1];
+        var L=Math.hypot(ex-sx,ey-sy);
+        if(L<=room){ d+=' L '+ex.toFixed(2)+' '+ey.toFixed(2); room-=L; }
+        else{
+          var f=room/L;
+          d+=' L '+(sx+(ex-sx)*f).toFixed(2)+' '+(sy+(ey-sy)*f).toFixed(2);
+          room=0; break;
+        }
+      }
+      rem-=strokeLen(st);
+    }
+    return d.replace(/^ /,'');
+  }
+  var rafId=null;
+  function easeIO(t){return t<0.5? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;}
+
+  function go(i){
+    idx=i;var o=NUM[i];
+    panel.classList.remove('showpoint'); clearSel();
+    pips.forEach(function(p,j){p.classList.toggle('active',j===i);});
+    $('prev').disabled=(i===0);
+    $('next').disabled=(i===NUM.length-1);
+    seq.textContent='Number '+o.n+' of 10';
+
+    glyph.textContent=o.n;glyph.classList.remove('lit');
+    qname.innerHTML=o.name;mode.innerHTML=o.mode;
+    construct.innerHTML=o.construct;full.innerHTML=o.full;
+    affirm.textContent='\u201C'+o.affirm+'\u201D';
+    panel.classList.remove('fade');void panel.offsetWidth;panel.classList.add('fade');
+
+    litNodes([]);
+    tracePath.classList.remove('dim');
+    if(rafId) cancelAnimationFrame(rafId);
+    tracePath.style.transition='none';
+    tracePath.style.strokeDasharray='none';
+    tracePath.style.strokeDashoffset='0';
+
+    var strokes=strokesOf(o.segs);
+    var total=0; strokes.forEach(function(st){total+=strokeLen(st);});
+    var dur=Math.min(4600,Math.max(2000,total*3.7));
+    var litKeys=endpointKeys(strokes);
+    // cumulative arc-length samples along the actual drawn path
+    var SAMP=[], cumL=0;
+    for(var si=0;si<strokes.length;si++){
+      var stt=strokes[si];
+      for(var pi=0;pi<stt.length;pi++){
+        if(pi>0) cumL+=Math.hypot(stt[pi][0]-stt[pi-1][0],stt[pi][1]-stt[pi-1][1]);
+        SAMP.push([stt[pi][0],stt[pi][1],cumL]);
+      }
+    }
+    // arc-length at which the stroke first reaches each lit point
+    var keyLen={}, doneK={};
+    litKeys.forEach(function(k){
+      var px=P[k][0],py=P[k][1],bd=1e9,bl=0;
+      for(var n=0;n<SAMP.length;n++){
+        var dd=Math.hypot(SAMP[n][0]-px,SAMP[n][1]-py);
+        if(dd<bd){bd=dd;bl=SAMP[n][2];}
+      }
+      keyLen[k]=bl; doneK[k]=false;
+    });
+    function lightReached(drawn){
+      var changed=false;
+      litKeys.forEach(function(k){
+        if(!doneK[k] && drawn>=keyLen[k]-0.01){ doneK[k]=true; changed=true; }
+      });
+      if(changed) litNodes(litKeys.filter(function(k){return doneK[k];}));
+    }
+    var start=null;
+    tracePath.setAttribute('d', drawUpTo(strokes,0.001));
+    function frame(now){
+      if(start===null) start=now;
+      var p=Math.min(1,(now-start)/dur), e=easeIO(p), drawn=e*total;
+      tracePath.setAttribute('d', drawUpTo(strokes, drawn));
+      lightReached(drawn);
+      if(p<1) rafId=requestAnimationFrame(frame);
+      else { rafId=null; litNodes(litKeys); glyph.classList.add('lit'); }
+    }
+    rafId=requestAnimationFrame(frame);
+
+    if(playing){
+      clearTimeout(playTimer);
+      playTimer=setTimeout(function(){
+        if(idx<NUM.length-1) go(idx+1); else stopPlay();
+      }, dur+3200);
+    }
+  }
+
+  function stopPlay(){playing=false;clearTimeout(playTimer);
+    $('play').textContent='Walk all \u25B8';}
+
+  $('prev').addEventListener('click',function(){stopPlay();if(idx>0)go(idx-1);});
+  $('next').addEventListener('click',function(){stopPlay();if(idx<NUM.length-1)go(idx+1);});
+  $('play').addEventListener('click',function(){
+    if(playing){stopPlay();return;}
+    playing=true;this.textContent='Pause \u2759\u2759';
+    go(idx===NUM.length-1?0:idx);
+  });
+  var SCAFFS=[
+    {t:'Full scaffold',    s:1,r:1,w:1,x:1,g:1},
+    {t:'Star only',        s:0,r:1,w:0,x:0,g:1},
+    {t:'Circles only',     s:1,r:0,w:0,x:0,g:1},
+    {t:'Without the zero', s:1,r:1,w:0,x:1,g:1},
+    {t:'Axes only',        s:0,r:0,w:0,x:1,g:1},
+    {t:'No scaffold',      s:0,r:0,w:0,x:0,g:0}
+  ];
+  var scIx=0;
+  function applyScaff(){
+    var v=SCAFFS[scIx];
+    gSeed.classList.toggle('hidden',!v.s);
+    gStar.classList.toggle('hidden',!v.r);
+    gWork.classList.toggle('hidden',!v.w);
+    gAx.classList.toggle('hidden',!v.x);
+    for(var nk in nodeEls){ nodeEls[nk].classList.toggle('hidden',!v.g);
+      labelEls[nk].classList.toggle('hidden',!v.g); }
+    $('tg').textContent='\u21BB  '+v.t;
+  }
+  $('tg').addEventListener('click',function(){
+    scIx=(scIx+1)%SCAFFS.length; applyScaff();
+  });
+  applyScaff();
+  document.addEventListener('keydown',function(e){
+    if(!$('view-app').classList.contains('on')) return;
+    if(e.key==='ArrowRight'){stopPlay();if(idx<NUM.length-1)go(idx+1);}
+    if(e.key==='ArrowLeft'){stopPlay();if(idx>0)go(idx-1);}
+  });
+
+  // click anywhere on the figure that is not a point: leave the chart blank.
+  // only a number button (go) or a point (showPointDef) illuminates anything.
+  svg.addEventListener('click',function(e){
+    var t=e.target;
+    if(t&&t.classList&&(t.classList.contains('node')||t.classList.contains('nodelabel'))) return;
+    stopPlay();
+    if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+    tracePath.setAttribute('d','');
+    litNodes([]); clearSel();
+    glyph.classList.remove('lit');
+  });
+
+  var POINTDEFS={
+   A:{name:'The Apex',
+     pos:'The centre of the uppermost of the seven Circles, and the highest point the upper working-circle reaches \u2014 the topmost point of the figure. The great oval of the zero opens here and, after its whole descent and return, closes here again; the upright of <b>1</b> stands from here down to <b>B</b>. Every figure that begins from the height begins at <b>A</b>.',
+     mean:'This is the height before anything has fallen into form \u2014 the boundless gathered to a single starting point. The long arc <b>D</b>&rarr;<b>A</b> is the return to conscious oneness with the source, so <b>A</b> is at once where the descent begins and where the return arrives: one point, seen at the outset and again at the end. With <b>B</b> it forms the vertical axis of Aleph, the breath that holds fire and water in balance \u2014 the single axis on which everything in the figure hangs. To rest on <b>A</b> is to stand at the place a life comes from and the place it is trying to return to.'},
+   B:{name:'The Depth',
+     pos:'The centre of the lowest of the seven Circles \u2014 the lowest point of the figure, where the lower working-circle reaches its full descent. Nothing in the Key descends past it; the upright of <b>1</b> ends here, and the descending arc of the zero reaches its lowest point here before it turns.',
+     mean:'This is the deepest reach of the descent, the density of bare matter, and the exact place where the return begins. The fall does not continue at <b>B</b>; it reverses. So the lowest point is not an end but a hinge \u2014 matter is where the descent becomes the way back. With <b>A</b> it is the lower pole of the same Aleph upright, and so it is the reflection of <b>A</b>: the depth answering the height. <b>A</b> is the Crown, Kether; <b>B</b> is the Kingdom, Malkuth \u2014 and each is wholly in the other: Kether is in Malkuth, and Malkuth is in Kether. The boundless gathered at the summit is the same boundless concentrated at the floor. The Kingdom is not the opposite of spirit but the ground the whole work stands on, the body where the descended life is finally lived. The deepest point is the one that holds everything else up, because the height is wholly present in it.'},
+   O:{name:'The Centre',
+     pos:'The centre of the central seventh Circle, and the one point where the upper and lower working-circles are tangent \u2014 the single point both share. Every figure that crosses the middle \u2014 <b>2</b>, <b>3</b>, <b>8</b>, <b>9</b> \u2014 passes through <b>O</b>.',
+     mean:'The boundless does not proceed from a centre, for it is centreless; it concentrates one. This is that concentration \u2014 the whole present, undivided, at a single place: the crossing, where the three axes meet. The centre is true in two ways at once. As Tav it is the structural centre \u2014 Tav is the last letter, the mark or sign, and its oldest form is a cross; it stands exactly where the axes cross, the still point the geometry turns upon. As Tiphareth it is the lived centre \u2014 the standing Self that was never born and will never die, the Christ upon that cross, the one through whom the crossing is actually made. One point: the cross, and the one upon it \u2014 held together, never fused.'},
+   C:{name:'The Threshold',
+     pos:'The meeting of the topmost Circle with the upper-left Circle of the seven \u2014 the first node a figure reaches as it leaves the height. The figures <b>2</b>, <b>3</b>, <b>5</b>, and <b>7</b> are first set down here.',
+     mean:'This is where the unbounded first accepts an edge. A figure leaving <b>A</b> has not yet become anything in particular; at <b>C</b> it takes its first definite turn \u2014 the first \u201Cthis, and not the whole.\u201D It carries the same truth the number <b>3</b> teaches: to give a thing form is to give it a boundary. <b>C</b> is the doorway of manifestation, where the descent stops being pure possibility and becomes a particular line.'},
+   D:{name:'The Summit',
+     pos:'The meeting of the topmost Circle with the upper-right Circle of the seven \u2014 the high turning point on the rising side. The figures <b>6</b> and <b>9</b> turn here.',
+     mean:'This is the highest reach of human consciousness on the ascending arc \u2014 the last point still wholly human \u2014 beyond which the climb <b>D</b>&rarr;<b>A</b> is conscious oneness with the Divine. So <b>D</b> is the place of turning: the height at which attainment stops climbing for itself and begins to return toward its source. Where <b>C</b> is the first edge taken on, <b>D</b> is the summit where what was gained turns back to give itself away.'},
+   E:{name:'The Rest',
+     pos:'The meeting of the lowest Circle with the lower-left Circle of the seven \u2014 the node at which several figures come to their close. The figures <b>2</b>, <b>3</b>, <b>5</b>, and <b>9</b> end here.',
+     mean:'<b>E</b> is where a motion that has descended and crossed finally settles. It is the stillness after the downward work \u2014 form having received what came down into it, and now holding it. It stands near in meaning to the number <b>9</b>, the Foundation: the reservoir where a finished motion is kept, a rest that is not emptiness but a holding.'},
+   F:{name:'The Outset of Return',
+     pos:'The meeting of the lowest Circle with the lower-right Circle of the seven \u2014 the node that opens the rising arc on the right.',
+     mean:'<b>B</b>&rarr;<b>F</b> is the inorganic world stirring \u2014 the first motion of the unwinding return, matter beginning to wake. Where <b>E</b> receives and holds, <b>F</b> releases and rises: the lowest stillness breaking into its first upward stir. It is the moment rest becomes work again \u2014 the turn from having descended to beginning to climb.'},
+   G:{name:'The Descending Reach',
+     pos:'The leftmost extremity of the zero \u2014 a constructed boundary of the field, not a meeting of Circles: the widest reach of the descending, left-hand arc.',
+     mean:'The left side of the zero falls \u2014 Involution, the inward descent into form. Water descends, so this reach is water: Mem, the substance of the fall. The Key is two-dimensional, so this is not a spatial axis but the figure\u2019s own motion. The left falls and the right, at <b>H</b>, rises \u2014 together one wave, whose substance is water. So the whole span is Mem as time: the rhythm of descent and return, the motion the number <b>8</b> traces as a single breath. On the three-dimensional Cube of Space this same Mother is a spatial axis; here, in two dimensions, it is time.'},
+   H:{name:'The Ascending Reach',
+     pos:'The rightmost extremity of the zero \u2014 the mirror of <b>G</b>: the widest reach of the rising, right-hand arc.',
+     mean:'The right side of the zero rises \u2014 Evolution, the return out of form. Fire ascends, so this reach carries Shin: fire, the upward return. It is not a second axis \u2014 it is the rising half of the one wave whose falling half is <b>G</b>. The wave\u2019s substance is water \u2014 Mem, time; the fire of Shin is its upturn, the same rhythm climbing. Fall and climb are not two things but one oscillation, met at its two edges.'},
+   I:{name:'The Hinge of Mediation',
+     pos:'The meeting of the lower-left Circle of the seven with the lower working-circle \u2014 a node entered by one figure alone, the Five.',
+     mean:'Every other named point is shared by several numbers; <b>I</b> belongs to <b>5</b> only. That is its whole meaning: it is the single pivot of the figure that stands at the exact middle, between Beginning and Completion. <b>5</b> is the number of law and of justice \u2014 severity bent into the means by which conditions are changed \u2014 and <b>I</b> is the point on which that mediation turns. It is where law stops being felt as a wall and becomes the road.'}
+  };
+
+    function clearSel(){
+    for(var kk in nodeEls){ nodeEls[kk].classList.remove('sel');
+      labelEls[kk].classList.remove('sel'); }
+  }
+  function showPointDef(k){
+    var d=POINTDEFS[k]; if(!d) return;
+    stopPlay();
+    if(rafId){ cancelAnimationFrame(rafId); rafId=null; }
+    var _st=strokesOf(NUM[idx].segs), _tot=0;        // finish the figure first
+    _st.forEach(function(s){_tot+=strokeLen(s);});
+    tracePath.style.transition='none';
+    tracePath.style.strokeDasharray='none';
+    tracePath.style.strokeDashoffset='0';
+    tracePath.setAttribute('d', drawUpTo(_st,_tot));
+    glyph.classList.add('lit');
+    tracePath.classList.add('dim');                // recede; the point is now subject
+    litNodes([]);                                  // drop endpoint lighting
+    for(var kk in nodeEls){ var s=(kk===k);
+      nodeEls[kk].classList.toggle('sel',s);
+      labelEls[kk].classList.toggle('sel',s); }
+    var h='<button class="pback" id="pbk">&larr; Back to the number</button>';
+    h+='<div class="pglyph"><div class="mk">'+k+'</div><div class="nm">'+d.name+'</div></div>';
+    h+='<div class="section"><div class="label">Its Place \u2014 position in the figure</div><div class="construct">'+d.pos+'</div></div>';
+    h+='<div class="section"><div class="label">Its Meaning \u2014 read within the whole</div><div class="full">'+d.mean+'</div></div>';
+    $('pointpanel').innerHTML=h;
+    $('pbk').addEventListener('click',exitPoint);
+    panel.classList.add('showpoint');
+    panel.classList.remove('fade');void panel.offsetWidth;panel.classList.add('fade');
+  }
+  function exitPoint(){
+    clearSel();
+    panel.classList.remove('showpoint');
+    go(idx);                                       // redraw the numeral
+  }
+  svg.addEventListener('click',function(e){
+    if(e.target&&e.target.classList&&e.target.classList.contains('tap')) return;
+    if(panel.classList.contains('showpoint')) exitPoint();
+  });
+
+  function showView(v){
+    var t=v==='title';
+    $('view-title').classList.toggle('on',t);
+    $('view-app').classList.toggle('on',!t);
+    if(t){ stopPlay(); }
+    else { go(idx); }
+    window.scrollTo(0,0);
+  }
+  $('enterBtn').addEventListener('click',function(){showView('app');});
+  $('backBtn').addEventListener('click',function(){showView('title');});
+
+  go(0);
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var L={'--bg':'#F4F1E4','--ink':'#1F1F1D','--gold':'#B89131','--cream':'#9E9680',
+    '--grey':'#6A6A5F','--faint':'rgba(31,31,29,.14)',
+    '--fig':'rgba(255,255,255,.32)','--glow':'rgba(184,145,49,.06)'};
+  var D={'--bg':'#1F1F1D','--ink':'#E8E2D0','--gold':'#BC9836','--cream':'#7A7464',
+    '--grey':'#A6A091','--faint':'rgba(232,226,208,.15)',
+    '--fig':'#1F1F1D','--glow':'rgba(212,168,74,.07)'};
+  function applyTheme(){
+    var v=dark?D:L,k;
+    for(k in v) root.style.setProperty(k,v[k]);   // inline -> beats the @media rule
+    document.body.style.backgroundColor=v['--bg'];
+    document.body.style.color=v['--ink'];
+  }
+  window.toggleTheme=function(){ dark=!dark; applyTheme(); };
+  applyTheme();
+  window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change',function(e){ dark=e.matches; applyTheme(); });
+})();
+</script>
+</body>
+</html>

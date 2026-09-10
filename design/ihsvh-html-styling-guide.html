@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>IHSVH Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg:         #F4F1E4;
+  --ink:        #1F1F1D;
+  --gold:       #B89131;
+  --cream-dark: #9E9680;
+  --warm-grey:  #6A6A5F;
+  --rule:       rgba(184,145,49,0.35);
+  --rule-soft:  rgba(107,107,96,0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #1F1F1D;
+    --ink:        #E8E2D0;
+    --gold:       #BC9836;
+    --cream-dark: #7A7464;
+    --warm-grey:  #A6A091;
+    --rule:       rgba(212,168,74,0.45);
+    --rule-soft:  rgba(166,160,145,0.2);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18.5px;
+  line-height: 1.72;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 0 1.2rem 6rem;
+}
+
+/* ── Guide-specific styles ── */
+.guide-section {
+  margin: 5rem 0 3rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--rule);
+}
+
+.guide-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--warm-grey);
+  margin: 0 0 0.4rem;
+}
+
+.guide-title {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  font-style: italic;
+  margin: 0 0 1.5rem;
+  color: var(--ink);
+}
+
+.guide-note {
+  font-size: 0.88rem;
+  color: var(--cream-dark);
+  line-height: 1.6;
+  margin: 0.5rem 0 1.5rem;
+  font-style: italic;
+}
+
+.swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 130px;
+}
+
+.swatch-block {
+  height: 48px;
+  border-radius: 2px;
+  border: 1px solid var(--rule-soft);
+}
+
+.swatch-name {
+  font-family: 'Assistant', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.swatch-hex {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  color: var(--warm-grey);
+  letter-spacing: 0.06em;
+}
+
+.specimen-row {
+  margin: 1.2rem 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.specimen-row:last-child { border-bottom: none; }
+
+.specimen-meta {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--warm-grey);
+  margin-bottom: 0.5rem;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  background: var(--rule-soft);
+  padding: 0.15em 0.4em;
+  border-radius: 2px;
+  color: var(--cream-dark);
+}
+
+pre {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  background: rgba(107,107,96,0.08);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  line-height: 1.6;
+  color: var(--cream-dark);
+  margin: 1rem 0;
+}
+
+.rule-demo {
+  margin: 1rem 0;
+  height: 1px;
+}
+
+.rule-demo.soft { background: var(--rule-soft); }
+.rule-demo.gold { background: var(--rule); }
+.rule-demo.gold-solid { background: var(--gold); opacity: 0.4; }
+
+.vertical-demo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.v-line {
+  width: 1px;
+  height: 56px;
+  background: var(--gold);
+}
+
+.v-line.thick { width: 2px; }
+
+/* ── Live examples of actual document styles ── */
+.page-header-demo {
+  padding: 0.6rem 0 1.4rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 2rem;
+}
+
+header.title-block-demo {
+  text-align: center;
+  padding-bottom: 60px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+header.title-block-demo::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: var(--gold);
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.author-demo {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--warm-grey);
+  margin: 8px 0 28px;
+  text-align: center;
+}
+
+h1.work-demo {
+  font-family: 'Cormorant Infant', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 52px;
+  letter-spacing: 0.01em;
+  line-height: 1.0;
+  color: var(--ink);
+  margin: 0 0 28px;
+  text-align: center;
+}
+
+.work-label-demo {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+}
+
+.h2-demo {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 2rem 0 0.15rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.section-numeral-demo {
+  display: block;
+  font-family: 'Assistant', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+  margin-bottom: 0.1rem;
+}
+
+.thesis-demo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 1rem 0;
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+.note-demo {
+  font-style: italic;
+  color: var(--gold);
+  margin: 0.8rem 0;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18.5px;
+  line-height: 1.72;
+}
+
+.blockquote-demo {
+  position: relative;
+  margin: 1rem 0 1rem 1.5rem;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+  color: var(--cream-dark);
+  font-family: 'EB Garamond', Georgia, serif;
+  line-height: 1.72;
+}
+
+.blockquote-demo::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.32em; bottom: 0.32em;
+  width: 2px;
+  background: var(--gold);
+}
+
+.h3-demo {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--warm-grey);
+  margin: 1.5rem 0 0.6rem;
+}
+
+.summary-demo {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  text-align: center;
+}
+
+.summary-demo p {
+  font-style: italic;
+  font-size: 1.03rem;
+  line-height: 1.2;
+  margin: 1.2rem 0;
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+.h4-demo {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  font-style: italic;
+  margin: 1.5rem 0 0.4rem;
+}
+
+.section-num-demo {
+  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin-right: 0.4rem;
+}
+
+.deflist-demo p {
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.5rem;
+  margin: 0 0 1rem;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18.5px;
+}
+
+.deflist-demo strong {
+  color: var(--gold);
+  flex-shrink: 0;
+  min-width: 3.5rem;
+}
+
+.doc-body {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18.5px;
+  line-height: 1.72;
+  margin: 0.8rem 0;
+}
+
+/* ── Title page ── */
+.title-page-demo {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 2rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════════════════════════════════ -->
+<!-- HEADER                                     -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page-header-demo"></div>
+
+<div style="text-align:center; padding: 3rem 0 5rem; position: relative;">
+  <div style="font-family:'Assistant',sans-serif; font-size:11px; font-weight:300; letter-spacing:0.32em; text-transform:uppercase; color:var(--warm-grey); margin-bottom: 1.2rem;">IHSVH</div>
+  <h1 style="font-family:'Cormorant Infant',serif; font-weight:500; font-style:italic; font-size:52px; line-height:1.0; margin:0 0 1rem; color:var(--ink);">Design System</h1>
+  <div style="font-family:'Assistant',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin-top:2.2rem;">HTML Style Guide</div>
+  <div style="position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); width:1px; height:40px; background:var(--gold);"></div>
+</div>
+
+<p style="color:var(--cream-dark); font-size:0.95rem; line-height:1.6; margin: 5rem 0 0;">This guide defines the visual language for all IHSVH HTML documents. The system is built on three principles: <em>restraint over decoration</em>, <em>gold as structural signal</em>, and <em>form following epistemic register</em>. Every typographic and color decision should serve the hierarchy of the content, not announce itself.</p>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 1. COLOR                                   -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">01</p>
+  <h2 class="guide-title">Color</h2>
+  <p class="guide-note">Seven variables. Light and dark modes. Gold is never decorative — it marks structural weight: section numerals, derivation numbers, vertical rules, key symbolic markers, authorial notes. When gold appears, it should signify architecture rather than commentary.</p>
+
+  <p class="guide-label" style="margin-top:1.5rem;">Light Mode</p>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#F4F1E4;"></div>
+      <div class="swatch-name">--bg</div>
+      <div class="swatch-hex">#F4F1E4</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#1F1F1D;"></div>
+      <div class="swatch-name">--ink</div>
+      <div class="swatch-hex">#1F1F1D</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#B89131;"></div>
+      <div class="swatch-name">--gold</div>
+      <div class="swatch-hex">#B89131</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#9E9680;"></div>
+      <div class="swatch-name">--cream-dark</div>
+      <div class="swatch-hex">#9E9680</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#6A6A5F;"></div>
+      <div class="swatch-name">--warm-grey</div>
+      <div class="swatch-hex">#6A6A5F</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:rgba(184,145,49,0.35);"></div>
+      <div class="swatch-name">--rule</div>
+      <div class="swatch-hex">gold @ 35%</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:rgba(107,107,96,0.2);"></div>
+      <div class="swatch-name">--rule-soft</div>
+      <div class="swatch-hex">grey @ 20%</div>
+    </div>
+  </div>
+
+  <p class="guide-label" style="margin-top:1.5rem;">Dark Mode</p>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#1F1F1D; border-color:rgba(255,255,255,0.1);"></div>
+      <div class="swatch-name">--bg</div>
+      <div class="swatch-hex">#1F1F1D</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#E8E2D0;"></div>
+      <div class="swatch-name">--ink</div>
+      <div class="swatch-hex">#E8E2D0</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#BC9836;"></div>
+      <div class="swatch-name">--gold</div>
+      <div class="swatch-hex">#BC9836</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#7A7464;"></div>
+      <div class="swatch-name">--cream-dark</div>
+      <div class="swatch-hex">#7A7464</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#A6A091;"></div>
+      <div class="swatch-name">--warm-grey</div>
+      <div class="swatch-hex">#A6A091</div>
+    </div>
+  </div>
+
+  <p class="guide-label" style="margin-top:1.5rem;">Color Use Rules</p>
+  <div class="specimen-row">
+    <div class="specimen-meta">var(--ink)</div>
+    <p class="doc-body" style="margin:0;">Primary body text. Thesis statements. Section headings. All load-bearing prose.</p>
+  </div>
+  <div class="specimen-row">
+    <div class="specimen-meta">var(--gold)</div>
+    <p class="doc-body" style="margin:0; color:var(--gold); font-style:italic;">Authorial notes. Section numerals. Derivation numbers. Vertical and horizontal rules. Symbolic term definitions. Summary borders. Never body prose.</p>
+  </div>
+  <div class="specimen-row">
+    <div class="specimen-meta">var(--cream-dark)</div>
+    <p class="doc-body" style="margin:0; color:var(--cream-dark);">Blockquote text. Front matter prose. Secondary body. Set-apart quoted material.</p>
+  </div>
+  <div class="specimen-row">
+    <div class="specimen-meta">var(--warm-grey)</div>
+    <p class="doc-body" style="margin:0; color:var(--warm-grey);">Structural labels (DEFINITIONS, DERIVATION, NOTE TO THE READER). Appendix section numbers. Author attribution. Citation text. Scaffolding — present but recessive.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 2. TYPOGRAPHY                              -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">02</p>
+  <h2 class="guide-title">Typography</h2>
+  <p class="guide-note">Three families. Each carries a specific register. Never interchange them — the reader learns the code.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">EB Garamond — Body</div>
+    <p class="doc-body" style="margin:0;">18.5px / line-height 1.72. All body prose, notes, blockquotes, theses. The governing voice of argument. Italic for authorial commentary. Bold (700) for thesis statements only.</p>
+    <p style="font-family:'EB Garamond',Georgia,serif; font-size:18.5px; margin:0.5rem 0 0; color:var(--ink);">The heart moves toward what it apprehends as good.</p>
+    <p style="font-family:'EB Garamond',Georgia,serif; font-size:18.5px; margin:0.2rem 0 0; font-style:italic; color:var(--gold);">In the heart, apprehension and movement are one act.</p>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Cormorant Infant — Display</div>
+    <p class="doc-body" style="margin:0;">Section headings (h2), title (h1.work), appendix title, appendix section headings (h4). The ceremonial voice. Uppercase for section headings. Italic for titles and appendix headings.</p>
+    <p style="font-family:'Cormorant Infant',serif; font-size:52px; font-weight:500; font-style:italic; line-height:1.0; margin:0.5rem 0 0; color:var(--ink);">The Axiom<br>of the Heart</p>
+    <p style="font-family:'Cormorant Infant',serif; font-size:1.5rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin:0.8rem 0 0; color:var(--ink);">The Ground</p>
+    <p style="font-family:'Cormorant Infant',serif; font-size:1.45rem; font-weight:500; font-style:italic; margin:0.5rem 0 0; color:var(--ink);"><span style="font-family:'Assistant',sans-serif; font-size:0.82rem; font-weight:700; color:var(--gold); margin-right:0.4rem;">1</span>The starting point</p>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Assistant — Labels &amp; UI</div>
+    <p class="doc-body" style="margin:0;">Structural labels (h3, section numerals, author, work-label, appendix label, citation). Always small, tracked, uppercase. The functional voice — never reads as prose. Weights: 300 (invocation), 400 (descriptors), 700 (labels &amp; numerals), 800 (primary gold labels).</p>
+    <div style="margin-top:0.6rem;">
+      <div style="font-family:'Assistant',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.32em; text-transform:uppercase; color:var(--warm-grey);">IHSVH</div>
+      <div style="font-family:'Assistant',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin-top:0.3rem;">GRACE, ARTICULATED</div>
+      <div style="font-family:'Assistant',sans-serif; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--warm-grey); margin-top:0.3rem;">DEFINITIONS</div>
+      <div style="font-family:'Assistant',sans-serif; font-size:0.9rem; font-weight:700; letter-spacing:0.02em; color:var(--gold); margin-top:0.3rem;">I</div>
+    </div>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Google Fonts Link</div>
+    <pre>&lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;family=Assistant:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"&gt;</pre>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 3. LAYOUT                                  -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">03</p>
+  <h2 class="guide-title">Layout</h2>
+  <p class="guide-note">Single column. Maximum 660px. Centered. The constraint is the design — text width controls reading rhythm more than any typographic choice.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Page Container</div>
+    <pre>.page {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 0 1.2rem;
+}</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Page Header Rule</div>
+    <p class="doc-body" style="margin:0 0 0.6rem;">A thin gold-tinted line at the very top of the page. Signals the document has begun.</p>
+    <pre>.page-header {
+  padding: 0.6rem 0 1.4rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 56px;
+}</pre>
+    <div class="page-header-demo" style="margin-top:0.8rem;"></div>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Horizontal Rules</div>
+    <p class="doc-body" style="margin:0 0 0.6rem;">Two weights. Soft (grey, low opacity) for general dividers. Gold (gold at opacity) for thematic breaks.</p>
+    <pre>hr               { border-top: 1px solid var(--rule-soft); }
+hr.gold-rule     { border-top-color: var(--rule); }</pre>
+    <div style="margin-top:0.8rem;">
+      <div class="guide-label" style="margin-bottom:0.4rem;">hr (default)</div>
+      <div class="rule-demo soft"></div>
+      <div class="guide-label" style="margin: 1rem 0 0.4rem;">hr.gold-rule</div>
+      <div class="rule-demo gold"></div>
+    </div>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Vertical Lines</div>
+    <p class="doc-body" style="margin:0 0 0.6rem;">Used for title block descender and appendix connector. 1px wide with gold background. Centered via <code>left:50%; transform:translateX(-50%)</code>. Blockquote and epigraph use 2px left-border variant.</p>
+    <div class="vertical-demo">
+      <div>
+        <div class="guide-label">1px — title/appendix</div>
+        <div class="v-line"></div>
+      </div>
+      <div>
+        <div class="guide-label">2px — blockquote/epigraph</div>
+        <div class="v-line thick"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 4. TITLE BLOCK                             -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">04</p>
+  <h2 class="guide-title">Title Block</h2>
+  <p class="guide-note">Centered. Energy is quiet at the entry — the cover invokes and names; it does not perform. The gold vertical line descends from the title block as a visual signal of descent into the text. Order: Invocation → Title → Work Label → Gold Line.<br><br>Spacing: author sits 8px below the top rule, 28px above the title. Title has 42px below before the work label. Work label has no bottom margin — it sits flush. The first body paragraph after the title block has 5rem top margin to give the gold descender room.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Live Example</div>
+    <header class="title-block-demo">
+      <div class="author-demo">IHSVH</div>
+      <h1 class="work-demo">The Axiom<br>of the Heart</h1>
+      <div class="work-label-demo">Grace, Articulated</div>
+    </header>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">HTML Structure</div>
+    <pre>&lt;header class="title-block"&gt;
+  &lt;div class="author"&gt;IHSVH&lt;/div&gt;
+  &lt;h1 class="work"&gt;Title&lt;br&gt;Text&lt;/h1&gt;
+  &lt;div class="work-label"&gt;Subtitle&lt;/div&gt;
+&lt;/header&gt;</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">CSS</div>
+    <pre>header.title-block {
+  text-align: center;
+  padding-bottom: 80px;
+  margin-bottom: 72px;
+  position: relative;
+}
+
+header.title-block::after {
+  content: '';
+  display: block;
+  width: 1px; height: 56px;
+  background: var(--gold);
+  position: absolute;
+  bottom: -16px; left: 50%;
+  transform: translateX(-50%);
+}
+
+.author {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px; font-weight: 300;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--warm-grey);
+  margin: 8px 0 28px;
+}
+
+h1.work {
+  font-family: 'Cormorant Infant', serif;
+  font-weight: 500; font-style: italic;
+  font-size: 68px; line-height: 1.0;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin: 0 0 42px;
+}
+
+.work-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  /* No bottom margin — label sits flush under title */
+}
+
+/* First paragraph after title block */
+.intro-text {
+  margin-top: 5rem; /* generous breathing room after gold line */
+}</pre>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 5. SECTION ARCHITECTURE                   -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">05</p>
+  <h2 class="guide-title">Section Architecture</h2>
+  <p class="guide-note">Each section opens with a rule, a gold numeral, and a Cormorant heading. The numeral and heading are separate elements that read as one unit — tight margin between them. The thesis follows as the first statement of the section's governing claim.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Live Example</div>
+    <div class="h2-demo"><span class="section-numeral-demo">I</span>The Ground</div>
+    <p class="thesis-demo">The heart moves toward what it apprehends as good.</p>
+    <p class="note-demo">In the heart, apprehension and movement are one act. To see as good is already to move.</p>
+    <p class="doc-body">Movement belongs to apprehension itself, not to what follows it.</p>
+    <div class="blockquote-demo">Where sight is true, movement is toward the maximal good. Where sight is partial, movement is toward a genuine but lesser good.</div>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Section Heading (h2)</div>
+    <pre>h2 {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.5rem; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 3.5rem 0 0.15rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.section-numeral {
+  display: block;
+  font-family: 'Assistant', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+  margin-bottom: 0.1rem;
+}</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Thesis (p.thesis)</div>
+    <p class="doc-body" style="margin:0 0 0.5rem;">The governing proposition of each section. Heavier weight, slightly larger. Distinguished by weight, not color.</p>
+    <pre>p.thesis {
+  font-size: 1.15rem; font-weight: 700;
+  line-height: 1.55; margin: 1.4rem 0;
+}</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Authorial Note (p.note)</div>
+    <p class="doc-body" style="margin:0 0 0.5rem;">The author's interpretive voice. Italic, gold. Whispered aside within the argument — neither thesis nor body. Gold signals the author stepping in.</p>
+    <pre>p.note {
+  font-style: italic;
+  color: var(--gold);
+  margin: 1rem 0;
+}</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Blockquote</div>
+    <p class="doc-body" style="margin:0 0 0.5rem;">Set-apart structural consequences or corollaries. Indented 1.5rem from body column. 2px gold left border bounded to text height via <code>::before</code>. Slightly smaller, cream-dark color.</p>
+    <pre>blockquote {
+  position: relative;
+  margin: 1.2rem 0 1.2rem 1.5rem;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+  color: var(--cream-dark);
+}
+
+blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.32em; bottom: 0.32em;
+  width: 2px;
+  background: var(--gold);
+}</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Subheadings (h3) — DEFINITIONS / DERIVATION</div>
+    <p class="doc-body" style="margin:0 0 0.5rem;">Structural labels within a section. Assistant 10px, tracked uppercase, warm-grey. Do not use for section titles — only for internal structural divisions.</p>
+    <div class="h3-demo">Definitions</div>
+    <pre>h3 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--warm-grey);
+  margin: 1.8rem 0 0.6rem;
+}</pre>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 6. FORMAL APPARATUS                        -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">06</p>
+  <h2 class="guide-title">Formal Apparatus</h2>
+  <p class="guide-note">Definitions and derivations. The deflist uses flex layout so definition text wraps flush — never bleeds under the gold term. Derivation uses CSS counter with gold numbers and italic grey labels as parenthetical annotations at the end of each step.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Definition List</div>
+    <div class="deflist-demo">
+      <p><strong>G</strong> God: the maximal good, independent of any apprehender.</p>
+      <p><strong>x</strong> the heart.</p>
+      <p><strong>S(x,y)</strong> x apprehends y as good.</p>
+    </div>
+    <pre>.deflist p {
+  display: flex; align-items: baseline;
+  gap: 0 0.5rem; margin: 0 0 1.4rem;
+}
+.deflist strong {
+  color: var(--gold);
+  flex-shrink: 0; min-width: 3.5rem;
+}</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Derivation List</div>
+    <p class="doc-body" style="margin:0 0 0.5rem;">Numbered list with gold counter. Each step ends with an italic grey label in parentheses: <em style="color:var(--warm-grey)">(Axiom)</em>, <em style="color:var(--warm-grey)">(Ontology)</em>, etc. The label is a quiet annotation, not part of the step.</p>
+    <pre>ol {
+  margin: 0.5rem 0 0.5rem 0.5rem;
+  padding-left: 0; list-style: none;
+  counter-reset: deriv;
+}
+ol li {
+  counter-increment: deriv;
+  margin-bottom: 1.4rem;
+  position: relative; padding-left: 2rem;
+}
+ol li em { color: var(--warm-grey); }
+ol li::before {
+  content: counter(deriv) ".";
+  position: absolute; left: 0; top: 0;
+  color: var(--gold); font-weight: bold;
+}</pre>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 7. SUMMARY                                 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">07</p>
+  <h2 class="guide-title">Summary</h2>
+  <p class="guide-note">The distilled theorem. Centered, italic, between two gold rules. Each proposition is a separate paragraph with exaggerated vertical margin — tight line-height within a line, generous space between propositions. The document's argument comes to rest here, not to a conclusion.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Live Example</div>
+    <div class="summary-demo">
+      <p>The heart moves toward what it apprehends as good.</p>
+      <p>God is the maximal good.</p>
+      <p>True apprehension of God is movement toward God with nothing withheld.</p>
+      <p>Grace is this act: God's giving and the heart's movement as one.</p>
+      <p>Practice is the refinement of sight.</p>
+      <p>Embodiment is its continuity in matter.</p>
+    </div>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">CSS</div>
+    <pre>.summary {
+  margin: 2.5rem 0; padding: 1.5rem 0;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  text-align: center;
+}
+.summary p {
+  font-style: italic;
+  font-size: 1.03rem;
+  line-height: 1.2;
+  margin: 1.2rem 0;
+}</pre>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 8. EPIGRAPH PAGE                           -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">08</p>
+  <h2 class="guide-title">Epigraph Page</h2>
+  <p class="guide-note">The verse that seeds the work. Given its own page — centered vertically and horizontally. No border, no ornament. Gold italic text, warm-grey citation. Placed after the Note to the Reader, before Section I. Separated from the Note by a gold-tinted horizontal rule.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">HTML Structure</div>
+    <pre>&lt;hr class="gold-rule"&gt;
+&lt;div class="epigraph-page"&gt;
+  &lt;p class="quote"&gt;"The eye is the lamp of the body.&lt;br&gt;
+  So, if your eye is healthy,&lt;br&gt;
+  your whole body will be full of light."&lt;/p&gt;
+  &lt;cite&gt;Matthew 6:22, ESV&lt;/cite&gt;
+&lt;/div&gt;</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">CSS</div>
+    <pre>.epigraph-page {
+  min-height: 80vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 4rem 2rem;
+}
+.epigraph-page p.quote {
+  font-style: italic; color: var(--gold);
+  margin: 0 0 1rem; max-width: 480px;
+}
+.epigraph-page cite {
+  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.06em;
+  color: var(--warm-grey);
+}</pre>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 9. APPENDIX                                -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">09</p>
+  <h2 class="guide-title">Appendix</h2>
+  <p class="guide-note">A companion register — quieter than the primary text. The appendix header uses a centered gold vertical connector descending from above, tying it visually to the document above. Appendix section headings use Cormorant italic (h4) with gold numbered prefix.</p>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Appendix Header</div>
+    <pre>.appendix-header {
+  margin-top: 5rem; padding-top: 2.5rem;
+  border-top: 1px solid var(--rule);
+  text-align: center; position: relative;
+}
+.appendix-header::before {
+  content: ''; display: block;
+  width: 1px; height: 40px;
+  background: var(--gold);
+  position: absolute;
+  top: -20px; left: 50%;
+  transform: translateX(-50%);
+}
+.appendix-header p.label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--warm-grey);
+  margin: 0 0 0.5rem;
+}
+.appendix-header h2 {
+  border-top: none; padding-top: 0;
+  margin-top: 0; text-transform: none;
+  font-size: 1.9rem; font-style: italic;
+  font-weight: 300; letter-spacing: 0;
+}</pre>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Appendix Section Heading (h4)</div>
+    <div class="h4-demo"><span class="section-num-demo">1</span>The starting point</div>
+    <pre>h4 {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.45rem; font-weight: 500;
+  font-style: italic;
+  margin: 2.2rem 0 0.4rem;
+}
+.section-num {
+  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 700; font-size: 0.82rem;
+  color: var(--gold); margin-right: 0.4rem;
+}</pre>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 10. DESIGN PRINCIPLES                      -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">10</p>
+  <h2 class="guide-title">Design Principles</h2>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Gold Marks Structure, Not Decoration</div>
+    <p class="doc-body" style="margin:0;">Every gold element signals epistemic weight: a numbered section, a formal derivation, a governing proposition, an authorial intervention. When gold appears, the reader should feel: <em>this is load-bearing.</em> Gold used decoratively collapses the signal.</p>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Richness Through Restraint</div>
+    <p class="doc-body" style="margin:0;">Thin strokes. Low-opacity fills. No glows. No shadows. No gradients. The aesthetic is drafting and technical drawing — precision, not atmosphere. Every decorative impulse should be tested against the question: does this serve the hierarchy of the content?</p>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Form Follows Epistemic Register</div>
+    <p class="doc-body" style="margin:0;">Typography and color encode the register of each element. Thesis = weight. Note = gold italic. Structural label = tracked uppercase grey. Body = plain. The reader learns this code quickly and navigates by it. Mixing registers — styling a body paragraph like a note, or a label like a heading — breaks the map.</p>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Energy Builds Toward the End</div>
+    <p class="doc-body" style="margin:0;">The cover is quiet — it names without performing. Visual weight accumulates as the argument deepens. The summary is the most ceremonially treated element: centered, bordered in gold, each proposition given room to breathe. The document should feel like it arrives somewhere, not like it announces itself and trails off.</p>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">Dark Mode Parity</div>
+    <p class="doc-body" style="margin:0;">Dark mode is not an inversion — it is the same document seen in different light. Background: <code>#1F1F1D</code>. Gold dims slightly to <code>#BC9836</code> to avoid harshness. All variables are scoped to <code>:root</code> inside a <code>prefers-color-scheme: dark</code> media query. Never hardcode hex values outside variable definitions.</p>
+  </div>
+
+  <div class="specimen-row">
+    <div class="specimen-meta">File Naming Convention</div>
+    <p class="doc-body" style="margin:0;">Always lowercase kebab-case. Documents derived from a specific author's work are prefixed with the author's last name: <code>hulse-cube-of-space.html</code>, <code>case-true-and-invisible.html</code>. Joshua's own works carry no prefix: <code>the-chariot.html</code>, <code>axiom-of-the-heart.html</code>.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 11. FULL CSS TEMPLATE                      -->
+<!-- ══════════════════════════════════════════ -->
+<div class="guide-section">
+  <p class="guide-label">11</p>
+  <h2 class="guide-title">Full CSS Template</h2>
+  <p class="guide-note">Copy this as the starting point for all new IHSVH documents. Remove unused classes before publishing.</p>
+
+  <pre>:root {
+  color-scheme: light dark;
+  --bg:         #F4F1E4;
+  --ink:        #1F1F1D;
+  --gold:       #B89131;
+  --cream-dark: #9E9680;
+  --warm-grey:  #6A6A5F;
+  --rule:       rgba(184,145,49,0.35);
+  --rule-soft:  rgba(107,107,96,0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #1F1F1D;
+    --ink:        #E8E2D0;
+    --gold:       #BC9836;
+    --cream-dark: #7A7464;
+    --warm-grey:  #A6A091;
+    --rule:       rgba(212,168,74,0.45);
+    --rule-soft:  rgba(166,160,145,0.2);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18.5px;
+  line-height: 1.72;
+  margin: 0; padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 660px; margin: 0 auto; padding: 0 1.2rem; }
+
+.page-header {
+  padding: 0.6rem 0 1.4rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 56px;
+}
+
+header.title-block {
+  text-align: center;
+  padding-bottom: 80px; margin-bottom: 72px;
+  position: relative;
+}
+
+header.title-block::after {
+  content: ''; display: block;
+  width: 1px; height: 56px;
+  background: var(--gold);
+  position: absolute;
+  bottom: -16px; left: 50%;
+  transform: translateX(-50%);
+}
+
+.author {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px; font-weight: 300;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--warm-grey); margin: 8px 0 28px;
+}
+
+h1.work {
+  font-family: 'Cormorant Infant', serif;
+  font-weight: 500; font-style: italic;
+  font-size: 68px; line-height: 1.0;
+  letter-spacing: 0.01em;
+  color: var(--ink); margin: 0 0 42px;
+}
+
+.work-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold);
+  /* sits flush under title — no bottom margin needed */
+}
+
+.front-matter { margin-bottom: 2.5rem; }
+
+.front-matter h3, h3 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--warm-grey); margin: 1.8rem 0 0.6rem;
+}
+
+.front-matter h3 { margin: 0 0 0.6rem; }
+
+.front-matter p {
+  font-size: 0.95rem; color: var(--cream-dark);
+  line-height: 1.6; margin: 0;
+}
+
+.epigraph-page {
+  min-height: 80vh; display: flex;
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 4rem 2rem;
+}
+
+.epigraph-page p.quote {
+  font-style: italic; color: var(--gold);
+  margin: 0 0 1rem; max-width: 480px;
+}
+
+.epigraph-page cite {
+  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.06em;
+  color: var(--warm-grey);
+}
+
+h2 {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.5rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin: 3.5rem 0 0.15rem; padding-top: 0.9rem;
+  border-top: 1px solid var(--rule); color: var(--ink);
+}
+
+.section-numeral {
+  display: block;
+  font-family: 'Assistant', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.02em; color: var(--gold);
+  margin-bottom: 0.1rem;
+}
+
+p { margin: 0.8rem 0; }
+
+p.thesis {
+  font-size: 1.15rem; font-weight: 700;
+  line-height: 1.55; margin: 1.4rem 0;
+}
+
+p.note { font-style: italic; color: var(--gold); margin: 1rem 0; }
+
+blockquote {
+  position: relative;
+  margin: 1.2rem 0 1.2rem 1.5rem;
+  padding-left: 1.1rem;
+  font-size: 0.92rem; color: var(--cream-dark);
+}
+
+blockquote::before {
+  content: ''; position: absolute;
+  left: 0; top: 0.32em; bottom: 0.32em;
+  width: 2px; background: var(--gold);
+}
+
+.deflist { margin: 0.5rem 0 0.5rem 0.5rem; }
+.deflist p { margin: 0 0 1.4rem; display: flex; align-items: baseline; gap: 0 0.5rem; }
+.deflist strong { color: var(--gold); flex-shrink: 0; min-width: 3.5rem; }
+
+ol {
+  margin: 0.5rem 0 0.5rem 0.5rem;
+  padding-left: 0; list-style: none; counter-reset: deriv;
+}
+
+ol li {
+  counter-increment: deriv; margin-bottom: 1.4rem;
+  position: relative; padding-left: 2rem;
+}
+
+ol li em { color: var(--warm-grey); }
+
+ol li::before {
+  content: counter(deriv) ".";
+  position: absolute; left: 0; top: 0;
+  color: var(--gold); font-weight: bold;
+}
+
+.summary {
+  margin: 2.5rem 0; padding: 1.5rem 0;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  text-align: center;
+}
+
+.summary p { font-style: italic; font-size: 1.03rem; line-height: 1.2; margin: 1.2rem 0; }
+
+.appendix-header {
+  margin-top: 5rem; padding-top: 2.5rem;
+  border-top: 1px solid var(--rule);
+  text-align: center; position: relative;
+}
+
+.appendix-header::before {
+  content: ''; display: block;
+  width: 1px; height: 40px;
+  background: var(--gold);
+  position: absolute; top: -20px; left: 50%;
+  transform: translateX(-50%);
+}
+
+.appendix-header p.label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--warm-grey); margin: 0 0 0.5rem;
+}
+
+.appendix-header h2 {
+  border-top: none; padding-top: 0; margin-top: 0;
+  text-transform: none; font-size: 1.9rem;
+  font-style: italic; font-weight: 300; letter-spacing: 0;
+}
+
+.appendix-header .subtitle {
+  font-style: italic; font-size: 0.9rem;
+  color: var(--warm-grey); margin: 0.25rem 0 0;
+}
+
+h4 {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.45rem; font-weight: 500; font-style: italic;
+  margin: 2.2rem 0 0.4rem;
+}
+
+.section-num {
+  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 700; font-size: 0.82rem;
+  color: var(--gold); margin-right: 0.4rem;
+}
+
+hr { border: none; border-top: 1px solid var(--rule-soft); margin: 2.5rem 0; }
+hr.gold-rule { border-top-color: var(--rule); }</pre>
+</div>
+
+</div><!-- .page -->
+</body>
+</html>

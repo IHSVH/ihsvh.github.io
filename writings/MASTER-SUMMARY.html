@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Master Summary — The Sources Read Against The Divine Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,500;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Assistant:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg:         #F4F1E4;
+  --ink:        #1F1F1D;
+  --gold:       #B89131;
+  --cream-dark: #9E9680;
+  --warm-grey:  #6A6A5F;
+  --rule:       rgba(184,145,49,0.35);
+  --rule-soft:  rgba(107,107,96,0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #1F1F1D;
+    --ink:        #E8E2D0;
+    --gold:       #BC9836;
+    --cream-dark: #7A7464;
+    --warm-grey:  #A6A091;
+    --rule:       rgba(212,168,74,0.45);
+    --rule-soft:  rgba(166,160,145,0.2);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18.5px;
+  line-height: 1.72;
+  margin: 0; padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 660px; margin: 0 auto; padding: 0 1.2rem 6rem; }
+
+.page-header {
+  padding: 0.6rem 0 1.4rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 56px;
+}
+
+header.title-block {
+  text-align: center;
+  padding-bottom: 80px; margin-bottom: 72px;
+  position: relative;
+}
+
+header.title-block::after {
+  content: ''; display: block;
+  width: 1px; height: 56px;
+  background: var(--gold);
+  position: absolute;
+  bottom: -16px; left: 50%;
+  transform: translateX(-50%);
+}
+
+.author {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px; font-weight: 300;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--warm-grey); margin: 8px 0 28px;
+}
+
+h1.work {
+  font-family: 'Cormorant Infant', serif;
+  font-weight: 500; font-style: italic;
+  font-size: 56px; line-height: 1.0;
+  letter-spacing: 0.01em;
+  color: var(--ink); margin: 0 0 32px;
+}
+
+.work-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold);
+}
+
+.lede {
+  margin-top: 5rem;
+}
+
+.front-section { margin-bottom: 2.5rem; }
+
+.front-section h3 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--warm-grey); margin: 0 0 0.6rem;
+}
+
+h2 {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.5rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin: 4rem 0 0.4rem; padding-top: 0.9rem;
+  border-top: 1px solid var(--rule); color: var(--ink);
+}
+
+.section-numeral {
+  display: block;
+  font-family: 'Assistant', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.02em; color: var(--gold);
+  margin-bottom: 0.1rem;
+}
+
+.work-citation {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--warm-grey);
+  margin: 0.6rem 0 1.6rem;
+}
+
+p { margin: 0.9rem 0; }
+
+p.thesis {
+  font-size: 1.05rem; font-weight: 700;
+  line-height: 1.55; margin: 1.2rem 0 1.4rem;
+}
+
+p.against {
+  margin-top: 1.4rem;
+}
+
+p.against::before {
+  content: 'Against ';
+  font-style: italic;
+  color: var(--gold);
+}
+
+p.against em.divine-name {
+  font-style: italic;
+  color: var(--gold);
+}
+
+em.tetra {
+  font-style: normal;
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+.summary {
+  margin: 4rem 0 2rem; padding: 1.8rem 0;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+}
+
+.summary h3 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--gold); margin: 0 0 1.4rem;
+  text-align: center;
+}
+
+.summary p {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  margin: 1rem 0;
+}
+
+.summary p strong {
+  font-family: 'Assistant', sans-serif;
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+hr { border: none; border-top: 1px solid var(--rule-soft); margin: 2.5rem 0; }
+hr.gold-rule { border-top-color: var(--rule); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="page-header"></div>
+
+<header class="title-block">
+  <div class="author">IHSVH</div>
+  <h1 class="work">Master Summary</h1>
+  <div class="work-label">The Sources Read Against The Divine Name</div>
+</header>
+
+<p class="lede">What the eight reference works hold in common, what each gives that the others do not, and where each stands in relation to the seven sections of <em>The Divine Name</em>.</p>
+
+
+<h2><span class="section-numeral">I</span>The Anchor</h2>
+
+<p><em>The Divine Name</em> names <em class="tetra">יהוה</em> as the descent that names itself. Seven sections settle the structure.</p>
+
+<p>Hierarchy — each letter requires the prior. Correspondence — the same reality named four ways at each level (Number, Geometry, Element, World). Recursion — one vertical law operating at two scales, one horizontal law at one. Cumulation — 10+15+21+26 = 72, the Name written out, undepleted. Geometry — point through cube returning as sphere. The Wall — vertical constitutes, horizontal corresponds, the two not to be confused. Disposition — faith as the only way to navigate the mystery.</p>
+
+<p>Every source in this library gives the descent in one of its registers, or gives one of the seven theses its sharpest formulation, or stands as the work against which the descent's wall has to hold. The synthesis below names which each does.</p>
+
+
+<h2><span class="section-numeral">II</span>Sefer Yetzirah</h2>
+<p class="work-citation">Anonymous · with Saadia's Commentary, 931 CE</p>
+
+<p class="thesis">The earliest extant treatment of the descent as inscription.</p>
+
+<p>Three modes of writing — <em>sephar</em>, <em>sippur</em>, <em>sepher</em> (number, word, letter) — issue from one root; thirty-two paths of Wisdom partition into ten Sefirot plus twenty-two letters; the twenty-two further partition into three Mothers, seven Doubles, twelve Simples. The whole spatial cosmos is sealed by six permutations of YHV — <em>six sides in the six directions, and the Holy Palace ruling in the center</em>.</p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: this text is the source for the Name's hierarchy — engraving of the world by combination. It is the source for the geometric backbone: the three Mothers do not in this text become axes (that derivation is Hulse/Case), but the seed is here — six directions sealed by Name-permutations, twelve diagonal boundaries dividing them, a holy palace at the center. The cumulation is anticipated by the factorial ladder (2, 6, 24, 120, 720, 5040 stones → houses) which the text walks to the threshold of the unspeakable, then halts.</p>
+
+<p>What <em>Sefer Yetzirah</em> does not give: the four-world / four-letter mapping of <em class="tetra">יהוה</em> (which arrives in the later Kabbalah); the explicit four-register descent (the text's own witness-structure is <em>three</em> — universe, year, soul — not four). The corpus reads the three Witnesses as a horizontal triad subordinate to the four-letter vertical, not as competitors.</p>
+
+
+<h2><span class="section-numeral">III</span>Mathers — The Kabbalah Unveiled</h2>
+<p class="work-citation">S. L. MacGregor Mathers · London, 1887</p>
+
+<p class="thesis">The text that fixes the Sephirothic table that becomes Golden Dawn and BOTA standard, and the text that hands the corpus its Ain → Kether seam in exact English wording.</p>
+
+<p>§38: <em>The limitless ocean of negative light does not proceed from a centre, for it is centreless, but it concentrates a centre, which is the number one of the manifested Sephiroth, Kether… Thus, Kether is in Malkuth, and Malkuth is in Kether.</em></p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: Mathers gives the canonical YHVH-to-four-Worlds mapping (Yod → Atziloth, Heh → Briah, Vav → Yetzirah, final Heh → Assiah) with the four secret-name expansions OB / SG / MH / BN at 72 / 63 / 45 / 52 — the count of <em>the Name written out</em> appears as the secret name of Atziloth itself. The Partzufim (Macroprosopus / Abba / Aima / Microprosopus / Bride) are the iconographic enactment of the descent's hierarchy. The Edomite-Kings doctrine — seven unbalanced emanations that died because constituted without proportion — is the wall made into narrative: read horizontal as vertical and the vessels break.</p>
+
+<p>Two pieces of vocabulary the corpus borrows directly: Microprosopus <em>shineth by the reflected splendour of Macroprosopus</em> (the lower as illumined by, not made of, the higher — the wall stated as iconography) and <em>in Him all is right side</em> (Macroprosopus prior to the articulation of duality — the Ain → Kether condition).</p>
+
+<p>The Christological permission is also here: Moina Mathers' Preface reads <em class="tetra">יהוה</em> + Shin = <em class="tetra">יהשוה</em> (Yeheshuah) as the Pentagrammaton, the Name of the Messiah — Shin inserted at the heart of the Name. The corpus's IHShVH doctrine descends from this.</p>
+
+
+<h2><span class="section-numeral">IV</span>Case — The Tarot</h2>
+<p class="work-citation">Paul Foster Case · BOTA edition</p>
+
+<p class="thesis">What Mathers gives as scholarship Case gives as discipline.</p>
+
+<p>The same Sephirothic table, the same four-world mapping, plus the twenty-two paths assigned to the twenty-two Major Arcana, and the cube named explicitly as the Tree's spatial complement: <em>six sides plus eight points plus twelve edges sum to twenty-six, the gematria of YHVH</em>.</p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: Case is where the four-fold correspondence is made operative — the descent is daily, not just cosmological. The Pattern on the Trestleboard (eleven affirmations) is the ten Sephiroth as a body of practice. Case also fixes the IHShVH doctrine in working form (Hanged Man = Mem = the Name with Shin inserted = LVX in the posture of self-sacrifice), and supplies the explicit body-positive reading the corpus depends on: <em>a flesh and blood body is the necessary vehicle for mastery</em>. The Christocentric frame of the corpus inherits this directly.</p>
+
+<p>One divergence to mark: Case reforms the <em>Sefer Yetzirah</em> planetary attribution of the Doubles (Bet → Mercury rather than Saturn, etc.) to harmonize with Tarot Key positions. Both attributions are in use; the corpus uses Case/Hulse for cubic placement, the <em>Sefer Yetzirah</em> order for textual citation. The term-shift must be marked, not silent.</p>
+
+
+<h2><span class="section-numeral">V</span>Hulse — New Dimensions for the Cube of Space</h2>
+<p class="work-citation">David Allen Hulse · Samuel Weiser, 2000</p>
+
+<p class="thesis">The first published full decoding of the cube as map of initiation.</p>
+
+<p>Three Mothers as interior axes (Aleph above-below, Mem east-west, Shin north-south); seven Doubles as six faces plus center (Tav at the meeting); twelve Simples as edges. Seven-grade path: sleeper-West, seeker-North, initiate-South, teacher-East, <em>magister lux</em> Above, <em>magister nox</em> Below, ascended master Center.</p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: this is the developed instance of the geometric section. <em>The Point Fulfilled</em> names the three axes and the sealed center; Hulse provides the full 22-position assignment that lets the cube be walked. <em>The three interior paths are the three elements of water, fire, and air. When these three elements meet in the center of the cube, they form the fourth element of earth</em> — exactly the corpus's reading of how the fourth level arrives. Earth is not a peer of the three; it is what appears when the three close on their centre.</p>
+
+<p>Hulse's Saint — unnumbered, invisible grade between teacher and ascended master, the consciously reborn one who walks the western face awake to redeem those still bound — is the corpus's Christ-pattern without the name. The Lovers fork at East Above (Path of the Saint vs. Path to the Godhead) is the heart's decision in cubic coordinates. The corpus's reading — that the incarnational path <em>is</em> the higher path — is consonant with Hulse, though Hulse leaves the question formally open.</p>
+
+
+<h2><span class="section-numeral">VI</span>Spinoza — Ethics</h2>
+<p class="work-citation">Spinoza · 1677 · Elwes translation 1883</p>
+
+<p class="thesis">The book whose name for what stands beneath the descent the corpus quotes against itself.</p>
+
+<p><em>Substantia</em> is <em>that which is in itself and is conceived through itself</em>; there is exactly one; the human intellect knows two of its infinite attributes — Thought and Extension. Mind and body are not two things but one thing under two namings.</p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: Spinoza is the strongest available statement of the horizontal law. <em>Ordo et connexio idearum idem est ac ordo et connexio rerum</em> — the order and connection of ideas is the same as the order and connection of things. Two parallel namings of one substance, with no causal traffic between them. The corpus reads this as exactly correct <em>within</em> a single level — and <em>not</em> applicable between levels, because Spinoza has no vertical. For Spinoza all attributes equally express the whole essence; there is no Ain → Kether seam because nothing stands above what is.</p>
+
+<p>The corpus inherits Spinoza's verb without his metaphysics: <em>substantia</em> read etymologically as <em>sub-stare</em>, the act of standing-under, not the stuff that is stood. At Kether being stands-under Ain Soph Aur — understanding it. The same word, two ends: the descent is this standing-under further determined, not divided. The corpus owes Spinoza the precision of the noun-as-act and refuses the flattening of the descent into the single plane of attributes.</p>
+
+<p>Spinoza's <em>beatitudo non est virtutis praemium, sed ipsa virtus</em> — blessedness is not the reward of virtue but virtue itself — is the structural shape of the <em>Axiom of the Heart</em>'s S̄(x,G) = M(x,G). Same form, different ground: Spinoza derives identity from the thing's own essence (autonomy); the Axiom derives it from grace (gift).</p>
+
+
+<h2><span class="section-numeral">VII</span>Waterfield — Theology of Arithmetic</h2>
+<p class="work-citation">Waterfield trans. · pseudo-Iamblichus · Phanes Press, 1988</p>
+
+<p class="thesis">The Greek arithmological compendium that gives each of the first ten numbers as a complete cosmogony.</p>
+
+<p>Monad as non-spatial source; Dyad as principle of difference; Triad as first actual; Tetrad as the begetter of the Decad (1+2+3+4=10); Hexad as first perfect and <em>maker of soul</em>; Decad as <em>kosmos</em>, <em>receptacle</em> (<em>dechas</em>), the bound within which everything is articulated and beyond which there is only recurrence.</p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: this is the Greek pre-figuration of the cumulation. 1+2+3+4 = 10 (the Tetraktys) and 10+15+21+26 = 72 (the cumulative gematria of <em class="tetra">יהוה</em>) are the same operation in different scripts — the cumulation of a four-stage descent where the count <em>is</em> the whole, undepleted. The Tetraktys is the Decad written out; the Shemhamphorasch is the Tetragrammaton written out. <em>The Key of the Cosmos and Numbers</em> operates in this idiom directly.</p>
+
+<p>Aetius's keynote — <em>first principles → numbers → symmetries → harmonies → geometricals</em> — is the four-register descent in its Greek lexicon: Number, then symmetries and harmonies as the mediating means, then geometricals as the embodied solids. The Pythagorean five solids (Tetrahedron/Fire, Octahedron/Air, Icosahedron/Water, Cube/Earth, Dodecahedron/Heaven) is the Greek source for the Element register's geometric grammar.</p>
+
+<p>What this text does not give: gender (Father–Mother) appears only in the marriage of male-and-female numbers, not as the corpus's Abba–Aima; no Hebrew letter-mapping; no Tree; no Christ — Athena as virgin born from the head of the father is the closest figure to Logos but is wisdom-without-incarnation.</p>
+
+
+<h2><span class="section-numeral">VIII</span>Plato — Timaeus</h2>
+<p class="work-citation">Plato · c. 360 BCE · Jowett translation</p>
+
+<p class="thesis">The dialogue that gives the Western imagination the Demiurge, the Receptacle, the World-Soul, the geometric atomism of the four-plus-one solids, the X-chiasm at the center of the soul of the world.</p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: the Receptacle (<em>chōra</em>) — Mother, Nurse, Space, <em>that in which</em> generation takes place, apprehended <em>by a kind of spurious reason</em> — is the Geometry register: <em>that-in-which</em> pattern is held without being stuff. Plato refuses to identify <em>chōra</em> with any element or substance; the corpus refuses to identify any register with the substance of another. Same wall, differently named.</p>
+
+<p>The X-chiasm — the world-soul split lengthwise and <em>joined at the centre like the letter X</em>, bent into two circles (Same and Different) — is the corpus's cross at the heart of the cosmos. Justin Martyr read this passage as Plato having prefigured the Crucifixion; the corpus reads it as the geometric instance of the Cross before its incarnational arrival.</p>
+
+<p>The five solids complete the Element register's grammar where <em>Sefer Yetzirah</em>'s three Mothers stop: fire/air/water built from the scalene triangle and mutually transformable; earth from the isosceles and isolated (the cube standing alone — the corpus's fourth level as sealed and bounded); the dodecahedron as the whole, <em>the fifth combination which God used in the delineation of the universe</em>.</p>
+
+<p>The collision: Plato's transmigration scheme — cowards become women, light-minded men become birds — runs against the corpus's Christocentric reading of the body as destined tabernacle. The corpus accepts Plato's structural moves (microcosm, world-soul, <em>eikōn</em>-status, the Demiurge as Source-acting) and refuses the cyclical-punitive descent into matter as punishment. Descent is destination.</p>
+
+
+<h2><span class="section-numeral">IX</span>Norelli-Bachelet — The Gnostic Circle</h2>
+<p class="work-citation">Patrizia Norelli-Bachelet (Thea) · Pondicherry, 1974</p>
+
+<p class="thesis">The most ambitious of the eight in scope and the most distant from the corpus's frame.</p>
+
+<p>The superimposition of the zodiac of 12 (space) and the solar system of 9 (time) on a single circle, with the Sacred Triangle 9-6-3 (Transcendent / Cosmic / Individual) invariant under theosophical reduction. Sri Aurobindo's Supermind descent treated as the present cosmological event; precessional cycles read as a single calendar holding all scales (one day = one year as fixed equivalence).</p>
+
+<p class="against"><em class="divine-name">The Divine Name</em>: Thea's four-fold (Physical / Vital / Mental / Spiritual sheaths) is not the corpus's four registers — her entire system sits inside Number alone (number-by-number Sacred-Triangle reductions; ratio-by-ratio calendrical math). Her vertical/horizontal is not the corpus's wall; she conflates productive and typological more than the wall permits — flag as structural deviation when porting any element.</p>
+
+<p>The signature doctrinal collision: Thea places Christ as Vibhuti only, not Evolutionary Avatar, following Sri Aurobindo's letter — and reads the crucifixion as a cellular-energy event at the Saturn-point (age 33), not as the singular axis of history. The corpus's Christocentric frame holds against this. The Mother's <em>it is not a crucified but a glorified body that will save the world</em> is Thea's load-bearing break from Christianity; the corpus reads the crucified body as already the glorified body — the wall against substituting one for the other.</p>
+
+<p>What Thea gives that the corpus can use, walled: the cosmological-arithmetical density itself (precession-as-breath, day-year equivalence, 432,000 / 25,920 / 77,760 as harmonics of the same cycle); the discipline of placing the individual on the cosmic clock by birth-date; the Sacred Triangle as a particular instance of the cumulation (3 + 6 = 9 reduces nothing, sustains the cumulative descent inside Number); the Matrimandir geometry as a particular instance of the geometric register (chamber proportions encoding day / month / year / precession). Where she names structure, take it. Where she substitutes Aurobindo for the Christological axis, refuse the substitution and mark the refusal.</p>
+
+
+<h2><span class="section-numeral">X</span>The Shape of the Constellation</h2>
+
+<p>These works do not converge into one voice. They converge into one structure read in different scripts.</p>
+
+<div class="summary">
+  <h3>By Register</h3>
+  <p><strong>Number</strong>Waterfield is the Greek primary; <em>Sefer Yetzirah</em> gives the Hebrew letter-number identification; Bachelet gives the cosmic-time arithmology under wall-conditions.</p>
+  <p><strong>Geometry</strong>Plato is the cosmological primary (Receptacle, X-chiasm, five solids); <em>Sefer Yetzirah</em> gives the cubic seed (six directions sealed, twelve diagonal boundaries); Hulse gives the full Cube of Space; Case integrates the Cube with the Tree.</p>
+  <p><strong>Element</strong>Plato's element-solid assignment, <em>Sefer Yetzirah</em>'s three Mothers, Hulse's reading of earth as what appears when the three close on their centre. The densest cross-source — Greek geometric atomism, Hebrew elemental letter-mapping, cubic enactment together.</p>
+  <p><strong>World</strong>Mathers gives the four Worlds (Atziloth / Briah / Yetzirah / Assiah) with their letter and secret-name mappings; Spinoza is the metaphysical limit case — one substance, two attributes — refused as the whole picture because there is no vertical.</p>
+</div>
+
+<div class="summary">
+  <h3>By Axis</h3>
+  <p><strong>The Wall</strong>Held canonically by Mathers (the Edomite Kings as the failure mode); made operative by Hulse (the productive/typological distinction preserved in the cube); tested most severely by Bachelet (whose conflations the corpus marks rather than adopts); refused most cleanly by Spinoza (no traffic between attributes).</p>
+  <p><strong>The Christological Axis</strong>Gestured by Mathers' <em>Yeheshuah</em> and Golgotha gloss; fixed operatively by Case's IHShVH; walked symbolically by Hulse's Saint; geometrically anticipated by Plato's X-chiasm; refused explicitly by Bachelet. The corpus stands with Mathers, Case, and Hulse; reads Plato through them; refuses Bachelet's substitution.</p>
+  <p><strong>Substantia as Act</strong>Spinoza's etymological seam, kept verbatim and refused metaphysically: the verb (<em>sub-stare</em> as standing-under) inherited, the flat ontology (no Ain → Kether seam) refused.</p>
+</div>
+
+<p><em>The Divine Name</em> states the seven theses as law. The sources show the law operating in eight different languages — the same descent in Greek geometry, Greek number, Hebrew letter, Hebrew face, Latin substance, English cube, twentieth-century circle. The wall against substance transmission between languages is what makes the comparison possible. Without it, the library would collapse into one of the eight voices and stop being a library.</p>
+
+</div>
+
+<button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode" aria-label="Toggle dark mode">
+  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="toggle-icon" d="M8 3a5 5 0 1 0 0 10A5 5 0 0 0 8 3z" fill="currentColor"/>
+  </svg>
+</button>
+
+<style>
+#theme-toggle {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--warm-grey);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+  opacity: 0.6;
+  padding: 0;
+  line-height: 1;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#theme-toggle:hover { color: var(--gold); border-color: var(--gold); opacity: 1; }
+</style>
+
+<script>
+(function() {
+  const root = document.documentElement;
+  let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  function applyTheme() {
+    if (dark) {
+      root.style.setProperty('--bg', '#1F1F1D');
+      root.style.setProperty('--ink', '#E8E2D0');
+      root.style.setProperty('--gold', '#BC9836');
+      root.style.setProperty('--cream-dark', '#7A7464');
+      root.style.setProperty('--warm-grey', '#A6A091');
+      root.style.setProperty('--rule', 'rgba(212,168,74,0.45)');
+      root.style.setProperty('--rule-soft', 'rgba(166,160,145,0.2)');
+      document.body.style.background = '#1F1F1D';
+      document.body.style.color = '#E8E2D0';
+    } else {
+      root.style.setProperty('--bg', '#F4F1E4');
+      root.style.setProperty('--ink', '#1F1F1D');
+      root.style.setProperty('--gold', '#B89131');
+      root.style.setProperty('--cream-dark', '#9E9680');
+      root.style.setProperty('--warm-grey', '#6A6A5F');
+      root.style.setProperty('--rule', 'rgba(184,145,49,0.35)');
+      root.style.setProperty('--rule-soft', 'rgba(107,107,96,0.2)');
+      document.body.style.background = '#F4F1E4';
+      document.body.style.color = '#1F1F1D';
+    }
+  }
+
+  window.toggleTheme = function() {
+    dark = !dark;
+    applyTheme();
+  };
+
+  // Apply on load so inline vars match system preference (overrides @media)
+  applyTheme();
+
+  // Follow system changes until the user toggles manually
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    dark = e.matches;
+    applyTheme();
+  });
+})();
+</script>
+
+</body>
+</html>

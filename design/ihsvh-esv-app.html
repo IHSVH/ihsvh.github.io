@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IHSVH — ESV app reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Cormorant+Infant:wght@500;600&family=Assistant:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F4F1E4;       /* IHSVH */
+    --card: #FBF9F2;        /* one step lighter than paper: ESV's white card, warmed */
+    --ink: #1F1F1D;         /* IHSVH */
+    --ink-soft: #46453F;    /* ESV #424547 warmed to the paper */
+    --grey: #7D7669;
+    --rule: #E1DBC9;
+    --gold: #B4A67F;        /* ESV chapter bar, sampled */
+    --gold-deep: #AC9D71;   /* ESV button, sampled */
+    --gold-line: #BFB18F;   /* ESV illustration line, sampled */
+    --ref: #72ABBF;         /* ESV cross-reference blue, sampled */
+    --serif: "Crimson Pro", Georgia, serif;
+    --display: "Cormorant Infant", "Crimson Pro", serif;
+    --sans: "Assistant", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); -webkit-text-size-adjust: 100%; }
+
+  .bar { position: sticky; top: 0; z-index: 5; background: var(--gold); color: #fff; font-family: var(--sans); font-weight: 500; font-size: 1.05rem; text-align: center; padding: calc(env(safe-area-inset-top) + 14px) 16px 14px; letter-spacing: .01em; }
+
+  .wrap { max-width: 640px; margin: 0 auto; padding: 8px 22px 64px; }
+
+  .plate { display: block; margin: 40px auto 36px; width: 150px; height: auto; }
+
+  h1.book { font-family: var(--display); font-weight: 600; font-size: 1.85rem; text-align: center; letter-spacing: .06em; margin: 0 0 22px; color: var(--ink-soft); }
+  h2.sect { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.35rem; margin: 22px 0 6px; color: var(--ink-soft); }
+
+  p.body { font-size: 1.32rem; line-height: 1.72; margin: 0 0 .2rem; color: var(--ink-soft); text-indent: 0; }
+  p.body + p.body { text-indent: 1.6em; }
+  .chap { float: left; font-family: var(--serif); font-weight: 300; font-size: 4.2rem; line-height: .78; margin: 12px 14px 0 0; color: var(--ink-soft); }
+  .v { font-family: var(--sans); font-size: .6em; vertical-align: .7em; margin-right: .15em; color: var(--ink-soft); }
+  .x { font-family: var(--serif); font-style: italic; font-size: .62em; vertical-align: .7em; margin: 0 .18em 0 .1em; color: var(--ref); }
+  .fn { font-family: var(--serif); font-style: italic; font-size: .62em; vertical-align: .7em; color: var(--ref); margin-left: .05em; }
+  .heb { font-family: var(--sans); direction: rtl; unicode-bidi: isolate; color: var(--gold-deep); }
+
+  .card { background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 20px 20px; margin: 44px 0 36px; }
+  .card h3 { font-family: var(--sans); font-weight: 600; font-size: 1.25rem; margin: 0 0 8px; color: var(--ink-soft); }
+  .card p { font-family: var(--sans); font-weight: 400; font-size: 1.05rem; line-height: 1.75; color: var(--ink-soft); margin: 0 0 16px; }
+  .btn { display: block; width: 100%; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1.1rem; text-align: center; padding: 14px; border: 0; border-radius: 4px; }
+
+  .lh { font-family: var(--sans); font-weight: 600; font-size: 1.25rem; margin: 0 0 6px; color: var(--ink-soft); }
+  .list { border-top: 1px solid var(--rule); }
+  .row { display: flex; align-items: center; gap: 18px; padding: 20px 4px; border-bottom: 1px solid var(--rule); font-family: var(--sans); font-size: 1.15rem; color: var(--ink-soft); }
+  .row svg { width: 26px; height: 26px; stroke: var(--ref); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .row .chev { margin-left: auto; stroke: var(--ink-soft); width: 14px; height: 14px; }
+
+  .spec { margin-top: 44px; border-top: 1px solid var(--rule); padding-top: 14px; font-family: var(--sans); font-size: .8rem; color: var(--grey); line-height: 1.6; }
+  .spec i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -2px; margin-right: 4px; border: 1px solid rgba(0,0,0,.1); }
+</style>
+</head>
+<body>
+
+<div class="bar">Tiphareth</div>
+
+<div class="wrap">
+
+  <svg class="plate" viewBox="0 0 150 210" fill="none" stroke="#BFB18F" stroke-width="1.1">
+    <path d="M2 2h146v130a73 73 0 0 1-146 0z"/>
+    <g stroke-width=".7">
+      <path d="M75 20v62M75 82l-40-30M75 82l40-30M75 82l-58 5M75 82l58 5M75 82l-52 40M75 82l52 40M75 82l-22 60M75 82l22 60"/>
+    </g>
+    <circle cx="75" cy="82" r="24"/>
+    <circle cx="75" cy="82" r="6"/>
+    <path d="M75 106v96M2 132h146" stroke-width=".7"/>
+  </svg>
+
+  <h1 class="book">THE TREE OF LIFE</h1>
+
+  <h2 class="sect">The Center That Is Not Self-Grounded</h2>
+  <p class="body"><span class="chap">6</span>Tiphareth <span class="heb">תפארת</span> receives from Kether by the direct path <span class="x">a</span>and distributes to Malkuth by the same. <span class="v">2</span>Its function on the map is mediation: every pillar crosses here, <span class="x">b</span>and nothing passes between the supernals and the lower seven without this transit. <span class="v">3</span>The sphere is named for harmony<span class="fn">1</span> because harmony is what mediation produces when it is faithful.</p>
+  <p class="body"><span class="v">4</span>The sun is not the source of its own light in this system; <span class="x">c</span>it is the first place light becomes visible. <span class="v">5</span>Case reads the solar attribution as functional, not astronomical: the sphere is solar because it does for the Tree what the sun does for a body.</p>
+
+  <h2 class="sect">Practice</h2>
+  <p class="body"><span class="v">6</span>Sit. Locate the sternum. <span class="v">7</span>Breathe until the breath arrives there without effort, then hold the name <span class="heb">יהוה אלוה ודעת</span> silently through one exhale.</p>
+
+  <div class="card">
+    <h3>Start a Practice</h3>
+    <p>Work the sphere for seven days: one reading, one sitting, one line of witness each morning.</p>
+    <button class="btn">Begin Tiphareth</button>
+  </div>
+
+  <p class="lh">Personal</p>
+  <div class="list">
+    <div class="row"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>Bookmarks<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+    <div class="row"><svg viewBox="0 0 24 24"><path d="M4 20h16M12 4l8 0v12H4V4z" /></svg>Notes<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+    <div class="row"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/></svg>Favorites<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+    <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>History<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></div>
+  </div>
+
+  <p class="spec">
+    <i style="background:#F4F1E4"></i>paper #F4F1E4 &nbsp;
+    <i style="background:#FBF9F2"></i>card #FBF9F2 &nbsp;
+    <i style="background:#46453F"></i>ink #46453F &nbsp;
+    <i style="background:#B4A67F"></i>gold #B4A67F &nbsp;
+    <i style="background:#AC9D71"></i>gold deep #AC9D71 &nbsp;
+    <i style="background:#72ABBF"></i>ref #72ABBF<br>
+    Crimson Pro body · Cormorant Infant title · Assistant chrome
+  </p>
+
+</div>
+</body>
+</html>

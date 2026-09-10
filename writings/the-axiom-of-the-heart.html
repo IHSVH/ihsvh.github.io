@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>The Axiom of the Heart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg:         #F4F1E4;
+  --ink:        #1F1F1D;
+  --gold:       #B89131;
+  --cream-dark: #9E9680;
+  --warm-grey:  #6A6A5F;
+  --rule:       rgba(184,145,49,0.35);
+  --rule-soft:  rgba(107,107,96,0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #1F1F1D;
+    --ink:        #E8E2D0;
+    --gold:       #BC9836;
+    --cream-dark: #7A7464;
+    --warm-grey:  #A6A091;
+    --rule:       rgba(212,168,74,0.45);
+    --rule-soft:  rgba(166,160,145,0.2);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18.5px;
+  line-height: 1.72;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 0 1.2rem;
+}
+
+/* ── Page header rule ── */
+.page-header {
+  padding: 0.6rem 0 1.4rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 56px;
+}
+
+/* ── Epigraph page ── */
+.epigraph-page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.epigraph-page p.quote {
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 1rem;
+  max-width: 480px;
+}
+
+.epigraph-page cite {
+  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--warm-grey);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Title block ── */
+header.title-block {
+  text-align: center;
+  padding-bottom: 80px;
+  margin-bottom: 100px;
+  position: relative;
+}
+
+header.title-block::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 56px;
+  background: var(--gold);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.author {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--warm-grey);
+  margin: 8px 0 28px;
+}
+
+h1.work {
+  font-family: 'Cormorant Infant', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 68px;
+  letter-spacing: 0.01em;
+  line-height: 1.0;
+  color: var(--ink);
+  margin: 0 0 42px;
+}
+
+.work-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── Front matter ── */
+.front-matter { margin-bottom: 2.5rem; }
+
+.front-matter h3, h3 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 1.8rem 0 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.front-matter h3 { color: var(--warm-grey); margin-bottom: 1.2rem; }
+h3 { color: var(--warm-grey); }
+
+h3::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-soft);
+}
+
+.front-matter h3 { margin: 0 0 0.6rem; }
+
+.front-matter p {
+  font-size: 0.95rem;
+  color: var(--cream-dark);
+  line-height: 1.6;
+  margin: 1.6rem 0 0;
+}
+
+/* ── Section headings ── */
+h2 {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 2.1rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0;
+  margin: 3.5rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.section-numeral {
+  display: block;
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  margin-bottom: -0.2rem;
+}
+
+/* ── Body voices ── */
+p { margin: 0.8rem 0; color: var(--warm-grey); }
+
+p.thesis {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.55;
+  margin: 1.4rem 0;
+  color: var(--warm-grey);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+p.note {
+  font-style: italic;
+  color: var(--gold);
+  margin: 1rem 0;
+}
+
+/* ── Blockquote ── */
+blockquote {
+  position: relative;
+  margin: 1.2rem 0 1.2rem 1.5rem;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+  color: var(--cream-dark);
+}
+
+blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.32em; bottom: 0.32em;
+  width: 1px;
+  background: var(--gold);
+}
+
+/* ── Definitions ── */
+.deflist { margin: 0.5rem 0; }
+.deflist p { margin: 0 0 1.4rem; display: flex; align-items: baseline; gap: 0 0.6rem; flex-wrap: wrap; }
+.deflist strong { color: var(--gold); flex-shrink: 0; min-width: 3.5rem; }
+
+/* ── Derivation ── */
+ol {
+  margin: 0.5rem 0;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: deriv;
+}
+
+ol li {
+  counter-increment: deriv;
+  margin-bottom: 1.4rem;
+  position: relative;
+  padding-left: 2rem;
+  color: var(--warm-grey);
+}
+
+ol li em { color: var(--warm-grey); }
+
+ol.plain-steps {
+  counter-reset: plain;
+  margin: 0.5rem 0 1.5rem;
+}
+
+ol.plain-steps li {
+  counter-increment: plain;
+  margin-bottom: 1.4rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+ol.plain-steps li::before {
+  content: counter(plain) ".";
+  position: absolute;
+  left: 0; top: 0;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+ol li::before {
+  content: counter(deriv) ".";
+  position: absolute;
+  left: 0; top: 0;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+/* ── Summary ── */
+.summary {
+  margin: 2.5rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  text-align: center;
+}
+
+.summary p {
+  font-style: italic;
+  font-size: 1.03rem;
+  line-height: 1.2;
+  margin: 1.2rem 0;
+  color: var(--gold);
+}
+
+/* ── Appendix ── */
+.appendix-header {
+  margin-top: 5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  position: relative;
+}
+
+.appendix-header::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: var(--gold);
+  position: absolute;
+  top: -20px; left: 50%;
+  transform: translateX(-50%);
+}
+
+.appendix-header p.label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--warm-grey);
+  margin: 0 0 0.5rem;
+}
+
+.appendix-header h2 {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  text-transform: none;
+  font-size: 1.9rem;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
+.appendix-header .subtitle {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--warm-grey);
+  margin: 0.25rem 0 0;
+}
+
+h4 {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  font-style: italic;
+  margin: 2.2rem 0 0.4rem;
+}
+
+.section-num {
+  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin-right: 0.4rem;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--rule-soft);
+  margin: 2.5rem 0;
+}
+
+hr.gold-rule {
+  border-top-color: var(--rule);
+}
+
+@media (max-width: 600px) {
+  .deflist p { display: block; }
+  .deflist strong { display: inline-block; min-width: 4rem; vertical-align: top; }
+  .deflist .def-text { display: inline-block; width: calc(100% - 5rem); }
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+<div class="page-header"></div>
+
+<header class="title-block">
+  <div class="author">IHSVH</div>
+  <h1 class="work">The Axiom<br>of the Heart</h1>
+  <div class="work-label">Grace, Articulated</div>
+</header>
+
+<div class="front-matter">
+  <h3>Note to the Reader</h3>
+  <p><em>The Axiom of the Heart</em> is a structural argument stated in formal and symbolic language to establish its logical structure with precision. The appendix, <em>A Plain Reading</em>, renders the same argument in direct prose. The two texts make one claim in two registers: one analytic, one contemplative.</p>
+</div>
+<hr class="gold-rule">
+<div class="epigraph-page">
+  <p class="quote">&ldquo;The eye is the lamp of the body.<br>So, if your eye is healthy,<br>your whole body will be full of light,<br><br>but if your eye is bad,<br>your whole body will be full of darkness.<br>If then the light in you is darkness,<br>how great is the darkness!&rdquo;</p>
+</div>
+
+<h2><span class="section-numeral">I</span>The Ground</h2>
+<p class="thesis">The heart moves toward<br>what it apprehends as good.</p>
+<p class="note">In the heart, apprehension and movement are one act. To see as good is already to move.</p>
+<p>Movement belongs to apprehension itself, not to what follows it. A heart that perceived good without moving toward it would be a different faculty entirely.</p>
+<blockquote>Where sight is true, movement is toward the maximal good. Where sight is partial, movement is toward a genuine but lesser good. Where sight is mistaken, movement is toward an apparent good. The structure is the same; the variable is what is seen.</blockquote>
+
+<h2><span class="section-numeral">II</span>The Pattern</h2>
+<p class="thesis">Grace is the name for what occurs<br>when the heart truly apprehends<br>God&rsquo;s self-giving nature.</p>
+<h3>Argument</h3>
+<ol class="plain-steps">
+  <li>The <b>Heart</b> moves toward what it apprehends as good.</li>
+  <li><b>God</b> is the maximal good.</li>
+  <li><b>True Sight</b> of <b>God</b> excludes all competing goods.</li>
+  <li>Therefore, <b>True Sight</b> of <b>God</b> entails total <b>Movement</b> toward <b>God</b>.</li>
+  <li><b>Grace</b> is the identity of <b>God</b>&rsquo;s self-giving and the <b>Heart</b>&rsquo;s undivided <b>Movement</b>.</li>
+</ol>
+<h3>Definitions</h3>
+<div class="deflist">
+  <p><strong>G</strong><span class="def-text"><b>God:</b> the maximal good, independent of any apprehender.</span></p>
+  <p><strong>x</strong><span class="def-text">the <b>Heart:</b> the faculty of apprehension and movement.</span></p>
+  <p><strong>y</strong><span class="def-text">the object of apprehension.</span></p>
+  <p><strong>S(x,y)</strong><span class="def-text"><b>Sight:</b> x apprehends y as good.</span></p>
+  <p><strong>S&#8348;(x,y)</strong><span class="def-text"><b>True Sight:</b> x apprehends y as it actually is.</span></p>
+  <p><strong>M(x,y)</strong><span class="def-text"><b>Movement:</b> x moves toward y.</span></p>
+</div>
+<h3>Derivation</h3>
+<ol>
+  <li><span><strong>S(x,&thinsp;y)</strong> <span style="color:var(--ink);">&rarr;</span> <strong>M(x,&thinsp;y)</strong>.</span></li>
+  <li><span><strong>G</strong> is the maximal good, independent of any apprehender.</span></li>
+  <li><span>To apprehend the maximal good as maximal is to apprehend that no higher or competing good exists. Therefore, <strong>x</strong> apprehends it as wholly desirable.</span></li>
+  <li><span><strong>S&#8348;(x,&thinsp;G)</strong> <span style="color:var(--ink);">&rarr;</span> <strong>M(x,&thinsp;G)</strong>, with nothing withheld.</span></li>
+  <li><span><strong>S&#8348;(x,&thinsp;G)</strong> <span style="color:var(--ink);">=</span> <strong>M(x,&thinsp;G)</strong>.</span></li>
+</ol>
+<p class="note">The relation is identity, not implication. In true apprehension, seeing and moving are not two acts in sequence but one act with two aspects. God gives; the heart receives and moves as one act. Not addition. Coincidence.</p>
+
+<h2><span class="section-numeral">III</span>The Recognition</h2>
+<p class="thesis">What the Pattern named formally,<br>the heart knows as Recognition.</p>
+<p>The heart does not first see grace and then move toward it. In the moment of true sight, movement is already present. What is seen as good is already the object of movement &mdash; to truly apprehend God is to be already moving toward God; <strong>S&#8348;(x,&thinsp;G)</strong> <span style="color:var(--ink);">=</span> <strong>M(x,&thinsp;G)</strong>, lived as the heart&rsquo;s own act. This is the inner shape of metanoia &mdash; a change in seeing in which apprehension and movement arrive as one.</p>
+<p class="thesis">Free will is the experience<br>of this identity from within.</p>
+<p>Freedom is movement without division. Submission and freedom are one act with two aspects. Recognition and movement are the same event, named twice.</p>
+
+<h2><span class="section-numeral">IV</span>The Embodiment</h2>
+<p class="thesis">Practice is the heart&rsquo;s movement<br>embodied in time.</p>
+<p>What is one act in the heart appears in time as continuity: attention held, movement sustained, expression repeated. Practice is therefore not preparation for grace but the visible continuity of the heart&rsquo;s movement through time.</p>
+<p>Because the axiom is universal, the heart is always already moving &mdash; toward the maximal good when sight is true, toward genuine but lesser goods when sight is partial, toward apparent goods when sight is mistaken. Practice is the refinement of sight. As perception clarifies, the heart&rsquo;s movement turns toward what is actually maximal.</p>
+<p>Grace descends: through intellect, through speech, through the heart, into the body. The mouth speaks from the abundance of the heart &mdash; speech is the natural overflow of what the heart is already moving toward. The body is the final receiver, where the unified act becomes lived continuity in matter.</p>
+<div class="summary">
+  <p>The heart moves toward what it apprehends as good.</p>
+  <p>God is the maximal good.</p>
+  <p>True apprehension of God is movement toward God with nothing withheld.</p>
+  <p>Grace is this act: God&rsquo;s giving and the heart&rsquo;s movement as one.</p>
+  <p>Practice is the refinement of sight.</p>
+  <p>Embodiment is its continuity in matter.</p>
+</div>
+
+<div class="appendix-header">
+  <p class="label">Appendix</p>
+  <h2>A Plain Reading</h2>
+  <p class="subtitle">Companion to The Axiom of the Heart</p>
+</div>
+
+<h4><span class="section-num">1</span>The starting point</h4>
+<p>There is one simple claim at the bottom of all this. You always move toward what you see as good. Not should. Not ideally. It already happens. If something looks good to you, you lean toward it. If it doesn&rsquo;t, you don&rsquo;t.</p>
+<p class="note">Seeing and moving are not two steps. They are one act.</p>
+
+<h4><span class="section-num">2</span>What seeing means</h4>
+<p>Seeing here does not mean eyesight. It means what you recognize as valuable, what you understand to be worth moving toward. If money looks good to you, you move toward money. If truth looks good to you, you move toward truth. Your life traces what you actually see as good.</p>
+
+<h4><span class="section-num">3</span>The key distinction</h4>
+<p>There are three kinds of seeing. True seeing &mdash; you see what is actually highest. Partial seeing &mdash; you see a genuine good, but not the highest. Mistaken seeing &mdash; you take something to be good when it is not. The movement itself is always consistent. Only the accuracy of the sight changes.</p>
+<p class="note">Seeing without acting is recognition without full apprehension. The eye registers; the heart has not yet seen.</p>
+
+<h4><span class="section-num">4</span>What God means here</h4>
+<p>God is defined precisely here: the highest possible good. Nothing greater can exist. So if something is truly seen as the highest good, there is nothing left to compete with it.</p>
+
+<h4><span class="section-num">5</span>What follows</h4>
+<p>If you truly see the highest good for what it is, you cannot partially move toward it. You cannot hesitate. You cannot move in two directions at once. Because nothing else could outweigh it.</p>
+<p class="note">True seeing of the highest good is total movement toward it.</p>
+
+<h4><span class="section-num">6</span>What grace means</h4>
+<p>Grace is the single moment in which the highest good gives itself, you truly see it, and your whole being moves toward it. All at once. Not a sequence. One event.</p>
+<p class="note">What was one act from the beginning is now revealed as gift &mdash; given, seen, received as the same act.</p>
+
+<h4><span class="section-num">7</span>What it feels like from inside</h4>
+<p>From the inside, this shows up as clarity, alignment, and the absence of an inner split. This is freedom &mdash; not choosing between options, but moving undivided toward what is truly good.</p>
+
+<h4><span class="section-num">8</span>Why practice exists</h4>
+<p>You do not see clearly all at once. You move toward genuine but lesser goods, and sometimes toward apparent goods. Practice is not earning anything. It is the body&rsquo;s gradual response to what the heart has begun to see &mdash; refining perception and bringing the rest of life into alignment. As sight clarifies, movement becomes cleaner.</p>
+
+<h4><span class="section-num">9</span>The full picture</h4>
+<p>You always move toward what you see as good. If you truly see the highest good, you move toward it completely. That total alignment is grace. Practice is how the body lives out what the heart has already seen.</p>
+<div class="summary">
+  <p>Sight and movement as one act.</p>
+  <p>Grace as what happens when sight is true.</p>
+  <p>Practice as the body&rsquo;s response to what the heart has already seen.</p>
+</div>
+
+</div>
+
+<button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">
+  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="toggle-icon" d="M8 3a5 5 0 1 0 0 10A5 5 0 0 0 8 3z" fill="currentColor"/>
+  </svg>
+</button>
+
+<style>
+#theme-toggle {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--warm-grey);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: color 0.2s, background 0.2s;
+  opacity: 0.6;
+  padding: 0;
+  line-height: 1;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#theme-toggle:hover { color: var(--gold); border-color: var(--gold); opacity: 1; }
+
+
+
+@media (max-width: 600px) {
+  .deflist p { display: block; }
+  .deflist strong { display: inline-block; min-width: 4rem; vertical-align: top; }
+  .deflist .def-text { display: inline-block; width: calc(100% - 5rem); }
+}
+
+</style>
+
+<script>
+(function() {
+  const root = document.documentElement;
+  let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  function applyTheme() {
+    if (dark) {
+      root.style.setProperty('--bg', '#1F1F1D');
+      root.style.setProperty('--ink', '#E8E2D0');
+      root.style.setProperty('--gold', '#BC9836');
+      root.style.setProperty('--cream-dark', '#7A7464');
+      root.style.setProperty('--warm-grey', '#A6A091');
+      root.style.setProperty('--rule', 'rgba(212,168,74,0.45)');
+      root.style.setProperty('--rule-soft', 'rgba(166,160,145,0.2)');
+      document.body.style.background = '#1F1F1D';
+      document.body.style.color = '#E8E2D0';
+    } else {
+      root.style.setProperty('--bg', '#F4F1E4');
+      root.style.setProperty('--ink', '#1F1F1D');
+      root.style.setProperty('--gold', '#B89131');
+      root.style.setProperty('--cream-dark', '#9E9680');
+      root.style.setProperty('--warm-grey', '#6A6A5F');
+      root.style.setProperty('--rule', 'rgba(184,145,49,0.35)');
+      root.style.setProperty('--rule-soft', 'rgba(107,107,96,0.2)');
+      document.body.style.background = '#F4F1E4';
+      document.body.style.color = '#1F1F1D';
+    }
+  }
+
+  window.toggleTheme = function() {
+    dark = !dark;
+    applyTheme();
+  };
+
+  // Apply on load to ensure inline vars match system preference
+  applyTheme();
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    dark = e.matches;
+    applyTheme();
+  });
+})();
+</script>
+
+
+</body>
+</html>
