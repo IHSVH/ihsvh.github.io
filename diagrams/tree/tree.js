@@ -48,7 +48,8 @@ const NS='http://www.w3.org/2000/svg';
 /* Palette sampled from the reference plate: ground #1E1B16, line/ring white, label gold-brown #786851;
    four gradient spheres — Binah teal, Chokmah red→amber, Tiphareth orange→gold→green, Malkuth teal→slate→wine. Others hollow. */
 const GRAD={ /* Case's scale, each hue taken from the plate's own colors */
- chokmah:['#6B7B86','#495A65','#3A4750'],      /* grey  → the plate's slate */
+ kether:['#FFFFFF','#FFFFFF','#E8E2D0'],       /* white */
+ chokmah:['#9A958C','#6E6A63','#4A4640'],      /* grey  → warm grey between the plate's white and ground */
  binah:['#3A3532','#262220','#1E1B16'],        /* black → the ground itself */
  chesed:['#16A2A4','#296C77','#1E4F5C'],       /* blue  → the plate's deep teal */
  geburah:['#BF3829','#9A2F22','#75271D'],      /* red   → the plate's red */
@@ -57,7 +58,7 @@ const GRAD={ /* Case's scale, each hue taken from the plate's own colors */
  hod:['#CF8E49','#CB783A','#B85A2E'],          /* orange→ the plate's amber */
  yesod:['#7A4A5A','#5B3338','#3F2630'],        /* violet→ the plate's wine */
 };
-const QUART=['#C8AC4D','#5F7A55','#75271D','#262220']; /* Malkuth: citrine, olive, russet, black — from the same set */
+const QUART=['#C8AC4D','#786851','#75271D','#1E1B16']; /* Malkuth: citrine = the gold, olive = the label brown, russet = the dark red, black = the ground */
 let gid=0;
 const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1],21:[.5,-1],23:[.5,1]};
