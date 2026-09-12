@@ -8,14 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,500;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Assistant:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tree.css?v=3">
+<link rel="stylesheet" href="tree.css?v=5">
 </head>
 <body>
 <main class="page">
 <h1>THE TREE</h1>
 <p class="sub">Anatomy</p>
 <nav><a href="anatomy.html" aria-current="page">Anatomy</a><a href="names.html">Names</a><a href="letters.html">Letters</a></nav>
-<svg class="hero" id="hero" viewBox="-115 -172 230 344" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tree of Life on Flower of Life geometry"></svg>
+<svg class="hero" id="hero" viewBox="-160 -200 320 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tree of Life on Flower of Life geometry"></svg>
 <p class="cap" id="cap"></p>
 <div class="views" id="views" aria-label="Views"></div>
 <div class="card" id="card"></div>
@@ -24,7 +24,7 @@
 <span class="seal">IHSVH</span>
 </div>
 </main>
-<script src="tree.js?v=3"></script>
+<script src="tree.js?v=5"></script>
 <script>
 (function(){
 const T=window.TREE;let api;
@@ -34,7 +34,7 @@ api=T.mount({
    {id:'count',label:'10 & 22',cap:'Ten spheres, twenty-two paths: thirty-two. The dashed ring is Daath — a position on the middle pillar, not a sphere.'},
    {id:'pillars',label:'Pillars',layers:['pillars'],cap:'Three pillars. Form on the left, Force on the right, Mildness between. Every sphere belongs to one; the paths that run along a pillar take its color.'},
    {id:'triads',label:'Triads',layers:['triads'],cap:'Three triangles: the supernal, the ethical, the astral. Malkuth hangs below them, alone.'},
-   {id:'descent',label:'Descent',layers:['descent'],cap:'The lightning flash: the order of emanation, one to ten, through four worlds — Atziluth is Kether; Briah, Chokmah and Binah; Yetzirah, Chesed through Yesod; Assiah, Malkuth.'},
+   {id:'descent',label:'Descent',layers:['descent'],cap:'The lightning flash: the order of emanation, one to ten. The four worlds are the four circles of the construction, centered on Kether, Daath, Tiphareth, and Yesod; the side spheres sit on their seams and belong to two.'},
    {id:'flower',label:'Flower',layers:['grid'],cap:'Every sphere is a circle-center of the hexagonal grid. One circle at Tiphareth, radius 2√3, passes through Kether and Malkuth.'},
   ],
   sphere(k){api.markSphere(k);const s=T.byK[k];

@@ -1,13 +1,9 @@
 :root{
-  color-scheme:light dark;
-  --bg:#F4F1E4; --ink:#1F1F1D; --gold:#B89131; --soft:#6A6A5F;
-  --rule:rgba(184,145,49,.35); --faint:rgba(184,145,49,.14); --paper:#FBF9F2;
-  --form:#3E5A6E; --force:#A8602E; --mild:#B89131; --grid:rgba(31,31,29,.10);
-}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#1F1F1D; --ink:#E8E2D0; --gold:#BC9836; --soft:#A6A091;
-    --rule:rgba(212,168,74,.45); --faint:rgba(212,168,74,.16); --paper:#262624;
-    --form:#7A98AE; --force:#C88A5E; --mild:#BC9836; --grid:rgba(232,226,208,.10);}
+  color-scheme:dark;
+  --bg:#171410; --ink:#EDE6D3; --gold:#B8A06A; --soft:#8C8470;
+  --rule:rgba(184,160,106,.35); --faint:rgba(184,160,106,.12); --paper:#1F1B15;
+  --form:#6E93AE; --force:#C48A5A; --mild:#B8A06A; --grid:rgba(237,230,211,.07);
+  --line:rgba(237,230,211,.55);
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0}
@@ -22,48 +18,53 @@ nav a:hover{color:var(--ink)}
 p{margin:0 0 1rem}
 .hebrew{font-family:'Assistant',sans-serif;color:var(--gold);unicode-bidi:isolate;font-weight:600}
 
-.hero{width:100%;max-width:520px;margin:0 auto;display:block}
+.hero{width:100%;max-width:600px;margin:0 auto;display:block}
 svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .grid{fill:none;stroke:var(--grid);stroke-width:.5}
-.bound{fill:none;stroke:var(--rule);stroke-width:.6;stroke-dasharray:2 3}
-.path{stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;opacity:.55;transition:stroke .2s,opacity .2s,stroke-width .2s}
+.bound{display:none}
+.world{fill:none;stroke:var(--rule);stroke-width:.45}
+.wl{font-size:5px;fill:var(--soft);letter-spacing:.18em}
+.veil{fill:none;stroke:var(--rule);stroke-width:.4}
+.veilt{font-size:3.6px;opacity:.7}
+.elm{fill:none;stroke:var(--soft);stroke-width:.5}
+.path{stroke:var(--line);stroke-width:.8;stroke-linecap:round;transition:stroke .2s,opacity .2s,stroke-width .2s}
 .hit{stroke:transparent;stroke-width:12;cursor:pointer}
-.path.on{stroke:var(--gold);opacity:1;stroke-width:2.6}
-.c .path{stroke:var(--c);opacity:.9;stroke-width:1.8} .c .path.on{stroke:var(--c);stroke-width:3.2}
-.v-pillars .sph.lt text,.v-pillars .sph text{fill:#F7F3E8}
-.sph circle{fill:var(--c,var(--paper));stroke:var(--ink);stroke-width:1.1;cursor:pointer;transition:fill .2s,stroke .2s}
-.sph.on circle{stroke:var(--gold);stroke-width:2.4}
+.path.on{stroke:var(--gold);opacity:1;stroke-width:2.2}
+.c .path{stroke:var(--c);opacity:.85;stroke-width:1.4} .c .path.on{stroke:var(--c);stroke-width:2.8}
+
+.sph circle{fill:var(--c,var(--paper));stroke:var(--ink);stroke-width:.8;cursor:pointer;transition:fill .2s,stroke .2s}
+.sph.on circle{stroke:var(--gold);stroke-width:2}
 .sph.lt .n,.sph.lt .lat,.sph.lt .heb,.sph.lt .glyph{fill:#F7F3E8}
-.sph[data-k=malkuth] text{paint-order:stroke;stroke:#1B1B1B;stroke-width:1.4px;stroke-linejoin:round}
+.sph[data-k=malkuth] .n,.sph[data-k=malkuth] .heb,.sph[data-k=malkuth] .glyph{paint-order:stroke;stroke:#1B1B1B;stroke-width:1.4px;stroke-linejoin:round}
 .sph .n{font-size:7.5px;fill:#1F1F1D;font-family:'Cormorant Infant',serif;font-weight:500}
 .sph .heb{font-size:7px;fill:#1F1F1D;font-weight:600}
-.sph .lat{font-family:'Crimson Pro',serif;font-size:5.4px;fill:#1F1F1D;opacity:.8}
+.sph .lat{font-size:4.6px;fill:var(--ink);letter-spacing:.16em;font-weight:600}
+.sph .sub{font-size:3.8px;fill:var(--soft);letter-spacing:.04em}
+.sph .lat,.sph .sub{paint-order:stroke;stroke:var(--bg);stroke-width:2.2px;stroke-linejoin:round}
 .sph .glyph{font-size:8px;fill:#1F1F1D}
-.daath circle{fill:none;stroke:var(--soft);stroke-width:.8;stroke-dasharray:1.5 1.5}
-.daath .lat{font-style:italic;font-size:5px}
-.pl{font-size:4.6px;fill:var(--soft)}
-.pl.let{font-size:6.5px;fill:var(--gold);font-weight:600}
-.lbl{font-size:5.5px;fill:var(--soft);letter-spacing:.1em;text-anchor:middle}
+.daath circle{fill:none;stroke:var(--soft);stroke-width:.7;stroke-dasharray:1.5 1.5}
+.pl{font-size:4.4px;fill:var(--soft)}
+.pl.let{font-size:6.2px;fill:var(--gold);font-weight:600}
 .layer{transition:opacity .25s}
-.pill{stroke-width:24;stroke-linecap:round;opacity:.14}
-.tri{fill:var(--gold);opacity:.13;stroke:var(--gold);stroke-width:.5}
-.band{fill:none;stroke:var(--gold);stroke-width:.6;stroke-dasharray:1.5 2.5;opacity:.7}
-.flash{fill:none;stroke:var(--gold);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.pill{stroke-width:22;stroke-linecap:round;opacity:.16}
+.tri{fill:var(--gold);opacity:.12;stroke:var(--gold);stroke-width:.4}
+.flash{fill:none;stroke:var(--gold);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
 .hero .flash{stroke-dasharray:900;stroke-dashoffset:900;animation:flash 2.4s ease-out forwards}
 @keyframes flash{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){.hero .flash{animation:none;stroke-dashoffset:0}}
 
 /* view rules */
 .v-pillars .sph.p-form circle{fill:var(--form)} .v-pillars .sph.p-force circle{fill:var(--force)} .v-pillars .sph.p-mild circle{fill:var(--mild)}
-.v-pillars .sph:not(.daath) text{fill:#F7F3E8}
+.v-pillars .sph:not(.daath) .n,.v-pillars .sph:not(.daath) .heb,.v-pillars .sph:not(.daath) .glyph{fill:#F7F3E8}
 .v-pillars .path.along-form{stroke:var(--form);opacity:1;stroke-width:2.2}
 .v-pillars .path.along-force{stroke:var(--force);opacity:1;stroke-width:2.2}
 .v-pillars .path.along-mild{stroke:var(--mild);opacity:1;stroke-width:2.2}
-.v-pillars .path:not([class*=along]){opacity:.28}
-.v-triads .path,.v-descent .path{opacity:.28}
-.v-flower .path{opacity:.35} .v-flower .sph circle{r:6} .v-flower .quart{display:none} .v-flower .sph[data-k=malkuth] circle{fill:#1B1B1B} .v-flower .sph text{display:none}
+.v-pillars .path:not([class*=along]){opacity:.25}
+.v-triads .path{opacity:.3}
+.v-descent .path{opacity:.12} .v-descent .world{stroke:var(--gold);opacity:.6} .v-descent .wl{fill:var(--gold)}
+.v-flower .path{opacity:.3} .v-flower .sph circle{r:6} .v-flower .quart{display:none} .v-flower .sph[data-k=malkuth] circle{fill:#1B1B1B} .v-flower .sph text{display:none}
 .v-flower .grid{stroke:var(--rule)}
-.v-mothers .path:not(.k-Mother),.v-doubles .path:not(.k-Double),.v-simples .path:not(.k-Simple){opacity:.14}
+.v-mothers .path:not(.k-Mother),.v-doubles .path:not(.k-Double),.v-simples .path:not(.k-Simple){opacity:.12}
 .v-mothers .path.k-Mother,.v-doubles .path.k-Double,.v-simples .path.k-Simple{opacity:1;stroke-width:2.6}
 .v-mothers .pl:not(.k-Mother),.v-doubles .pl:not(.k-Double),.v-simples .pl:not(.k-Simple){opacity:.25}
 
@@ -73,7 +74,7 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .views button svg{width:100%;display:block;margin-bottom:.35rem}
 .views button[aria-pressed="true"]{color:var(--ink);border-top-color:var(--gold)}
 .views button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.views .path{stroke-width:1.6}.views .sph circle{stroke-width:1.4}.views .pill{stroke-width:20}
+.views .path{stroke-width:1.4}.views .sph circle{stroke-width:1.2}.views .pill{stroke-width:20}.views .world{stroke-width:.6}
 
 .card{margin:1.6rem auto 0;max-width:520px;padding:1rem 1.2rem;background:var(--paper);border:1px solid var(--rule)}
 .card .head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:.4rem;margin-bottom:.6rem}

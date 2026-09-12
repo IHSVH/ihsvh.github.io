@@ -3,15 +3,15 @@ window.TREE=(function(){
 const R=40,H=R*Math.sqrt(3)/2,XY=(q,row)=>[q*R,row*H];
 const S=[
  {k:'kether',col:'#FFFFFF',colt:'white',lt:false,n:1,q:0,row:-4,heb:'כתר',lat:'Kether',mean:'Crown',pillar:'mild',triad:'Supernal',world:'Atziluth',div:'אהיה',divt:'Eheieh',arch:'Metatron',sphere:'Primum Mobile',glyph:'☉'},
- {k:'chokmah',col:'#8E8E8E',colt:'grey',lt:false,n:2,q:1.5,row:-3,heb:'חכמה',lat:'Chokmah',mean:'Wisdom',pillar:'force',triad:'Supernal',world:'Briah',div:'יה',divt:'Yah',arch:'Raziel',sphere:'Sphere of the zodiac',glyph:'✶'},
- {k:'binah',col:'#1B1B1B',colt:'black',lt:true,n:3,q:-1.5,row:-3,heb:'בינה',lat:'Binah',mean:'Understanding',pillar:'form',triad:'Supernal',world:'Briah',div:'יהוה אלהים',divt:'YHVH Elohim',arch:'Tzaphkiel',sphere:'Saturn',glyph:'♄'},
- {k:'daath',n:0,q:0,row:-2,heb:'דעת',lat:'Daath',mean:'Knowledge',pillar:'mild'},
- {k:'chesed',col:'#1E5CB8',colt:'blue',lt:true,n:4,q:1.5,row:-1,heb:'חסד',lat:'Chesed',mean:'Mercy',pillar:'force',triad:'Ethical',world:'Yetzirah',div:'אל',divt:'El',arch:'Tzadkiel',sphere:'Jupiter',glyph:'♃'},
- {k:'geburah',col:'#C4202B',colt:'red',lt:true,n:5,q:-1.5,row:-1,heb:'גבורה',lat:'Geburah',mean:'Severity',pillar:'form',triad:'Ethical',world:'Yetzirah',div:'אלהים גבור',divt:'Elohim Gibor',arch:'Kamael',sphere:'Mars',glyph:'♂'},
+ {k:'chokmah',col:'#8E8E8E',colt:'grey',lt:false,n:2,q:1.5,row:-3,heb:'חכמה',lat:'Chokmah',mean:'Wisdom',pillar:'force',triad:'Supernal',world:'Atziluth · Briah',div:'יה',divt:'Yah',arch:'Raziel',sphere:'Sphere of the zodiac',glyph:'✶'},
+ {k:'binah',col:'#1B1B1B',colt:'black',lt:true,n:3,q:-1.5,row:-3,heb:'בינה',lat:'Binah',mean:'Understanding',pillar:'form',triad:'Supernal',world:'Atziluth · Briah',div:'יהוה אלהים',divt:'YHVH Elohim',arch:'Tzaphkiel',sphere:'Saturn',glyph:'♄'},
+ {k:'daath',n:0,q:0,row:-2,heb:'דעת',lat:'Daath',mean:'Knowledge',pillar:'mild',world:'Briah'},
+ {k:'chesed',col:'#1E5CB8',colt:'blue',lt:true,n:4,q:1.5,row:-1,heb:'חסד',lat:'Chesed',mean:'Mercy',pillar:'force',triad:'Ethical',world:'Briah · Yetzirah',div:'אל',divt:'El',arch:'Tzadkiel',sphere:'Jupiter',glyph:'♃'},
+ {k:'geburah',col:'#C4202B',colt:'red',lt:true,n:5,q:-1.5,row:-1,heb:'גבורה',lat:'Geburah',mean:'Severity',pillar:'form',triad:'Ethical',world:'Briah · Yetzirah',div:'אלהים גבור',divt:'Elohim Gibor',arch:'Kamael',sphere:'Mars',glyph:'♂'},
  {k:'tiphareth',col:'#F2D11E',colt:'yellow',lt:false,n:6,q:0,row:0,heb:'תפארת',lat:'Tiphareth',mean:'Beauty',pillar:'mild',triad:'Ethical',world:'Yetzirah',div:'יהוה אלוה ודעת',divt:'YHVH Eloah va-Daath',arch:'Raphael',sphere:'Sun',glyph:'☉'},
- {k:'netzach',col:'#2E8B3B',colt:'green',lt:true,n:7,q:1.5,row:1,heb:'נצח',lat:'Netzach',mean:'Victory',pillar:'force',triad:'Astral',world:'Yetzirah',div:'יהוה צבאות',divt:'YHVH Tzabaoth',arch:'Haniel',sphere:'Venus',glyph:'♀'},
- {k:'hod',col:'#EE8A1B',colt:'orange',lt:false,n:8,q:-1.5,row:1,heb:'הוד',lat:'Hod',mean:'Splendor',pillar:'form',triad:'Astral',world:'Yetzirah',div:'אלהים צבאות',divt:'Elohim Tzabaoth',arch:'Michael',sphere:'Mercury',glyph:'☿'},
- {k:'yesod',col:'#6E3AAE',colt:'violet',lt:true,n:9,q:0,row:2,heb:'יסוד',lat:'Yesod',mean:'Foundation',pillar:'mild',triad:'Astral',world:'Yetzirah',div:'שדי אל חי',divt:'Shaddai El Chai',arch:'Gabriel',sphere:'Moon',glyph:'☽'},
+ {k:'netzach',col:'#2E8B3B',colt:'green',lt:true,n:7,q:1.5,row:1,heb:'נצח',lat:'Netzach',mean:'Victory',pillar:'force',triad:'Astral',world:'Yetzirah · Assiah',div:'יהוה צבאות',divt:'YHVH Tzabaoth',arch:'Haniel',sphere:'Venus',glyph:'♀'},
+ {k:'hod',col:'#EE8A1B',colt:'orange',lt:false,n:8,q:-1.5,row:1,heb:'הוד',lat:'Hod',mean:'Splendor',pillar:'form',triad:'Astral',world:'Yetzirah · Assiah',div:'אלהים צבאות',divt:'Elohim Tzabaoth',arch:'Michael',sphere:'Mercury',glyph:'☿'},
+ {k:'yesod',col:'#6E3AAE',colt:'violet',lt:true,n:9,q:0,row:2,heb:'יסוד',lat:'Yesod',mean:'Foundation',pillar:'mild',triad:'Astral',world:'Assiah',div:'שדי אל חי',divt:'Shaddai El Chai',arch:'Gabriel',sphere:'Moon',glyph:'☽'},
  {k:'malkuth',col:'#C9B322,#6B7A1E,#8A3A1E,#1B1B1B',colt:'citrine, olive, russet, black',lt:true,n:10,q:0,row:4,heb:'מלכות',lat:'Malkuth',mean:'Kingdom',pillar:'mild',triad:'—',world:'Assiah',div:'אדני הארץ',divt:'Adonai ha-Aretz',arch:'Sandalphon',sphere:'Sphere of the elements',glyph:'⊕'},
 ];
 S[0].glyph='⊚'; // Kether: Primum Mobile has no planet glyph
@@ -46,7 +46,7 @@ const P=[
 const PN={form:'Form',force:'Force',mild:'Mildness'};
 const NS='http://www.w3.org/2000/svg';
 const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
-const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1]};
+const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1],21:[.5,1],23:[.5,-1]};
 
 /* opts: interactive, sphereText: 'number'|'hebrew'|'glyph'|null, pathText: 'number'|'letter'|null, onSphere, onPath */
 function build(svg,o={}){
@@ -54,6 +54,16 @@ function build(svg,o={}){
   for(let row=-4;row<=4;row++){const off=(row%2)?.5:0;for(let i=-4;i<=4;i++){const [x,y]=XY(i+off,row);if(Math.hypot(x,y)>139)continue;g.appendChild(el('circle',{class:'grid',cx:x,cy:y,r:R}));}}
   svg.appendChild(g);
   svg.appendChild(el('circle',{class:'bound',cx:0,cy:0,r:138.564}));
+  const gw=el('g',{class:'layer L-worlds'});
+  const WR=2*H,WC=[['ATZILUTH',-4,'fire'],['BRIAH',-2,'water'],['YETZIRAH',0,'air'],['ASSIAH',2,'earth']];
+  WC.forEach(([t,row,elm])=>{const [,cy]=XY(0,row);gw.appendChild(el('circle',{class:'world',cx:0,cy,r:WR}));
+    if(o.interactive){const x=el('text',{class:'wl',x:-150,y:cy+2,'text-anchor':'start'});x.textContent=t;gw.appendChild(x);
+      const up=elm==='fire'||elm==='air',ty=cy+10,pts=up?`-150,${ty+6} -142,${ty+6} -146,${ty-1}`:`-150,${ty-1} -142,${ty-1} -146,${ty+6}`;
+      gw.appendChild(el('polygon',{class:'elm',points:pts}));
+      if(elm==='air'||elm==='earth')gw.appendChild(el('line',{class:'elm',x1:-150.5,x2:-141.5,y1:up?ty+3.2:ty+1.8,y2:up?ty+3.2:ty+1.8}));}});
+  if(o.interactive){[['AIN',-186],['AIN SOPH',-176],['AIN SOPH AUR',-166]].forEach(([t,y],i)=>{const r=WR+ (i+1)*0;
+    gw.appendChild(el('path',{class:'veil',d:`M-70,${y+8}Q0,${y-6} 70,${y+8}`}));const x=el('text',{class:'wl veilt',x:0,y:y+2,'text-anchor':'middle'});x.textContent=t;gw.appendChild(x);});}
+  svg.appendChild(gw);
   const gp=el('g',{class:'layer L-pillars'});
   [['form',-60],['mild',0],['force',60]].forEach(([p,x])=>gp.appendChild(el('line',{class:'pill',x1:x,x2:x,y1:x?-103.923:-138.564,y2:x?34.641:138.564,stroke:`var(--${p})`})));
   svg.appendChild(gp);
@@ -61,8 +71,6 @@ function build(svg,o={}){
   ['0,-138.564 60,-103.923 -60,-103.923','60,-34.641 -60,-34.641 0,0','60,34.641 -60,34.641 0,69.282'].forEach(pt=>gt.appendChild(el('polygon',{class:'tri',points:pt})));
   svg.appendChild(gt);
   const gd=el('g',{class:'layer L-descent'});
-  [-121,-69,104].forEach(y=>gd.appendChild(el('path',{class:'band',d:`M-96,${y}H96`})));
-  if(o.interactive)[['ATZILUTH',-152],['BRIAH',-97],['YETZIRAH',-40],['ASSIAH',116]].forEach(([t,y])=>{const x=el('text',{class:'lbl',x:-90,y,'text-anchor':'start'});x.textContent=t;gd.appendChild(x);});
   const order=['kether','chokmah','binah','chesed','geburah','tiphareth','netzach','hod','yesod','malkuth'];
   gd.appendChild(el('path',{class:'flash',d:order.map((k,i)=>{const [x,y]=XY(byK[k].q,byK[k].row);return(i?'L':'M')+x.toFixed(2)+','+y.toFixed(2);}).join('')}));
   svg.appendChild(gd);
@@ -87,7 +95,7 @@ function build(svg,o={}){
     if(s.k==='daath'){
       if(o.interactive)g.appendChild(el('circle',{cx:x,cy:y,r:12,fill:'transparent',stroke:'none'}));
       g.appendChild(el('circle',{cx:x,cy:y,r:4.5}));
-      if(o.interactive){const l=el('text',{class:'lat',x:x+8,y:y+2,'text-anchor':'start'});l.textContent='Daath';g.appendChild(l);}
+      if(o.interactive){const l=el('text',{class:'sub',x:x+18,y:y+2,'text-anchor':'start'});l.textContent='Daath';g.appendChild(l);}
     }else{
       if(s.k==='malkuth'){const cs=s.col.split(','),q=el('g',{class:'quart'});
         const a=9.9;[[-a,-a,a,-a],[-a,a,-a,-a],[a,-a,a,a],[a,a,-a,a]].forEach(([x1,y1,x2,y2],i)=>q.appendChild(el('path',{fill:cs[i],d:`M${x},${y}L${x+x1},${y+y1}A14,14 0 0 1 ${x+x2},${y+y2}Z`})));
@@ -97,7 +105,9 @@ function build(svg,o={}){
         const m=o.sphereText;
         const top=el('text',{class:m==='hebrew'?'heb':m==='glyph'?'glyph':'n',x,y:y+(m==='glyph'?2.2:1.2),'text-anchor':'middle'});
         top.textContent=m==='hebrew'?s.heb:m==='glyph'?s.glyph:s.n;g.appendChild(top);
-        const l=el('text',{class:'lat',x,y:y+8.2,'text-anchor':'middle'});l.textContent=s.lat;g.appendChild(l);
+        const side=x<0?-1:1,lx=x+side*18,an=side<0?'end':'start';
+        const l=el('text',{class:'lat',x:lx,y:y+.5,'text-anchor':an});l.textContent=s.lat.toUpperCase();g.appendChild(l);
+        const sub=el('text',{class:'sub',x:lx,y:y+6,'text-anchor':an});sub.textContent=s.sphere+' · '+s.mean;g.appendChild(sub);
       }
     }
     if(o.interactive){g.setAttribute('tabindex',0);g.setAttribute('role','button');g.setAttribute('aria-label',s.lat);
@@ -122,7 +132,7 @@ function mount(page){
   }
   page.views.forEach(v=>{
     const b=document.createElement('button');b.type='button';b.dataset.v=v.id;b.setAttribute('aria-pressed','false');
-    const sv=el('svg',{viewBox:'-115 -172 230 344',class:'v-'+v.id+(opts.pathColor?' c':''),'aria-hidden':'true'});build(sv,{});setLayers(sv,v);
+    const sv=el('svg',{viewBox:'-100 -160 200 320',class:'v-'+v.id+(opts.pathColor?' c':''),'aria-hidden':'true'});build(sv,{});setLayers(sv,v);
     b.appendChild(sv);b.appendChild(document.createTextNode(v.label));b.addEventListener('click',()=>setView(v.id));views.appendChild(b);
   });
   setView(page.views[0].id);
