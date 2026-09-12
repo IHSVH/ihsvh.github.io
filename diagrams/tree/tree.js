@@ -47,7 +47,17 @@ const PN={form:'Form',force:'Force',mild:'Mildness'};
 const NS='http://www.w3.org/2000/svg';
 /* Palette sampled from the reference plate: ground #1E1B16, line/ring white, label gold-brown #786851;
    four gradient spheres — Binah teal, Chokmah red→amber, Tiphareth orange→gold→green, Malkuth teal→slate→wine. Others hollow. */
-const GRAD={binah:['#50B68E','#16A2A4','#296C77'],chokmah:['#75271D','#BF3829','#CF8E49'],tiphareth:['#CB783A','#C8AC4D','#60B27E'],malkuth:['#1E8A8D','#495A65','#5B3338']};
+const GRAD={ /* Case's scale, each hue taken from the plate's own colors */
+ chokmah:['#6B7B86','#495A65','#3A4750'],      /* grey  → the plate's slate */
+ binah:['#3A3532','#262220','#1E1B16'],        /* black → the ground itself */
+ chesed:['#16A2A4','#296C77','#1E4F5C'],       /* blue  → the plate's deep teal */
+ geburah:['#BF3829','#9A2F22','#75271D'],      /* red   → the plate's red */
+ tiphareth:['#E0D79D','#C8AC4D','#CB783A'],    /* yellow→ the plate's gold */
+ netzach:['#60B27E','#50B68E','#3F8F6A'],      /* green → the plate's green */
+ hod:['#CF8E49','#CB783A','#B85A2E'],          /* orange→ the plate's amber */
+ yesod:['#7A4A5A','#5B3338','#3F2630'],        /* violet→ the plate's wine */
+};
+const QUART=['#C8AC4D','#5F7A55','#75271D','#262220']; /* Malkuth: citrine, olive, russet, black — from the same set */
 let gid=0;
 const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1],21:[.5,-1],23:[.5,1]};
@@ -99,13 +109,16 @@ function build(svg,o={}){
   const gS=el('g');
   S.forEach(s=>{
     const [x,y]=XY(s.q,s.row);
-    const g=el('g',{class:'sph p-'+s.pillar+(s.k==='daath'?' daath':'')+(GRAD[s.k]?' lt':''),'data-k':s.k});
+    const g=el('g',{class:'sph p-'+s.pillar+(s.k==='daath'?' daath':'')+(s.k!=='tiphareth'&&s.k!=='kether'&&s.k!=='daath'?' lt':''),'data-k':s.k});
     if(s.k==='daath'){
       if(o.interactive)g.appendChild(el('circle',{cx:x,cy:y,r:12,fill:'transparent',stroke:'none'}));
       g.appendChild(el('circle',{cx:x,cy:y,r:4.5}));
       if(o.interactive){const l=el('text',{class:'sub',x:x+18,y:y+2,'text-anchor':'start'});l.textContent='Daath';g.appendChild(l);}
     }else{
-      g.appendChild(el('circle',{cx:x,cy:y,r:14,class:GRAD[s.k]?'grad':'hollow',style:GRAD[s.k]?`fill:url(#${uid}${s.k})`:''}));
+      if(s.k==='malkuth'){const q=el('g',{class:'quart'}),a=9.9;
+        [[-a,-a,a,-a],[-a,a,-a,-a],[a,-a,a,a],[a,a,-a,a]].forEach(([x1,y1,x2,y2],i)=>q.appendChild(el('path',{fill:QUART[i],d:`M${x},${y}L${x+x1},${y+y1}A14,14 0 0 1 ${x+x2},${y+y2}Z`})));
+        g.appendChild(q);g.appendChild(el('circle',{cx:x,cy:y,r:14,class:'hollow',style:'fill:none'}));}
+      else g.appendChild(el('circle',{cx:x,cy:y,r:14,class:GRAD[s.k]?'grad':'hollow',style:GRAD[s.k]?`fill:url(#${uid}${s.k})`:''}));
       if(o.interactive&&o.sphereText){
         const m=o.sphereText;
         const top=el('text',{class:m==='hebrew'?'heb':m==='glyph'?'glyph':'n',x,y:y+(m==='glyph'?2.2:1.2),'text-anchor':'middle'});
