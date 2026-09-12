@@ -3,7 +3,7 @@ window.TREE=(function(){
 const R=40,H=R*Math.sqrt(3)/2,XY=(q,row)=>[q*R,row*H];
 const S=[
  {k:'kether',col:'#FFFFFF',colt:'white',lt:false,n:1,q:0,row:-4,heb:'כתר',lat:'Kether',mean:'Crown',pillar:'mild',triad:'Supernal',world:'Atziluth',div:'אהיה',divt:'Eheieh',arch:'Metatron',sphere:'Primum Mobile',glyph:'☉'},
- {k:'chokmah',col:'#8E8E8E',colt:'grey',lt:false,n:2,q:1.5,row:-3,heb:'חכמה',lat:'Chokmah',mean:'Wisdom',pillar:'force',triad:'Supernal',world:'Atziluth',div:'יה',divt:'Yah',arch:'Raziel',sphere:'Sphere of the zodiac',glyph:'✶'},
+ {k:'chokmah',col:'#8E8E8E',colt:'grey',lt:false,n:2,q:1.5,row:-3,heb:'חכמה',lat:'Chokmah',mean:'Wisdom',pillar:'force',triad:'Supernal',world:'Briah',div:'יה',divt:'Yah',arch:'Raziel',sphere:'Sphere of the zodiac',glyph:'✶'},
  {k:'binah',col:'#1B1B1B',colt:'black',lt:true,n:3,q:-1.5,row:-3,heb:'בינה',lat:'Binah',mean:'Understanding',pillar:'form',triad:'Supernal',world:'Briah',div:'יהוה אלהים',divt:'YHVH Elohim',arch:'Tzaphkiel',sphere:'Saturn',glyph:'♄'},
  {k:'daath',n:0,q:0,row:-2,heb:'דעת',lat:'Daath',mean:'Knowledge',pillar:'mild'},
  {k:'chesed',col:'#1E5CB8',colt:'blue',lt:true,n:4,q:1.5,row:-1,heb:'חסד',lat:'Chesed',mean:'Mercy',pillar:'force',triad:'Ethical',world:'Yetzirah',div:'אל',divt:'El',arch:'Tzadkiel',sphere:'Jupiter',glyph:'♃'},
@@ -61,8 +61,8 @@ function build(svg,o={}){
   ['0,-138.564 60,-103.923 -60,-103.923','60,-34.641 -60,-34.641 0,0','60,34.641 -60,34.641 0,69.282'].forEach(pt=>gt.appendChild(el('polygon',{class:'tri',points:pt})));
   svg.appendChild(gt);
   const gd=el('g',{class:'layer L-descent'});
-  [-88,-52,104].forEach(y=>gd.appendChild(el('path',{class:'band',d:`M-96,${y}H96`})));
-  if(o.interactive)[['ATZILUTH',-150],['BRIAH',-78],['YETZIRAH',-40],['ASSIAH',116]].forEach(([t,y])=>{const x=el('text',{class:'lbl',x:-90,y,'text-anchor':'start'});x.textContent=t;gd.appendChild(x);});
+  [-121,-69,104].forEach(y=>gd.appendChild(el('path',{class:'band',d:`M-96,${y}H96`})));
+  if(o.interactive)[['ATZILUTH',-152],['BRIAH',-97],['YETZIRAH',-40],['ASSIAH',116]].forEach(([t,y])=>{const x=el('text',{class:'lbl',x:-90,y,'text-anchor':'start'});x.textContent=t;gd.appendChild(x);});
   const order=['kether','chokmah','binah','chesed','geburah','tiphareth','netzach','hod','yesod','malkuth'];
   gd.appendChild(el('path',{class:'flash',d:order.map((k,i)=>{const [x,y]=XY(byK[k].q,byK[k].row);return(i?'L':'M')+x.toFixed(2)+','+y.toFixed(2);}).join('')}));
   svg.appendChild(gd);
