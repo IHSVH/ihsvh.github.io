@@ -21,7 +21,7 @@
 <div class="card" id="card"></div>
 <div class="wrap"><table id="t"><thead><tr><th>№</th><th>Letter</th><th>Meaning</th><th>Joins</th><th>Attribution</th><th>Key</th></tr></thead><tbody></tbody></table></div>
 <div class="colophon">
-  Letter attributions and Tarot keys follow Paul Foster Case, <i>The Tree of Life</i> and <i>The Tarot</i> (B.O.T.A.); the three classes of letters follow Sefer Yetzirah — documented.
+  Letter attributions, path colors, and Tarot keys follow Paul Foster Case, <i>The Tree of Life</i> and <i>The Tarot</i> (B.O.T.A.); the three classes of letters follow Sefer Yetzirah — documented.
 <span class="seal">IHSVH</span>
 </div>
 </main>
@@ -31,9 +31,9 @@
 const T=window.TREE;let api;
 const KIND={Mother:'Mother — element',Double:'Double — planet',Simple:'Simple — sign'};
 api=T.mount({
-  draw:{sphereText:'number',pathText:'letter'},
+  draw:{sphereText:'number',pathText:'letter',pathColor:true},
   views:[
-   {id:'letters',label:'22',cap:'Twenty-two letters on twenty-two paths, numbered eleven to thirty-two after the ten spheres.'},
+   {id:'letters',label:'22',cap:'Twenty-two letters on twenty-two paths, numbered eleven to thirty-two after the ten spheres. Each path takes the color of its attribution on the twelve-color wheel.'},
    {id:'mothers',label:'3 Mothers',cap:'Three mothers, three elements: Aleph air, Mem water, Shin fire. Two are horizontals; Shin rises to Malkuth.'},
    {id:'doubles',label:'7 Doubles',cap:'Seven doubles, seven planets. Each letter has a hard and a soft sound; each planet a pair of opposites.'},
    {id:'simples',label:'12 Simples',cap:'Twelve simples, twelve signs. Six run from the sides to the center; six run along or between the sides.'},
@@ -43,7 +43,7 @@ api=T.mount({
     const links=T.P.filter(p=>p.a===k||p.b===k).map(p=>`<span class="hebrew">${p.l}</span> ${p.name}`).join(', ');
     api.card.innerHTML=api.head(s.lat,s.heb,s.n)+api.dl([['Paths',links],['See','Names']]);},
   path(n){api.markPath(n);const p=T.P.find(x=>x.n===n);
-    api.card.innerHTML=api.head(p.name,p.l,p.n)+api.dl([['Meaning',p.mean],['Joins',`${T.byK[p.a].lat} — ${T.byK[p.b].lat}`],['Class',KIND[p.kind]],['Attribution',p.attr],['Tarot key',p.key]]);},
+    api.card.innerHTML=api.head(p.name,p.l,p.n)+api.dl([['Meaning',p.mean],['Joins',`${T.byK[p.a].lat} — ${T.byK[p.b].lat}`],['Class',KIND[p.kind]],['Attribution',p.attr],['Color',p.colt],['Tarot key',p.key]]);},
 });
 const tb=document.querySelector('#t tbody');
 T.P.forEach(p=>{const tr=document.createElement('tr');tr.dataset.k=p.n;

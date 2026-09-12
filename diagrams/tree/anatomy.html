@@ -20,7 +20,7 @@
 <div class="views" id="views" aria-label="Views"></div>
 <div class="card" id="card"></div>
 <div class="colophon">
-  Names and path letters follow Paul Foster Case, <i>The Tree of Life</i> (B.O.T.A.) — documented. The Flower-of-Life construction is a geometric reading of the standard figure, not a claim about its origin — inference.
+  Names, path letters, and colors follow Paul Foster Case, <i>The Tree of Life</i> (B.O.T.A.) — documented. The Flower-of-Life construction is a geometric reading of the standard figure, not a claim about its origin — inference.
 <span class="seal">IHSVH</span>
 </div>
 </main>
@@ -40,7 +40,7 @@ api=T.mount({
   sphere(k){api.markSphere(k);const s=T.byK[k];
     if(k==='daath'){api.card.innerHTML=T.daathCard(api);return;}
     const links=T.P.filter(p=>p.a===k||p.b===k).map(p=>`${p.n} ${p.name}`).join(', ');
-    api.card.innerHTML=api.head(s.lat,s.heb,s.n)+api.dl([['Meaning',s.mean],['Pillar',T.PN[s.pillar]],['Triad',s.triad],['World',s.world],['Paths',links]]);},
+    api.card.innerHTML=api.head(s.lat,s.heb,s.n)+api.dl([['Meaning',s.mean],['Color',s.colt],['Pillar',T.PN[s.pillar]],['Triad',s.triad],['World',s.world],['Paths',links]]);},
   path(n){api.markPath(n);const p=T.P.find(x=>x.n===n);
     api.card.innerHTML=api.head(p.name,p.l,p.n)+api.dl([['Joins',`${T.byK[p.a].lat} — ${T.byK[p.b].lat}`],['Letter',`${p.kind} · ${p.n-10} of 22`],['Runs',p.along?'along the pillar of '+T.PN[p.along]:'between pillars']]);},
 });

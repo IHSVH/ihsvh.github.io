@@ -29,12 +29,16 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .path{stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;opacity:.55;transition:stroke .2s,opacity .2s,stroke-width .2s}
 .hit{stroke:transparent;stroke-width:12;cursor:pointer}
 .path.on{stroke:var(--gold);opacity:1;stroke-width:2.6}
-.sph circle{fill:var(--paper);stroke:var(--ink);stroke-width:1.1;cursor:pointer;transition:fill .2s,stroke .2s}
+.c .path{stroke:var(--c);opacity:.9;stroke-width:1.8} .c .path.on{stroke:var(--c);stroke-width:3.2}
+.v-pillars .sph.lt text,.v-pillars .sph text{fill:#F7F3E8}
+.sph circle{fill:var(--c,var(--paper));stroke:var(--ink);stroke-width:1.1;cursor:pointer;transition:fill .2s,stroke .2s}
 .sph.on circle{stroke:var(--gold);stroke-width:2.4}
-.sph .n{font-size:7.5px;fill:var(--ink);font-family:'Cormorant Infant',serif;font-weight:500}
-.sph .heb{font-size:7px;fill:var(--gold);font-weight:600}
-.sph .lat{font-family:'Crimson Pro',serif;font-size:5.4px;fill:var(--soft)}
-.sph .glyph{font-size:8px;fill:var(--ink)}
+.sph.lt .n,.sph.lt .lat,.sph.lt .heb,.sph.lt .glyph{fill:#F7F3E8}
+.sph[data-k=malkuth] text{paint-order:stroke;stroke:#1B1B1B;stroke-width:1.4px;stroke-linejoin:round}
+.sph .n{font-size:7.5px;fill:#1F1F1D;font-family:'Cormorant Infant',serif;font-weight:500}
+.sph .heb{font-size:7px;fill:#1F1F1D;font-weight:600}
+.sph .lat{font-family:'Crimson Pro',serif;font-size:5.4px;fill:#1F1F1D;opacity:.8}
+.sph .glyph{font-size:8px;fill:#1F1F1D}
 .daath circle{fill:none;stroke:var(--soft);stroke-width:.8;stroke-dasharray:1.5 1.5}
 .daath .lat{font-style:italic;font-size:5px}
 .pl{font-size:4.6px;fill:var(--soft)}
@@ -57,10 +61,10 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .v-pillars .path.along-mild{stroke:var(--mild);opacity:1;stroke-width:2.2}
 .v-pillars .path:not([class*=along]){opacity:.28}
 .v-triads .path,.v-descent .path{opacity:.28}
-.v-flower .path{opacity:.35} .v-flower .sph circle{r:6} .v-flower .sph text{display:none}
+.v-flower .path{opacity:.35} .v-flower .sph circle{r:6} .v-flower .quart{display:none} .v-flower .sph[data-k=malkuth] circle{fill:#1B1B1B} .v-flower .sph text{display:none}
 .v-flower .grid{stroke:var(--rule)}
 .v-mothers .path:not(.k-Mother),.v-doubles .path:not(.k-Double),.v-simples .path:not(.k-Simple){opacity:.14}
-.v-mothers .path.k-Mother,.v-doubles .path.k-Double,.v-simples .path.k-Simple{opacity:1;stroke-width:2.2;stroke:var(--gold)}
+.v-mothers .path.k-Mother,.v-doubles .path.k-Double,.v-simples .path.k-Simple{opacity:1;stroke-width:2.6}
 .v-mothers .pl:not(.k-Mother),.v-doubles .pl:not(.k-Double),.v-simples .pl:not(.k-Simple){opacity:.25}
 
 .cap{text-align:center;max-width:520px;margin:.8rem auto 1.4rem;min-height:3.2rem}

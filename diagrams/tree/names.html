@@ -21,7 +21,7 @@
 <div class="card" id="card"></div>
 <div class="wrap"><table id="t"><thead><tr><th>№</th><th>Name</th><th>Meaning</th><th>Divine name</th><th>Archangel</th><th>Sphere</th></tr></thead><tbody></tbody></table></div>
 <div class="colophon">
-  Divine names, archangels, and planetary spheres follow Paul Foster Case, <i>The Tree of Life</i> (B.O.T.A.) — documented.
+  Divine names, archangels, planetary spheres, and colors follow Paul Foster Case, <i>The Tree of Life</i> (B.O.T.A.) — documented.
 <span class="seal">IHSVH</span>
 </div>
 </main>
@@ -37,7 +37,7 @@ api=T.mount({
   ],
   sphere(k){api.markSphere(k);const s=T.byK[k];
     if(k==='daath'){api.card.innerHTML=T.daathCard(api);return;}
-    api.card.innerHTML=api.head(s.lat,s.heb,s.n)+api.dl([['Meaning',s.mean],['Divine name',`<span class="hebrew">${s.div}</span> <span class="tr">(${s.divt})</span>`],['Archangel',s.arch],['Sphere',s.sphere],['World',s.world]]);},
+    api.card.innerHTML=api.head(s.lat,s.heb,s.n)+api.dl([['Meaning',s.mean],['Color',s.colt],['Divine name',`<span class="hebrew">${s.div}</span> <span class="tr">(${s.divt})</span>`],['Archangel',s.arch],['Sphere',s.sphere],['World',s.world]]);},
   path(n){api.markPath(n);const p=T.P.find(x=>x.n===n);
     api.card.innerHTML=api.head(p.name,p.l,p.n)+api.dl([['Joins',`${T.byK[p.a].lat} — ${T.byK[p.b].lat}`],['See','Letters']]);},
 });
