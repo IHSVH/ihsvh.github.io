@@ -1,9 +1,9 @@
 :root{
   color-scheme:dark;
-  --bg:#171410; --ink:#EDE6D3; --gold:#B8A06A; --soft:#8C8470;
-  --rule:rgba(184,160,106,.35); --faint:rgba(184,160,106,.12); --paper:#1F1B15;
+  --bg:#1E1B16; --ink:#FFFFFF; --gold:#B8A06A; --soft:#786851;
+  --rule:rgba(120,103,81,.45); --faint:rgba(120,103,81,.14); --paper:#24201A;
   --form:#6E93AE; --force:#C48A5A; --mild:#B8A06A; --grid:rgba(237,230,211,.07);
-  --line:rgba(237,230,211,.55);
+  --line:rgba(255,255,255,.7);
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0}
@@ -23,6 +23,9 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .grid{fill:none;stroke:var(--grid);stroke-width:.5}
 .bound{display:none}
 .world{fill:none;stroke:var(--rule);stroke-width:.45}
+.L-worlds *{pointer-events:none} .pband{fill:rgba(120,103,81,.13)} .sph:focus{outline:none} .psign{font-size:9px;fill:var(--soft)}
+.sph[data-k=kether] circle{r:3.5;fill:#fff} .sph[data-k=kether] .n,.sph[data-k=kether] .heb,.sph[data-k=kether] .glyph{display:none}
+.v-kadmon .path{display:none} .v-kadmon .L-descent{opacity:1!important} .v-kadmon .flash{stroke:#fff;stroke-width:.8} .v-kadmon .pl{display:none}
 .wl{font-size:5px;fill:var(--soft);letter-spacing:.18em}
 .veil{fill:none;stroke:var(--rule);stroke-width:.4}
 .veilt{font-size:3.6px;opacity:.7}
@@ -32,16 +35,15 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .path.on{stroke:var(--gold);opacity:1;stroke-width:2.2}
 .c .path{stroke:var(--c);opacity:.85;stroke-width:1.4} .c .path.on{stroke:var(--c);stroke-width:2.8}
 
-.sph circle{fill:var(--c,var(--paper));stroke:var(--ink);stroke-width:.8;cursor:pointer;transition:fill .2s,stroke .2s}
-.sph.on circle{stroke:var(--gold);stroke-width:2}
+.sph circle{fill:var(--bg);stroke:var(--ink);stroke-width:.7;cursor:pointer;transition:fill .2s,stroke .2s}
+.sph.on circle{stroke:var(--gold);stroke-width:2} .sph[data-k=kether].on circle{r:5}
 .sph.lt .n,.sph.lt .lat,.sph.lt .heb,.sph.lt .glyph{fill:#F7F3E8}
-.sph[data-k=malkuth] .n,.sph[data-k=malkuth] .heb,.sph[data-k=malkuth] .glyph{paint-order:stroke;stroke:#26231E;stroke-width:1.4px;stroke-linejoin:round}
-.sph .n{font-size:7.5px;fill:#1F1F1D;font-family:'Cormorant Infant',serif;font-weight:500}
-.sph .heb{font-size:7px;fill:#1F1F1D;font-weight:600}
-.sph .lat{font-size:4.6px;fill:var(--ink);letter-spacing:.16em;font-weight:600}
+.sph .n{font-size:7.5px;fill:var(--ink);font-family:'Cormorant Infant',serif;font-weight:500}
+.sph .heb{font-size:7px;fill:var(--ink);font-weight:600}
+.sph .lat{font-size:4.6px;fill:var(--ink);letter-spacing:.2em;font-weight:700}
 .sph .sub{font-size:3.8px;fill:var(--soft);letter-spacing:.04em}
 .sph .lat,.sph .sub{paint-order:stroke;stroke:var(--bg);stroke-width:2.2px;stroke-linejoin:round}
-.sph .glyph{font-size:8px;fill:#1F1F1D}
+.sph .glyph{font-size:9px;fill:var(--ink)}
 .daath circle{fill:none;stroke:var(--soft);stroke-width:.7;stroke-dasharray:1.5 1.5}
 .pl{font-size:4.4px;fill:var(--soft)}
 .pl.let{font-size:6.2px;fill:var(--gold);font-weight:600}
@@ -62,8 +64,7 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .v-pillars .path:not([class*=along]){opacity:.25}
 .v-triads .path{opacity:.3}
 .v-descent .path{opacity:.12} .v-descent .world{stroke:var(--gold);opacity:.6} .v-descent .wl{fill:var(--gold)}
-.v-flower .path{opacity:.3} .v-flower .sph circle{r:6} .v-flower .quart{display:none} .v-flower .sph[data-k=malkuth] circle{fill:#26231E} .v-flower .sph text{display:none}
-.v-flower .grid{stroke:var(--rule)}
+.v-flower .path{opacity:.3} .v-flower .sph circle{r:6} .v-flower .quart{display:none} .v-flower .v-flower .grid{stroke:var(--rule)}
 .v-mothers .path:not(.k-Mother),.v-doubles .path:not(.k-Double),.v-simples .path:not(.k-Simple){opacity:.12}
 .v-mothers .path.k-Mother,.v-doubles .path.k-Double,.v-simples .path.k-Simple{opacity:1;stroke-width:2.6}
 .v-mothers .pl:not(.k-Mother),.v-doubles .pl:not(.k-Double),.v-simples .pl:not(.k-Simple){opacity:.25}

@@ -45,11 +45,18 @@ const P=[
   along:(byK[a].pillar===byK[b].pillar&&byK[a].q===byK[b].q)?byK[a].pillar:null}));
 const PN={form:'Form',force:'Force',mild:'Mildness'};
 const NS='http://www.w3.org/2000/svg';
+/* Palette sampled from the reference plate: ground #1E1B16, line/ring white, label gold-brown #786851;
+   four gradient spheres — Binah teal, Chokmah red→amber, Tiphareth orange→gold→green, Malkuth teal→slate→wine. Others hollow. */
+const GRAD={binah:['#50B68E','#16A2A4','#296C77'],chokmah:['#75271D','#BF3829','#CF8E49'],tiphareth:['#CB783A','#C8AC4D','#60B27E'],malkuth:['#1E8A8D','#495A65','#5B3338']};
+let gid=0;
 const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1],21:[.5,-1],23:[.5,1]};
 
 /* opts: interactive, sphereText: 'number'|'hebrew'|'glyph'|null, pathText: 'number'|'letter'|null, onSphere, onPath */
 function build(svg,o={}){
+  const uid='g'+(gid++);const defs=el('defs');
+  Object.entries(GRAD).forEach(([k,cs])=>{const lg=el('linearGradient',{id:uid+k,x1:0,y1:0,x2:0,y2:1});cs.forEach((c,i)=>lg.appendChild(el('stop',{offset:(i/(cs.length-1)),'stop-color':c})));defs.appendChild(lg);});
+  svg.appendChild(defs);
   const g=el('g',{class:'layer L-grid'});
   for(let row=-4;row<=4;row++){const off=(row%2)?.5:0;for(let i=-4;i<=4;i++){const [x,y]=XY(i+off,row);if(Math.hypot(x,y)>139)continue;g.appendChild(el('circle',{class:'grid',cx:x,cy:y,r:R}));}}
   svg.appendChild(g);
@@ -63,6 +70,7 @@ function build(svg,o={}){
       if(elm==='air'||elm==='earth')gw.appendChild(el('line',{class:'elm',x1:-150.5,x2:-141.5,y1:up?ty+3.2:ty+1.8,y2:up?ty+3.2:ty+1.8}));}});
   if(o.interactive){[['AIN',-186],['AIN SOPH',-176],['AIN SOPH AUR',-166]].forEach(([t,y],i)=>{const r=WR+ (i+1)*0;
     gw.appendChild(el('path',{class:'veil',d:`M-70,${y+8}Q0,${y-6} 70,${y+8}`}));const x=el('text',{class:'wl veilt',x:0,y:y+2,'text-anchor':'middle'});x.textContent=t;gw.appendChild(x);});}
+  [[-60,'−'],[60,'+']].forEach(([x,t])=>{gw.appendChild(el('rect',{class:'pband',x:x-9,y:-104,width:18,height:262}));if(o.interactive){const s=el('text',{class:'psign',x,y:168,'text-anchor':'middle'});s.textContent=t;gw.appendChild(s);}});
   svg.appendChild(gw);
   const gp=el('g',{class:'layer L-pillars'});
   [['form',-60],['mild',0],['force',60]].forEach(([p,x])=>gp.appendChild(el('line',{class:'pill',x1:x,x2:x,y1:x?-103.923:-138.564,y2:x?34.641:138.564,stroke:`var(--${p})`})));
@@ -91,16 +99,13 @@ function build(svg,o={}){
   const gS=el('g');
   S.forEach(s=>{
     const [x,y]=XY(s.q,s.row);
-    const g=el('g',{class:'sph p-'+s.pillar+(s.k==='daath'?' daath':'')+(s.lt?' lt':''),'data-k':s.k});
+    const g=el('g',{class:'sph p-'+s.pillar+(s.k==='daath'?' daath':'')+(GRAD[s.k]?' lt':''),'data-k':s.k});
     if(s.k==='daath'){
       if(o.interactive)g.appendChild(el('circle',{cx:x,cy:y,r:12,fill:'transparent',stroke:'none'}));
       g.appendChild(el('circle',{cx:x,cy:y,r:4.5}));
       if(o.interactive){const l=el('text',{class:'sub',x:x+18,y:y+2,'text-anchor':'start'});l.textContent='Daath';g.appendChild(l);}
     }else{
-      if(s.k==='malkuth'){const cs=s.col.split(','),q=el('g',{class:'quart'});
-        const a=9.9;[[-a,-a,a,-a],[-a,a,-a,-a],[a,-a,a,a],[a,a,-a,a]].forEach(([x1,y1,x2,y2],i)=>q.appendChild(el('path',{fill:cs[i],d:`M${x},${y}L${x+x1},${y+y1}A14,14 0 0 1 ${x+x2},${y+y2}Z`})));
-        g.appendChild(q);g.appendChild(el('circle',{cx:x,cy:y,r:14,style:'fill:none'}));}
-      else g.appendChild(el('circle',{cx:x,cy:y,r:14,style:'--c:'+s.col}));
+      g.appendChild(el('circle',{cx:x,cy:y,r:14,class:GRAD[s.k]?'grad':'hollow',style:GRAD[s.k]?`fill:url(#${uid}${s.k})`:''}));
       if(o.interactive&&o.sphereText){
         const m=o.sphereText;
         const top=el('text',{class:m==='hebrew'?'heb':m==='glyph'?'glyph':'n',x,y:y+(m==='glyph'?2.2:1.2),'text-anchor':'middle'});
