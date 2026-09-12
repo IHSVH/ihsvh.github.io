@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>The Tree — Names</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,500;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Assistant:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tree.css">
+</head>
+<body>
+<main class="page">
+<h1>THE TREE</h1>
+<p class="sub">Names</p>
+<nav><a href="anatomy.html">Anatomy</a><a href="names.html" aria-current="page">Names</a><a href="letters.html">Letters</a></nav>
+<svg class="hero" id="hero" viewBox="-115 -172 230 344" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tree of Life on Flower of Life geometry"></svg>
+<p class="cap" id="cap"></p>
+<div class="views" id="views" aria-label="Views"></div>
+<div class="card" id="card"></div>
+<div class="wrap"><table id="t"><thead><tr><th>№</th><th>Name</th><th>Meaning</th><th>Divine name</th><th>Archangel</th><th>Sphere</th></tr></thead><tbody></tbody></table></div>
+<div class="colophon">
+  Divine names, archangels, and planetary spheres follow Paul Foster Case, <i>The Tree of Life</i> (B.O.T.A.) — documented.
+<span class="seal">IHSVH</span>
+</div>
+</main>
+<script src="tree.js"></script>
+<script>
+(function(){
+const T=window.TREE;let api;
+api=T.mount({
+  draw:{sphereText:'hebrew',pathText:null},
+  views:[
+   {id:'names',label:'Names',cap:'The ten names. Each is a noun: what the sphere is, not what it does.'},
+   {id:'spheres',label:'Spheres',cap:'The planetary spheres, from the first mover down to the elements. Tap a sphere for its divine name and archangel.'},
+  ],
+  sphere(k){api.markSphere(k);const s=T.byK[k];
+    if(k==='daath'){api.card.innerHTML=T.daathCard(api);return;}
+    api.card.innerHTML=api.head(s.lat,s.heb,s.n)+api.dl([['Meaning',s.mean],['Divine name',`<span class="hebrew">${s.div}</span> <span class="tr">(${s.divt})</span>`],['Archangel',s.arch],['Sphere',s.sphere],['World',s.world]]);},
+  path(n){api.markPath(n);const p=T.P.find(x=>x.n===n);
+    api.card.innerHTML=api.head(p.name,p.l,p.n)+api.dl([['Joins',`${T.byK[p.a].lat} — ${T.byK[p.b].lat}`],['See','Letters']]);},
+});
+// Spheres view swaps sphere text to glyphs
+const hero=api.hero;
+document.getElementById('views').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  hero.querySelectorAll('.sph:not(.daath)').forEach(g=>{const t=g.querySelector('.heb,.glyph');const s=T.byK[g.dataset.k];
+    if(b.dataset.v==='spheres'){t.setAttribute('class','glyph');t.textContent=s.glyph;t.setAttribute('y',+g.querySelector('circle').getAttribute('cy')+2.2);}
+    else{t.setAttribute('class','heb');t.textContent=s.heb;t.setAttribute('y',+g.querySelector('circle').getAttribute('cy')+1.2);}});});
+const tb=document.querySelector('#t tbody');
+T.S.filter(s=>s.k!=='daath').forEach(s=>{const tr=document.createElement('tr');tr.dataset.k=s.k;
+  tr.innerHTML=`<td>${s.n}</td><td>${s.lat} <span class="hebrew">${s.heb}</span></td><td>${s.mean}</td><td><span class="hebrew">${s.div}</span></td><td>${s.arch}</td><td>${s.sphere}</td>`;
+  tr.addEventListener('click',()=>{api.hero.scrollIntoView({behavior:'smooth',block:'start'});document.querySelector('.sph[data-k="'+s.k+'"]').dispatchEvent(new Event('click'));});tb.appendChild(tr);});
+})();
+</script>
+</body>
+</html>

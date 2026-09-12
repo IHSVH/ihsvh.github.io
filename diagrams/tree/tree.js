@@ -1,0 +1,142 @@
+/* IHSVH — the Tree, drawn once. Geometry: hexagonal grid, Tiphareth at origin. */
+window.TREE=(function(){
+const R=40,H=R*Math.sqrt(3)/2,XY=(q,row)=>[q*R,row*H];
+const S=[
+ {k:'kether',n:1,q:0,row:-4,heb:'כתר',lat:'Kether',mean:'Crown',pillar:'mild',triad:'Supernal',world:'Atziluth',div:'אהיה',divt:'Eheieh',arch:'Metatron',sphere:'Primum Mobile',glyph:'☉'},
+ {k:'chokmah',n:2,q:1.5,row:-3,heb:'חכמה',lat:'Chokmah',mean:'Wisdom',pillar:'force',triad:'Supernal',world:'Atziluth',div:'יה',divt:'Yah',arch:'Raziel',sphere:'Sphere of the zodiac',glyph:'✶'},
+ {k:'binah',n:3,q:-1.5,row:-3,heb:'בינה',lat:'Binah',mean:'Understanding',pillar:'form',triad:'Supernal',world:'Briah',div:'יהוה אלהים',divt:'YHVH Elohim',arch:'Tzaphkiel',sphere:'Saturn',glyph:'♄'},
+ {k:'daath',n:0,q:0,row:-2,heb:'דעת',lat:'Daath',mean:'Knowledge',pillar:'mild'},
+ {k:'chesed',n:4,q:1.5,row:-1,heb:'חסד',lat:'Chesed',mean:'Mercy',pillar:'force',triad:'Ethical',world:'Yetzirah',div:'אל',divt:'El',arch:'Tzadkiel',sphere:'Jupiter',glyph:'♃'},
+ {k:'geburah',n:5,q:-1.5,row:-1,heb:'גבורה',lat:'Geburah',mean:'Severity',pillar:'form',triad:'Ethical',world:'Yetzirah',div:'אלהים גבור',divt:'Elohim Gibor',arch:'Kamael',sphere:'Mars',glyph:'♂'},
+ {k:'tiphareth',n:6,q:0,row:0,heb:'תפארת',lat:'Tiphareth',mean:'Beauty',pillar:'mild',triad:'Ethical',world:'Yetzirah',div:'יהוה אלוה ודעת',divt:'YHVH Eloah va-Daath',arch:'Raphael',sphere:'Sun',glyph:'☉'},
+ {k:'netzach',n:7,q:1.5,row:1,heb:'נצח',lat:'Netzach',mean:'Victory',pillar:'force',triad:'Astral',world:'Yetzirah',div:'יהוה צבאות',divt:'YHVH Tzabaoth',arch:'Haniel',sphere:'Venus',glyph:'♀'},
+ {k:'hod',n:8,q:-1.5,row:1,heb:'הוד',lat:'Hod',mean:'Splendor',pillar:'form',triad:'Astral',world:'Yetzirah',div:'אלהים צבאות',divt:'Elohim Tzabaoth',arch:'Michael',sphere:'Mercury',glyph:'☿'},
+ {k:'yesod',n:9,q:0,row:2,heb:'יסוד',lat:'Yesod',mean:'Foundation',pillar:'mild',triad:'Astral',world:'Yetzirah',div:'שדי אל חי',divt:'Shaddai El Chai',arch:'Gabriel',sphere:'Moon',glyph:'☽'},
+ {k:'malkuth',n:10,q:0,row:4,heb:'מלכות',lat:'Malkuth',mean:'Kingdom',pillar:'mild',triad:'—',world:'Assiah',div:'אדני הארץ',divt:'Adonai ha-Aretz',arch:'Sandalphon',sphere:'Sphere of the elements',glyph:'⊕'},
+];
+S[0].glyph='⊚'; // Kether: Primum Mobile has no planet glyph
+const byK=Object.fromEntries(S.map(s=>[s.k,s]));
+const P=[
+ [11,'א','Aleph','Ox','kether','chokmah','Mother','Air','0 The Fool'],
+ [12,'ב','Beth','House','kether','binah','Double','Mercury','1 The Magician'],
+ [13,'ג','Gimel','Camel','kether','tiphareth','Double','Moon','2 The High Priestess'],
+ [14,'ד','Daleth','Door','chokmah','binah','Double','Venus','3 The Empress'],
+ [15,'ה','Heh','Window','chokmah','tiphareth','Simple','Aries','4 The Emperor'],
+ [16,'ו','Vav','Nail','chokmah','chesed','Simple','Taurus','5 The Hierophant'],
+ [17,'ז','Zain','Sword','binah','tiphareth','Simple','Gemini','6 The Lovers'],
+ [18,'ח','Cheth','Fence','binah','geburah','Simple','Cancer','7 The Chariot'],
+ [19,'ט','Teth','Serpent','chesed','geburah','Simple','Leo','8 Strength'],
+ [20,'י','Yod','Hand','chesed','tiphareth','Simple','Virgo','9 The Hermit'],
+ [21,'כ','Kaph','Palm','chesed','netzach','Double','Jupiter','10 The Wheel of Fortune'],
+ [22,'ל','Lamed','Ox-goad','geburah','tiphareth','Simple','Libra','11 Justice'],
+ [23,'מ','Mem','Water','geburah','hod','Mother','Water','12 The Hanged Man'],
+ [24,'נ','Nun','Fish','tiphareth','netzach','Simple','Scorpio','13 Death'],
+ [25,'ס','Samekh','Prop','tiphareth','yesod','Simple','Sagittarius','14 Temperance'],
+ [26,'ע','Ayin','Eye','tiphareth','hod','Simple','Capricorn','15 The Devil'],
+ [27,'פ','Peh','Mouth','netzach','hod','Double','Mars','16 The Tower'],
+ [28,'צ','Tzaddi','Fish-hook','netzach','yesod','Simple','Aquarius','17 The Star'],
+ [29,'ק','Qoph','Back of head','netzach','malkuth','Simple','Pisces','18 The Moon'],
+ [30,'ר','Resh','Head','hod','yesod','Double','Sun','19 The Sun'],
+ [31,'ש','Shin','Tooth','hod','malkuth','Mother','Fire','20 Judgement'],
+ [32,'ת','Tav','Mark','yesod','malkuth','Double','Saturn','21 The World'],
+].map(([n,l,name,mean,a,b,kind,attr,key])=>({n,l,name,mean,a,b,kind,attr,key,
+  along:(byK[a].pillar===byK[b].pillar&&byK[a].q===byK[b].q)?byK[a].pillar:null}));
+const PN={form:'Form',force:'Force',mild:'Mildness'};
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1]};
+
+/* opts: interactive, sphereText: 'number'|'hebrew'|'glyph'|null, pathText: 'number'|'letter'|null, onSphere, onPath */
+function build(svg,o={}){
+  const g=el('g',{class:'layer L-grid'});
+  for(let row=-4;row<=4;row++){const off=(row%2)?.5:0;for(let i=-4;i<=4;i++){const [x,y]=XY(i+off,row);if(Math.hypot(x,y)>139)continue;g.appendChild(el('circle',{class:'grid',cx:x,cy:y,r:R}));}}
+  svg.appendChild(g);
+  svg.appendChild(el('circle',{class:'bound',cx:0,cy:0,r:138.564}));
+  const gp=el('g',{class:'layer L-pillars'});
+  [['form',-60],['mild',0],['force',60]].forEach(([p,x])=>gp.appendChild(el('line',{class:'pill',x1:x,x2:x,y1:x?-103.923:-138.564,y2:x?34.641:138.564,stroke:`var(--${p})`})));
+  svg.appendChild(gp);
+  const gt=el('g',{class:'layer L-triads'});
+  ['0,-138.564 60,-103.923 -60,-103.923','60,-34.641 -60,-34.641 0,0','60,34.641 -60,34.641 0,69.282'].forEach(pt=>gt.appendChild(el('polygon',{class:'tri',points:pt})));
+  svg.appendChild(gt);
+  const gd=el('g',{class:'layer L-descent'});
+  [-88,-52,104].forEach(y=>gd.appendChild(el('path',{class:'band',d:`M-96,${y}H96`})));
+  if(o.interactive)[['ATZILUTH',-150],['BRIAH',-78],['YETZIRAH',-40],['ASSIAH',116]].forEach(([t,y])=>{const x=el('text',{class:'lbl',x:-90,y,'text-anchor':'start'});x.textContent=t;gd.appendChild(x);});
+  const order=['kether','chokmah','binah','chesed','geburah','tiphareth','netzach','hod','yesod','malkuth'];
+  gd.appendChild(el('path',{class:'flash',d:order.map((k,i)=>{const [x,y]=XY(byK[k].q,byK[k].row);return(i?'L':'M')+x.toFixed(2)+','+y.toFixed(2);}).join('')}));
+  svg.appendChild(gd);
+  const gP=el('g');
+  P.forEach(p=>{
+    const [x1,y1]=XY(byK[p.a].q,byK[p.a].row),[x2,y2]=XY(byK[p.b].q,byK[p.b].row);
+    gP.appendChild(el('line',{class:'path k-'+p.kind+(p.along?' along-'+p.along:''),x1,y1,x2,y2,'data-p':p.n}));
+    if(o.interactive){
+      const hit=el('line',{class:'hit',x1,y1,x2,y2});hit.addEventListener('click',()=>o.onPath&&o.onPath(p.n));gP.appendChild(hit);
+      if(o.pathText){
+        const [t0,side]=LBL[p.n]||[.5,(p.n%2?1:-1)],dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy),s=side*6.5;
+        const t=el('text',{class:'pl k-'+p.kind+(o.pathText==='letter'?' let':''),x:x1+dx*t0-dy/len*s,y:y1+dy*t0+dx/len*s+(o.pathText==='letter'?2.4:1.6),'text-anchor':'middle'});
+        t.textContent=o.pathText==='letter'?p.l:p.n;gP.appendChild(t);
+      }
+    }
+  });
+  svg.appendChild(gP);
+  const gS=el('g');
+  S.forEach(s=>{
+    const [x,y]=XY(s.q,s.row);
+    const g=el('g',{class:'sph p-'+s.pillar+(s.k==='daath'?' daath':''),'data-k':s.k});
+    if(s.k==='daath'){
+      if(o.interactive)g.appendChild(el('circle',{cx:x,cy:y,r:12,fill:'transparent',stroke:'none'}));
+      g.appendChild(el('circle',{cx:x,cy:y,r:4.5}));
+      if(o.interactive){const l=el('text',{class:'lat',x:x+8,y:y+2,'text-anchor':'start'});l.textContent='Daath';g.appendChild(l);}
+    }else{
+      g.appendChild(el('circle',{cx:x,cy:y,r:14}));
+      if(o.interactive&&o.sphereText){
+        const m=o.sphereText;
+        const top=el('text',{class:m==='hebrew'?'heb':m==='glyph'?'glyph':'n',x,y:y+(m==='glyph'?2.2:1.2),'text-anchor':'middle'});
+        top.textContent=m==='hebrew'?s.heb:m==='glyph'?s.glyph:s.n;g.appendChild(top);
+        const l=el('text',{class:'lat',x,y:y+8.2,'text-anchor':'middle'});l.textContent=s.lat;g.appendChild(l);
+      }
+    }
+    if(o.interactive){g.setAttribute('tabindex',0);g.setAttribute('role','button');g.setAttribute('aria-label',s.lat);
+      g.addEventListener('click',()=>o.onSphere&&o.onSphere(s.k));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();o.onSphere&&o.onSphere(s.k);}});}
+    gS.appendChild(g);
+  });
+  svg.appendChild(gS);
+}
+
+/* views: [{id,label,cap,layers:['pillars',...]}] — one hero, thumbnails, exclusive */
+function mount(page){
+  const hero=document.getElementById('hero'),cap=document.getElementById('cap'),views=document.getElementById('views'),card=document.getElementById('card');
+  const opts=Object.assign({interactive:true},page.draw);
+  opts.onSphere=k=>page.sphere(k);opts.onPath=n=>page.path(n);
+  build(hero,opts);
+  const setLayers=(svg,v)=>['grid','pillars','triads','descent'].forEach(l=>svg.querySelector('.L-'+l).style.opacity=(v.layers||[]).includes(l)?1:0);
+  function setView(id){
+    const v=page.views.find(x=>x.id===id);
+    hero.className.baseVal='hero v-'+id;setLayers(hero,v);
+    if((v.layers||[]).includes('descent')){const f=hero.querySelector('.flash');f.style.animation='none';f.getBoundingClientRect();f.style.animation='';}
+    cap.textContent=v.cap;views.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===id));
+  }
+  page.views.forEach(v=>{
+    const b=document.createElement('button');b.type='button';b.dataset.v=v.id;b.setAttribute('aria-pressed','false');
+    const sv=el('svg',{viewBox:'-115 -172 230 344',class:'v-'+v.id,'aria-hidden':'true'});build(sv,{});setLayers(sv,v);
+    b.appendChild(sv);b.appendChild(document.createTextNode(v.label));b.addEventListener('click',()=>setView(v.id));views.appendChild(b);
+  });
+  setView(page.views[0].id);
+  const clear=()=>hero.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));
+  const api={hero,card,clear,
+    deselect(){clear();card.innerHTML='<p class="empty">Tap a sphere or a path.</p>';},
+    markSphere(k){clear();hero.querySelector(`.sph[data-k="${k}"]`).classList.add('on');P.filter(p=>p.a===k||p.b===k).forEach(p=>hero.querySelector(`.path[data-p="${p.n}"]`).classList.add('on'));},
+    markPath(n){clear();const p=P.find(x=>x.n===n);hero.querySelector(`.path[data-p="${n}"]`).classList.add('on');[p.a,p.b].forEach(k=>hero.querySelector(`.sph[data-k="${k}"]`).classList.add('on'));},
+    head(title,heb,num){return `<div class="head"><div class="title">${title}<span class="hebrew">${heb}</span></div><div class="num">${num}</div></div>`;},
+    dl(rows){return '<dl>'+rows.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join('')+'</dl>';},
+  };
+  api.deselect();
+  document.addEventListener('click',e=>{if(e.target.closest('.sph,.hit,.card,.views,tr[data-k]'))return;if(hero.querySelector('.on'))api.deselect();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')api.deselect();});
+  return api;
+}
+const daathCard=api=>api.head('Daath','דעת','—')+api.dl([
+  ['Meaning','Knowledge'],
+  ['What it is','A position, not an emanation: no number, no path, no name. The one grid-center on the middle pillar left empty, where the abyss lies between the supernal three and the seven below.'],
+  ['Why marked','Chokmah and Binah meet here — knowledge is what wisdom and understanding produce in conjunction. Case reads it as a state of consciousness, not a sphere — documented.']]);
+return {S,P,byK,PN,XY,build,mount,daathCard};
+})();
