@@ -2,21 +2,21 @@
 window.TREE=(function(){
 const R=40,H=R*Math.sqrt(3)/2,XY=(q,row)=>[q*R,row*H];
 const S=[
- {k:'kether',col:'#FFFFFF',colt:'white',lt:false,n:1,q:0,row:-4,heb:'כתר',lat:'Kether',mean:'Crown',pillar:'mild',triad:'Supernal',world:'Atziluth',div:'אהיה',divt:'Eheieh',arch:'Metatron',sphere:'Primum Mobile',glyph:'☉'},
- {k:'chokmah',col:'#8E8E8E',colt:'grey',lt:false,n:2,q:1.5,row:-3,heb:'חכמה',lat:'Chokmah',mean:'Wisdom',pillar:'force',triad:'Supernal',world:'Atziluth · Briah',div:'יה',divt:'Yah',arch:'Raziel',sphere:'Sphere of the zodiac',glyph:'✶'},
- {k:'binah',col:'#1B1B1B',colt:'black',lt:true,n:3,q:-1.5,row:-3,heb:'בינה',lat:'Binah',mean:'Understanding',pillar:'form',triad:'Supernal',world:'Atziluth · Briah',div:'יהוה אלהים',divt:'YHVH Elohim',arch:'Tzaphkiel',sphere:'Saturn',glyph:'♄'},
+ {k:'kether',col:'#EDE6D3',colt:'white',lt:false,n:1,q:0,row:-4,heb:'כתר',lat:'Kether',mean:'Crown',pillar:'mild',triad:'Supernal',world:'Atziluth',div:'אהיה',divt:'Eheieh',arch:'Metatron',sphere:'Primum Mobile',glyph:'☉'},
+ {k:'chokmah',col:'#8A857A',colt:'grey',lt:false,n:2,q:1.5,row:-3,heb:'חכמה',lat:'Chokmah',mean:'Wisdom',pillar:'force',triad:'Supernal',world:'Atziluth · Briah',div:'יה',divt:'Yah',arch:'Raziel',sphere:'Sphere of the zodiac',glyph:'✶'},
+ {k:'binah',col:'#26231E',colt:'black',lt:true,n:3,q:-1.5,row:-3,heb:'בינה',lat:'Binah',mean:'Understanding',pillar:'form',triad:'Supernal',world:'Atziluth · Briah',div:'יהוה אלהים',divt:'YHVH Elohim',arch:'Tzaphkiel',sphere:'Saturn',glyph:'♄'},
  {k:'daath',n:0,q:0,row:-2,heb:'דעת',lat:'Daath',mean:'Knowledge',pillar:'mild',world:'Briah'},
- {k:'chesed',col:'#1E5CB8',colt:'blue',lt:true,n:4,q:1.5,row:-1,heb:'חסד',lat:'Chesed',mean:'Mercy',pillar:'force',triad:'Ethical',world:'Briah · Yetzirah',div:'אל',divt:'El',arch:'Tzadkiel',sphere:'Jupiter',glyph:'♃'},
- {k:'geburah',col:'#C4202B',colt:'red',lt:true,n:5,q:-1.5,row:-1,heb:'גבורה',lat:'Geburah',mean:'Severity',pillar:'form',triad:'Ethical',world:'Briah · Yetzirah',div:'אלהים גבור',divt:'Elohim Gibor',arch:'Kamael',sphere:'Mars',glyph:'♂'},
- {k:'tiphareth',col:'#F2D11E',colt:'yellow',lt:false,n:6,q:0,row:0,heb:'תפארת',lat:'Tiphareth',mean:'Beauty',pillar:'mild',triad:'Ethical',world:'Yetzirah',div:'יהוה אלוה ודעת',divt:'YHVH Eloah va-Daath',arch:'Raphael',sphere:'Sun',glyph:'☉'},
- {k:'netzach',col:'#2E8B3B',colt:'green',lt:true,n:7,q:1.5,row:1,heb:'נצח',lat:'Netzach',mean:'Victory',pillar:'force',triad:'Astral',world:'Yetzirah · Assiah',div:'יהוה צבאות',divt:'YHVH Tzabaoth',arch:'Haniel',sphere:'Venus',glyph:'♀'},
- {k:'hod',col:'#EE8A1B',colt:'orange',lt:false,n:8,q:-1.5,row:1,heb:'הוד',lat:'Hod',mean:'Splendor',pillar:'form',triad:'Astral',world:'Yetzirah · Assiah',div:'אלהים צבאות',divt:'Elohim Tzabaoth',arch:'Michael',sphere:'Mercury',glyph:'☿'},
- {k:'yesod',col:'#6E3AAE',colt:'violet',lt:true,n:9,q:0,row:2,heb:'יסוד',lat:'Yesod',mean:'Foundation',pillar:'mild',triad:'Astral',world:'Assiah',div:'שדי אל חי',divt:'Shaddai El Chai',arch:'Gabriel',sphere:'Moon',glyph:'☽'},
- {k:'malkuth',col:'#C9B322,#6B7A1E,#8A3A1E,#1B1B1B',colt:'citrine, olive, russet, black',lt:true,n:10,q:0,row:4,heb:'מלכות',lat:'Malkuth',mean:'Kingdom',pillar:'mild',triad:'—',world:'Assiah',div:'אדני הארץ',divt:'Adonai ha-Aretz',arch:'Sandalphon',sphere:'Sphere of the elements',glyph:'⊕'},
+ {k:'chesed',col:'#4F6F9E',colt:'blue',lt:true,n:4,q:1.5,row:-1,heb:'חסד',lat:'Chesed',mean:'Mercy',pillar:'force',triad:'Ethical',world:'Briah · Yetzirah',div:'אל',divt:'El',arch:'Tzadkiel',sphere:'Jupiter',glyph:'♃'},
+ {k:'geburah',col:'#B3483F',colt:'red',lt:true,n:5,q:-1.5,row:-1,heb:'גבורה',lat:'Geburah',mean:'Severity',pillar:'form',triad:'Ethical',world:'Briah · Yetzirah',div:'אלהים גבור',divt:'Elohim Gibor',arch:'Kamael',sphere:'Mars',glyph:'♂'},
+ {k:'tiphareth',col:'#D9B84A',colt:'yellow',lt:false,n:6,q:0,row:0,heb:'תפארת',lat:'Tiphareth',mean:'Beauty',pillar:'mild',triad:'Ethical',world:'Yetzirah',div:'יהוה אלוה ודעת',divt:'YHVH Eloah va-Daath',arch:'Raphael',sphere:'Sun',glyph:'☉'},
+ {k:'netzach',col:'#5C8A5E',colt:'green',lt:true,n:7,q:1.5,row:1,heb:'נצח',lat:'Netzach',mean:'Victory',pillar:'force',triad:'Astral',world:'Yetzirah · Assiah',div:'יהוה צבאות',divt:'YHVH Tzabaoth',arch:'Haniel',sphere:'Venus',glyph:'♀'},
+ {k:'hod',col:'#CF8244',colt:'orange',lt:false,n:8,q:-1.5,row:1,heb:'הוד',lat:'Hod',mean:'Splendor',pillar:'form',triad:'Astral',world:'Yetzirah · Assiah',div:'אלהים צבאות',divt:'Elohim Tzabaoth',arch:'Michael',sphere:'Mercury',glyph:'☿'},
+ {k:'yesod',col:'#7D5C9A',colt:'violet',lt:true,n:9,q:0,row:2,heb:'יסוד',lat:'Yesod',mean:'Foundation',pillar:'mild',triad:'Astral',world:'Assiah',div:'שדי אל חי',divt:'Shaddai El Chai',arch:'Gabriel',sphere:'Moon',glyph:'☽'},
+ {k:'malkuth',col:'#B7A23C,#6E7238,#8B4A2E,#26231E',colt:'citrine, olive, russet, black',lt:true,n:10,q:0,row:4,heb:'מלכות',lat:'Malkuth',mean:'Kingdom',pillar:'mild',triad:'—',world:'Assiah',div:'אדני הארץ',divt:'Adonai ha-Aretz',arch:'Sandalphon',sphere:'Sphere of the elements',glyph:'⊕'},
 ];
 S[0].glyph='⊚'; // Kether: Primum Mobile has no planet glyph
 const byK=Object.fromEntries(S.map(s=>[s.k,s]));
-const PC={Air:['#F2D11E','yellow'],Mercury:['#F2D11E','yellow'],Moon:['#1E5CB8','blue'],Venus:['#2E8B3B','green'],Aries:['#C4202B','red'],Taurus:['#DE5A1E','red-orange'],Gemini:['#EE8A1B','orange'],Cancer:['#F0B21C','orange-yellow'],Leo:['#F2D11E','yellow'],Virgo:['#9BBF2A','yellow-green'],Jupiter:['#6E3AAE','violet'],Libra:['#2E8B3B','green'],Water:['#1E5CB8','blue'],Scorpio:['#1E9A8A','blue-green'],Sagittarius:['#1E5CB8','blue'],Capricorn:['#3F3A9E','blue-violet'],Mars:['#C4202B','red'],Aquarius:['#6E3AAE','violet'],Pisces:['#A2338B','red-violet'],Sun:['#EE8A1B','orange'],Fire:['#C4202B','red'],Saturn:['#3F3A9E','blue-violet']};
+const PC={Air:['#D9B84A','yellow'],Mercury:['#D9B84A','yellow'],Moon:['#4F6F9E','blue'],Venus:['#5C8A5E','green'],Aries:['#B3483F','red'],Taurus:['#C4663F','red-orange'],Gemini:['#CF8244','orange'],Cancer:['#D6A048','orange-yellow'],Leo:['#D9B84A','yellow'],Virgo:['#9DA84E','yellow-green'],Jupiter:['#7D5C9A','violet'],Libra:['#5C8A5E','green'],Water:['#4F6F9E','blue'],Scorpio:['#4E8A84','blue-green'],Sagittarius:['#4F6F9E','blue'],Capricorn:['#5F5A96','blue-violet'],Mars:['#B3483F','red'],Aquarius:['#7D5C9A','violet'],Pisces:['#9A5279','red-violet'],Sun:['#CF8244','orange'],Fire:['#B3483F','red'],Saturn:['#5F5A96','blue-violet']};
 /* Colors: Case/BOTA scale — spheres per the B.O.T.A. Tree; paths per the twelve-color wheel of the attributions. */
 const P=[
  [11,'א','Aleph','Ox','kether','chokmah','Mother','Air','0 The Fool'],
@@ -46,7 +46,7 @@ const P=[
 const PN={form:'Form',force:'Force',mild:'Mildness'};
 const NS='http://www.w3.org/2000/svg';
 const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
-const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1],21:[.5,1],23:[.5,-1]};
+const LBL={13:[.17,1],25:[.32,1],27:[.42,-1],19:[.42,-1],14:[.42,-1],21:[.5,-1],23:[.5,1]};
 
 /* opts: interactive, sphereText: 'number'|'hebrew'|'glyph'|null, pathText: 'number'|'letter'|null, onSphere, onPath */
 function build(svg,o={}){

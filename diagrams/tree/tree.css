@@ -35,7 +35,7 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .sph circle{fill:var(--c,var(--paper));stroke:var(--ink);stroke-width:.8;cursor:pointer;transition:fill .2s,stroke .2s}
 .sph.on circle{stroke:var(--gold);stroke-width:2}
 .sph.lt .n,.sph.lt .lat,.sph.lt .heb,.sph.lt .glyph{fill:#F7F3E8}
-.sph[data-k=malkuth] .n,.sph[data-k=malkuth] .heb,.sph[data-k=malkuth] .glyph{paint-order:stroke;stroke:#1B1B1B;stroke-width:1.4px;stroke-linejoin:round}
+.sph[data-k=malkuth] .n,.sph[data-k=malkuth] .heb,.sph[data-k=malkuth] .glyph{paint-order:stroke;stroke:#26231E;stroke-width:1.4px;stroke-linejoin:round}
 .sph .n{font-size:7.5px;fill:#1F1F1D;font-family:'Cormorant Infant',serif;font-weight:500}
 .sph .heb{font-size:7px;fill:#1F1F1D;font-weight:600}
 .sph .lat{font-size:4.6px;fill:var(--ink);letter-spacing:.16em;font-weight:600}
@@ -62,7 +62,7 @@ svg text{font-family:'Assistant',sans-serif;pointer-events:none}
 .v-pillars .path:not([class*=along]){opacity:.25}
 .v-triads .path{opacity:.3}
 .v-descent .path{opacity:.12} .v-descent .world{stroke:var(--gold);opacity:.6} .v-descent .wl{fill:var(--gold)}
-.v-flower .path{opacity:.3} .v-flower .sph circle{r:6} .v-flower .quart{display:none} .v-flower .sph[data-k=malkuth] circle{fill:#1B1B1B} .v-flower .sph text{display:none}
+.v-flower .path{opacity:.3} .v-flower .sph circle{r:6} .v-flower .quart{display:none} .v-flower .sph[data-k=malkuth] circle{fill:#26231E} .v-flower .sph text{display:none}
 .v-flower .grid{stroke:var(--rule)}
 .v-mothers .path:not(.k-Mother),.v-doubles .path:not(.k-Double),.v-simples .path:not(.k-Simple){opacity:.12}
 .v-mothers .path.k-Mother,.v-doubles .path.k-Double,.v-simples .path.k-Simple{opacity:1;stroke-width:2.6}
