@@ -39,7 +39,10 @@
    Box heights: '(24", 20")'.
 
   FORMAT RULES
-   Tuesday: always team format — state it explicitly. Saturday: always partner format.
+   Tuesday and Saturday format (team/partner/individual) varies week to week — read
+   the board, don't assume. When the board states a format (Teams of N, Partner
+   Workout, Partner Style), transcribe it explicitly as a sub line. When it doesn't,
+   the day is individual — don't add a format line that isn't there.
    Percent ranges inline use hyphens ("45-50%"), never en dashes — the resolver keys on it.
    "Pen plate", not "per plate". Preserve "Functional Strength / Body Building" verbatim.
    Week-label conflicts: posted percent scheme overrides posted week label.
@@ -1303,6 +1306,163 @@ const MOBILITY_DESCRIPTIONS = {
 };
 
 const WEEKS = [
+  {
+    weekOf: '2026-09-14',
+    cycleWeek: 2,
+    days: [
+      {
+        id: 'monday', name: 'Monday', lift: 'Back Squat',
+        cap: '30:00', capLabel: 'Clock',
+        workout: [
+          { t: 'section', v: '(8:00 – 30:00) 22:00 Cap' },
+          { t: 'rounds', v: '-6 Rounds-' },
+          '100m Run',
+          '5 Box-Overs (24", 20")',
+          '10 Cal Bike',
+          '15 KB Swings (45, 55, 70)',
+          '20 Back Squats (95)',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 2 Back Squat' },
+          '5 Reps @ 50%',
+          '5 Reps @ 55%',
+          '5 Reps @ 60%',
+          '3 Reps @ 65%',
+          '3 Reps @ 70%',
+          '3 Reps @ 75%',
+          '1 Rep @ 80%',
+          '1 Rep @ 85%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 5 @ 75%'
+        ]
+      },
+      {
+        id: 'tuesday', name: 'Tuesday', lift: 'Clean',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          { t: 'sub', v: 'Buy In: 9 Rope Climbs' },
+          { gap: 1 },
+          { t: 'rounds', v: '-6 Rounds-' },
+          '30 Cal Row',
+          '15 Lateral Burpees Over the Bar',
+          '15 Power Cleans (115, 135, 155)',
+          { gap: 1 },
+          { t: 'sub', v: 'Cash Out: 15 Bar Muscle Ups' },
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 2 Clean' },
+          '5 Reps @ 50%',
+          '5 Reps @ 55%',
+          '5 Reps @ 60%',
+          '3 Reps @ 65%',
+          '3 Reps @ 70%',
+          '3 Reps @ 75%',
+          '1 Rep @ 80%',
+          '1 Rep @ 85%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 5 @ 75%'
+        ]
+      },
+      {
+        id: 'wednesday', name: 'Wednesday', lift: 'Bench Press',
+        cap: '32:00', capLabel: 'Clock',
+        workout: [
+          { t: 'sub', v: '10-9-8-7-6-5-4-3-2-1' },
+          'Push Ups',
+          'Single Arm DB Bent Over Row (You Choose a Heavy Weight)',
+          "60' Shuttle Runs",
+          'Bench Press (45-50%)',
+          'Single DB Pull Overs (You Choose a Heavy Weight)',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 2 Bench Press' },
+          '5 Reps @ 50%',
+          '5 Reps @ 55%',
+          '5 Reps @ 60%',
+          '3 Reps @ 65%',
+          '3 Reps @ 70%',
+          '3 Reps @ 75%',
+          '1 Rep @ 80%',
+          '1 Rep @ 85%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 5 @ 75%'
+        ]
+      },
+      {
+        id: 'thursday', name: 'Thursday', lift: 'Front Squat',
+        cap: '28:00', capLabel: 'Clock',
+        workout: [
+          { t: 'section', v: '(0:00 – 6:00)' },
+          'Build to a heavy 1 Rep Max Front Squat',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 2:00' },
+          { gap: 1 },
+          { t: 'section', v: '(8:00 – 28:00) 20:00 AMRAP' },
+          '60 Double Unders',
+          '10 Pistol Squats (R/L = 2)',
+          '10 Russian KB Swings (45, 55, 70)',
+          '5 Overhead Squats (75, 95, 115)',
+          '100m Ski',
+          '20 Air Squats',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Find a 1 Rep Max — Front Squat' },
+          { t: 'sub', v: 'Current max: 265 lb · or rest' }
+        ]
+      },
+      {
+        id: 'friday', name: 'Friday', lift: 'Deadlift',
+        cap: '30:00', capLabel: 'Clock',
+        workout: [
+          { t: 'title', v: '"Hyrox Fun Friday"' },
+          { t: 'rounds', v: '-7 Rounds-' },
+          '10 Deadlifts (Bodyweight)',
+          '15 Burpees to Pull-Up Bar',
+          "20 Wall Balls (20/14) (10', 9')",
+          '400m Run',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 2 Deadlift' },
+          '5 Reps @ 50%',
+          '5 Reps @ 55%',
+          '5 Reps @ 60%',
+          '3 Reps @ 65%',
+          '3 Reps @ 70%',
+          '3 Reps @ 75%',
+          '1 Rep @ 80%',
+          '1 Rep @ 85%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 5 @ 75%'
+        ]
+      },
+      {
+        id: 'saturday', name: 'Saturday', lift: 'Strict Press',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          { t: 'sub', v: 'Partner Style · 1 Working at a Time' },
+          { gap: 1 },
+          '100 Cal Bike',
+          'Alt. DB Snatch (90 Total)',
+          '80 Hand Release Push Ups',
+          '60 Pull Ups',
+          '40 Clean & Jerks',
+          '30 Handstand Push Ups',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 2 Strict Press' },
+          '5 Reps @ 50%',
+          '5 Reps @ 55%',
+          '5 Reps @ 60%',
+          '3 Reps @ 65%',
+          '3 Reps @ 70%',
+          '3 Reps @ 75%',
+          '1 Rep @ 80%',
+          '1 Rep @ 85%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 5 @ 75%'
+        ]
+      }
+    ]
+  },
   {
     weekOf: '2026-09-07',
     cycleWeek: 1,
