@@ -11,7 +11,12 @@
    3. Enter the week as the FIRST element of WEEKS (newest first).
    4. VERIFY (node): WEEKS parses; target week has 6 days mon–sat; every day has
       exactly one 'strength-h' whose lift matches DAY.lift via the resolver mapping
-      (Shoulder to Overhead → Strict Press). Fail loudly on any miss.
+      (Shoulder to Overhead → Strict Press); a day's first timed 'section' starts at
+      0:00 (a first section at 8:00 means the opening strength slot was dropped).
+      Fail loudly on any miss.
+   5. CLOCK COVERAGE: transcribe every timed segment the board/post shows, including
+      an opening strength slot such as "(0:00 – 6:00) Strength" + sub line + Rest.
+      The appended cycle pyramid (right card) never substitutes for it.
 
   STRENGTH BLOCK — REQUIRED ON EVERY DAY, EVERY WEEK
    cycleWeek 1–6: 'Strength: Week N <Lift>' + pyramid lines + 'Or 4 × R @ P%'.
