@@ -4,9 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#FBF9F2" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1F1F1D" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<script>
+  // status-bar colour is read once at launch: write it from the saved theme before the parser goes further
+  (function(){ var t = null; try { t = localStorage.getItem("ihsvh.theme"); } catch(e){}
+    var dark = t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    if (t) document.documentElement.dataset.theme = t;
+    document.write('<meta name="theme-color" content="' + (dark ? "#1F1F1D" : "#FBF9F2") + '">'); })();
+</script>
 <link rel="apple-touch-icon" href="tree-of-life-paths-icon.png">
 <link rel="icon" type="image/png" href="tree-of-life-paths-icon.png">
 <title>Paths of the Tree</title>
@@ -67,7 +72,7 @@
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
   /* fixed, non-scrolling frame: gives iOS no scrolling content to blur under the status bar */
-  .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; top: env(safe-area-inset-top); right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
+  .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; top: env(safe-area-inset-top); right: 0; left: 0; height: 100dvh; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   /* controls: bottom right, stacked — theme above, mode below; Next takes the bottom left */
   /* two round controls on the right edge, above the choice rows so nothing ever collides */
   .ctrl { position: absolute; right: 11px; bottom: 98px; z-index: 3; display: flex; flex-direction: column; gap: 8px; }
