@@ -128,7 +128,7 @@
   .path.reveal { stroke-width: 6; }                        /* the true path, in its letter colour */
   .path.wrong { stroke: var(--miss); stroke-width: 4; stroke-dasharray: 7 6; }   /* the path you tapped instead */
   .mark circle { fill: var(--card); stroke-width: 2; }
-  .mark text { font-family: var(--sans); font-weight: 600; font-size: 15px; text-anchor: middle; dominant-baseline: auto; pointer-events: none; }
+  .mark text { font-family: var(--sans); font-weight: 600; font-size: 15px; pointer-events: none; }
 
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 50% { stroke-width: 4; } }
@@ -287,6 +287,21 @@
     if (best) { pick(best.id); e.stopPropagation(); }   // the answering tap must not also advance
   });
   const mark = el("g",{class:"mark"}); mark.appendChild(el("circle",{r:13})); const markT = el("text",{y:0}); mark.appendChild(markT); mark.setAttribute("visibility","hidden");
+  // centre the letter on its ink (not its advance box or em box): measure the glyph on a canvas
+  const mc = document.createElement("canvas").getContext("2d");
+  function centreMark(ch){
+    const f = getComputedStyle(markT);
+    mc.font = `${f.fontWeight} ${f.fontSize} ${f.fontFamily}`;
+    const m = mc.measureText(ch);
+    if (m.actualBoundingBoxLeft !== undefined) {
+      markT.setAttribute("text-anchor", "start"); markT.setAttribute("dominant-baseline", "alphabetic");
+      const w = m.actualBoundingBoxLeft + m.actualBoundingBoxRight, h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+      markT.setAttribute("x", -w / 2 + m.actualBoundingBoxLeft); markT.setAttribute("y", h / 2 - m.actualBoundingBoxDescent);
+    } else {
+      markT.setAttribute("text-anchor", "middle"); markT.setAttribute("x", 0); markT.setAttribute("y", 0);
+      const bb = markT.getBBox(); markT.setAttribute("y", -(bb.y + bb.height / 2));
+    }
+  }
   const sephEls = {};
   SEPH.forEach(s => {
     const g = el("g",{class:"seph"});
@@ -351,9 +366,7 @@
     { const a = pos[k.from], b = pos[k.to];                          // the letter, on the line
       mark.setAttribute("transform", `translate(${(a.x+b.x)/2} ${(a.y+b.y)/2})`);
       mark.querySelector("circle").style.stroke = `var(--${k.c})`; markT.style.fill = `var(--${k.c})`;
-      markT.textContent = k.heb; mark.setAttribute("visibility","visible");
-      // centre the glyph's ink, not its em box: lamed rises, qoph descends
-      markT.setAttribute("y", 0); const bb = markT.getBBox(); markT.setAttribute("y", -(bb.y + bb.height / 2)); }
+      markT.textContent = k.heb; mark.setAttribute("visibility","visible"); centreMark(k.heb); }
     treebox.classList.add(ok ? "hit-yes" : "hit-no");
     if (choosing()) $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
