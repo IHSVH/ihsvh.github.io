@@ -124,6 +124,8 @@
   .halo { stroke: var(--paper); stroke-width: 13; stroke-linecap: round; pointer-events: none; display: none; }
   .halo.ask { display: inline; }
   .path.reveal { stroke-width: 6; }                        /* the true path, in its letter colour */
+  .mark circle { fill: var(--card); stroke-width: 2; }
+  .mark text { font-family: var(--sans); font-weight: 600; font-size: 15px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
 
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 50% { stroke-width: 4; } }
@@ -280,6 +282,7 @@
     });
     if (best) pick(best.id);
   });
+  const mark = el("g",{class:"mark"}); mark.appendChild(el("circle",{r:13})); const markT = el("text",{y:1}); mark.appendChild(markT); mark.setAttribute("visibility","hidden");
   const sephEls = {};
   SEPH.forEach(s => {
     const g = el("g",{class:"seph"});
@@ -289,6 +292,7 @@
     const n = el("text",{class:"n",x:s.x,y:s.y-10}); n.textContent = s.n; g.appendChild(n);
     tree.appendChild(g); sephEls[s.name] = g;
   });
+  tree.appendChild(mark);
 
   // ---- round control
   function shuffle(a){ for(let j=a.length-1;j>0;j--){ const r=Math.floor(Math.random()*(j+1)); [a[j],a[r]]=[a[r],a[j]]; } return a; }
@@ -301,7 +305,7 @@
   }
   function clearTree(){
     Object.values(lines).forEach(l=>{ l.classList.remove("reveal","ask"); l.style.stroke = ""; });
-    Object.values(halos).forEach(l=>l.classList.remove("ask"));
+    Object.values(halos).forEach(l=>l.classList.remove("ask")); mark.setAttribute("visibility","hidden");
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
     treebox.classList.remove("locked", "asking", "hit-yes", "hit-no"); next.hidden = true;
   }
@@ -339,6 +343,10 @@
     treebox.classList.add("locked");
     lines[k.id].classList.remove("ask"); halos[k.id].classList.remove("ask"); treebox.classList.remove("asking");
     lines[k.id].classList.add("reveal"); lines[k.id].style.stroke = `var(--${k.c})`;
+    { const a = pos[k.from], b = pos[k.to];                          // the letter, on the line
+      mark.setAttribute("transform", `translate(${(a.x+b.x)/2} ${(a.y+b.y)/2})`);
+      mark.querySelector("circle").style.stroke = `var(--${k.c})`; markT.style.fill = `var(--${k.c})`;
+      markT.textContent = k.heb; mark.setAttribute("visibility","visible"); }
     treebox.classList.add(ok ? "hit-yes" : "hit-no");
     if (mode === "path") $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
