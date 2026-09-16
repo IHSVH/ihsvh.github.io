@@ -69,8 +69,8 @@
   /* fixed, non-scrolling frame: gives iOS no scrolling content to blur under the status bar */
   .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; inset: env(safe-area-inset-top) 0 0 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   /* modes live in a panel that slides in from the right; its handle balances the card on the left */
-  .handle { position: absolute; right: 0; top: 10px; z-index: 4; width: 30px; height: var(--card-h); background: var(--gold); border-radius: 6px 0 0 6px; display: flex; align-items: center; justify-content: center; box-shadow: -1px 0 0 rgba(0,0,0,.04); }
-  .handle svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .modebtn { pointer-events: auto; font-family: var(--sans); font-size: .72rem; letter-spacing: .06em; color: var(--gold-deep); font-weight: 600; padding: 6px 0 6px 10px; margin: -6px 0; }
+  .modebtn::after { content: " ›"; }
   .scrim { position: absolute; inset: 0; z-index: 5; background: rgba(31,31,29,.18); opacity: 0; pointer-events: none; transition: opacity .2s; }
   .panel { position: absolute; top: 0; right: 0; bottom: 0; z-index: 6; width: 232px; background: var(--gold); transform: translateX(100%); transition: transform .22s ease; display: flex; flex-direction: column; padding: 18px 0 calc(env(safe-area-inset-bottom) + 18px); }
   .app.open .scrim { opacity: 1; pointer-events: auto; }
@@ -83,7 +83,7 @@
   .panel .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 14px); padding: 10px 44px 0 8px; }
+  .prompt { position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 14px); padding: 10px 19px 0 8px; }
   .prompt img { flex: none; width: calc(var(--card-h) * .615); height: var(--card-h); object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); pointer-events: auto; cursor: zoom-in; }
 
   /* the Key, large: tap the card to open, tap anywhere to close */
@@ -97,7 +97,7 @@
   .prompt .kicker.yes { color: var(--gold-deep); }
   .prompt .kicker.no { color: var(--miss); }
   .prompt .kicker.yes .prog, .prompt .kicker.no .prog { color: var(--grey); }
-  .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.12; padding-bottom: .1em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.08; padding-bottom: .1em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; }
   .prompt .sub .heb { font-family: var(--sans); font-weight: 600; font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
 
@@ -153,7 +153,6 @@
 </head>
 <body>
 <div class="app">
-  <button class="handle" id="handle" aria-label="Modes"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
   <div class="scrim" id="scrim"></div>
   <div class="panel" id="panel" role="group" aria-label="Drill mode">
     <h2>Drill</h2>
@@ -307,7 +306,7 @@
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
     treebox.classList.remove("locked", "asking", "hit-yes", "hit-no"); next.hidden = true;
   }
-  const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
+  const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓ <button class="modebtn" data-open>${MODES[mode]}</button></span>`;
   function show(){
     locked = false; clearTree();
     const old = $("choices"); if (old) old.remove();
@@ -396,7 +395,7 @@
   document.addEventListener("keydown", e => { if (e.key === "Escape") big.hidden = true; });
   document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && locked && !treebox.hidden && document.activeElement.tagName!=="BUTTON") { e.preventDefault(); advance(); } });
   const app = document.querySelector(".app");
-  $("handle").addEventListener("click", () => app.classList.add("open"));
+  prompt.addEventListener("click", e => { if (e.target.closest("[data-open]")) app.classList.add("open"); });
   $("scrim").addEventListener("click", () => app.classList.remove("open"));
   document.querySelectorAll(".panel [data-mode]").forEach(b => b.addEventListener("click", () => {
     app.classList.remove("open");
