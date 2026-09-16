@@ -52,7 +52,7 @@
       --gold-line: #8C7A45;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { -webkit-text-size-adjust: 100%; height: 100%; }
+  html { -webkit-text-size-adjust: 100%; height: 100%; background: var(--gold); }
   body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); height: 100%; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   [hidden] { display: none !important; }
@@ -105,15 +105,16 @@
   .treebox:not(.locked) .hit:hover + .path, .treebox:not(.locked) .hit:focus-visible + .path { stroke: var(--gold); stroke-width: 3; }
   .hit:focus, .hit:focus-visible { outline: none; }
   .locked .hit { pointer-events: none; }
-  .path.ask { stroke: var(--gold-deep); stroke-width: 5; }
+  .path.ask { stroke: var(--ink); stroke-width: 6; }
   .path.answer { stroke: var(--ref); stroke-width: 5; }   /* you had it */
   .path.miss { stroke: var(--miss); stroke-width: 5; }    /* the path you were looking for */
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
-  @keyframes pulse { 50% { stroke-width: 3; } }
+  @keyframes pulse { 50% { stroke-width: 3.5; } }
   .seph circle { fill: var(--card); stroke: var(--gold-line); stroke-width: 1.2; }
   .seph text { font-family: var(--sans); font-size: 12.5px; fill: var(--gold-deep); text-anchor: middle; dominant-baseline: central; direction: rtl; pointer-events: none; }
   .seph .n { font-family: var(--serif); font-weight: 300; font-size: 10px; fill: var(--grey); direction: ltr; }
   .seph.lit circle { stroke: var(--gold-deep); stroke-width: 2; }
+  .asking .seph.lit circle { stroke: var(--ink); stroke-width: 2.2; }
 
   .btn { display: block; width: 100%; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1.05rem; text-align: center; padding: 12px; border-radius: 4px; }
   .btn.quiet { background: none; color: var(--grey); font-weight: 500; border: 1px solid var(--rule); margin-top: 10px; }
@@ -279,7 +280,7 @@
   function clearTree(){
     Object.values(lines).forEach(l=>l.classList.remove("answer","miss","ask"));
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
-    treebox.classList.remove("locked"); next.hidden = true;
+    treebox.classList.remove("locked", "asking"); next.hidden = true;
   }
   const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
   function show(){
@@ -293,7 +294,7 @@
     } else {
       lines[k.id].classList.add("ask");
       sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
-      treebox.classList.add("locked");
+      treebox.classList.add("locked", "asking");
       const opts = shuffle([k, ...shuffle(KEYS.filter(o=>o!==k)).slice(0,3)]);
       prompt.innerHTML = `<div class="txt"><p class="kicker"><span>Which Key</span>${prog()}</p><p class="title">walks this path?</p><p class="sub">${k.from} to ${k.to}</p></div>`;
       const c = document.createElement("div"); c.className = "choices"; c.id = "choices";
@@ -312,7 +313,7 @@
     const k = deck[i], ok = id === k.id;
     if (ok) hits++; else missed.push(k);
     treebox.classList.add("locked");
-    lines[k.id].classList.remove("ask");
+    lines[k.id].classList.remove("ask"); treebox.classList.remove("asking");
     lines[k.id].classList.add(ok ? "answer" : "miss");
     if (mode === "path") $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
