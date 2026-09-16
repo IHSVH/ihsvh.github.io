@@ -66,16 +66,16 @@
   .bar .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { flex: none; display: flex; align-items: center; gap: 12px; height: 92px; padding: 4px 14px 0; }
-  .prompt img { flex: none; width: 50px; height: 81px; object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
-  .prompt .letter { flex: none; width: 50px; text-align: center; font-family: var(--sans); font-size: 3.2rem; line-height: 1; color: var(--gold-deep); direction: rtl; }
+  .prompt { --card-h: clamp(80px, 14dvh, 132px); flex: none; display: flex; align-items: center; gap: 14px; height: calc(var(--card-h) + 8px); padding: 2px 14px 0; }
+  .prompt img { flex: none; width: calc(var(--card-h) * .615); height: var(--card-h); object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
+  .prompt .letter { flex: none; width: calc(var(--card-h) * .615); text-align: center; font-family: var(--sans); font-size: calc(var(--card-h) * .72); line-height: 1; color: var(--gold-deep); direction: rtl; }
   .prompt .txt { min-width: 0; flex: 1; }
   .prompt .kicker { display: flex; justify-content: space-between; font-family: var(--sans); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0 0 2px; }
   .prompt .kicker .prog { letter-spacing: .04em; text-transform: none; }
   .prompt .kicker.yes { color: var(--gold-deep); }
   .prompt .kicker.no { color: var(--miss); }
   .prompt .kicker.yes .prog, .prompt .kicker.no .prog { color: var(--grey); }
-  .prompt .title { font-family: var(--display); font-weight: 600; font-size: 1.6rem; letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt .sub .heb { font-family: var(--sans); font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
 
@@ -86,13 +86,13 @@
   .choices .t { font-family: var(--display); font-weight: 600; font-size: 1rem; color: var(--ink-soft); }
 
   /* tree fills whatever height is left; absolute inside a flexed box so Safari sizes it */
-  .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: 2px 8px calc(env(safe-area-inset-bottom) + 4px); }
+  .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: 0 8px calc(env(safe-area-inset-bottom) + 4px); }
   .next { position: absolute; right: 2px; bottom: 2px; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1rem; padding: 10px 18px; border-radius: 4px; }
   svg.tree { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .guide { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 5; }
   .path { stroke: var(--gold-line); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; transition: stroke .15s, stroke-width .15s; }
   .hit { stroke: transparent; stroke-width: 24; cursor: pointer; pointer-events: stroke; touch-action: manipulation; }
-  .hit:hover + .path, .hit:focus-visible + .path { stroke: var(--gold); stroke-width: 3; }
+  .treebox:not(.locked) .hit:hover + .path, .treebox:not(.locked) .hit:focus-visible + .path { stroke: var(--gold); stroke-width: 3; }
   .hit:focus, .hit:focus-visible { outline: none; }
   .locked .hit { pointer-events: none; }
   .path.ask { stroke: var(--gold-deep); stroke-width: 5; }
@@ -216,10 +216,23 @@
     const a = pos[k.from], b = pos[k.to];
     const hit = el("line",{class:"hit",x1:a.x,y1:a.y,x2:b.x,y2:b.y,tabindex:0,role:"button","aria-label":`${k.from} to ${k.to}`});
     const line = el("line",{class:"path",x1:a.x,y1:a.y,x2:b.x,y2:b.y});
-    hit.addEventListener("click", ()=>pick(k.id));
     hit.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(k.id);} });
     tree.appendChild(hit); tree.appendChild(line);
     lines[k.id] = line;
+  });
+  // a tap picks the nearest path, not whichever hit-line happens to be drawn on top where two cross
+  tree.addEventListener("click", e => {
+    if (locked) return;
+    const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(tree.getScreenCTM().inverse());
+    let best = null, bd = 16;
+    KEYS.forEach(k => {
+      const a = pos[k.from], b = pos[k.to];
+      const dx = b.x - a.x, dy = b.y - a.y, L = dx*dx + dy*dy;
+      let t = ((pt.x - a.x) * dx + (pt.y - a.y) * dy) / L; t = Math.max(0.1, Math.min(0.9, t));
+      const d = Math.hypot(pt.x - (a.x + t*dx), pt.y - (a.y + t*dy));
+      if (d < bd) { bd = d; best = k; }
+    });
+    if (best) pick(best.id);
   });
   const sephEls = {};
   SEPH.forEach(s => {
