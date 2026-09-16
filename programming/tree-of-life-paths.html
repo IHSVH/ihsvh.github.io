@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" id="themeColor" content="#B4A67F">
+<meta name="theme-color" content="#B4A67F" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#BC9836" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="tree-of-life-paths-icon.png">
 <link rel="icon" type="image/png" href="tree-of-life-paths-icon.png">
 <title>Paths of the Tree</title>
@@ -366,8 +367,12 @@
     themeColor();
   });
   function themeColor(){
-    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-    $("themeColor").content = dark ? "#BC9836" : "#B4A67F";
+    // Safari reads theme-color once; replace the tags rather than editing them
+    if (!root.dataset.theme) return;
+    document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
+    const m = document.createElement("meta"); m.name = "theme-color";
+    m.content = root.dataset.theme === "dark" ? "#BC9836" : "#B4A67F";
+    document.head.appendChild(m);
   }
   themeColor();
   next.addEventListener("click", advance);
