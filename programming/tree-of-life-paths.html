@@ -69,8 +69,14 @@
   /* fixed, non-scrolling frame: gives iOS no scrolling content to blur under the status bar */
   .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; inset: env(safe-area-inset-top) 0 0 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   /* modes live in a panel that slides in from the right; its handle balances the card on the left */
-  .modebtn { pointer-events: auto; font-family: var(--sans); font-size: .72rem; letter-spacing: .06em; color: var(--gold-deep); font-weight: 600; padding: 6px 0 6px 10px; margin: -6px 0; }
-  .modebtn::after { content: " ›"; }
+  /* controls: bottom right, stacked — theme above, mode below; Next takes the bottom left */
+  .ctrl { position: absolute; right: 11px; bottom: 2px; z-index: 3; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .ctrl .mode { background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: .95rem; padding: 10px 14px; border-radius: 4px; }
+  .ctrl .mode::after { content: " ›"; }
+  .ctrl .theme { width: 38px; height: 38px; border-radius: 50%; background: var(--gold-deep); display: flex; align-items: center; justify-content: center; }
+  .ctrl .theme svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; }
+  .ctrl .theme svg path { fill: #fff; stroke: none; }
+  .choosing .ctrl { display: none; }
   .scrim { position: absolute; inset: 0; z-index: 5; background: rgba(31,31,29,.18); opacity: 0; pointer-events: none; transition: opacity .2s; }
   .panel { position: absolute; top: 0; right: 0; bottom: 0; z-index: 6; width: 232px; background: var(--gold); transform: translateX(100%); transition: transform .22s ease; display: flex; flex-direction: column; padding: 18px 0 calc(env(safe-area-inset-bottom) + 18px); }
   .app.open .scrim { opacity: 1; pointer-events: auto; }
@@ -78,9 +84,6 @@
   .panel h2 { margin: 0 18px 8px; font-family: var(--sans); font-weight: 600; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); }
   .panel button { text-align: left; color: rgba(255,255,255,.78); font-family: var(--sans); font-weight: 500; font-size: 1.08rem; padding: 12px 18px; border-left: 3px solid transparent; }
   .panel button[aria-pressed="true"] { color: #fff; font-weight: 600; border-left-color: #fff; background: rgba(255,255,255,.08); }
-  .panel .theme { margin-top: auto; display: flex; align-items: center; gap: 10px; }
-  .panel .theme svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; }
-  .panel .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
   .prompt { position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 14px); padding: 10px 19px 0 8px; }
@@ -113,7 +116,7 @@
   .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: calc(-1 * var(--row-h)) 8px calc(env(safe-area-inset-bottom) + 4px); }
   /* the top guide circle rises behind the card row and fades out under the bar */
   svg.tree { -webkit-mask: linear-gradient(to bottom, transparent 0, #000 var(--row-h)); mask: linear-gradient(to bottom, transparent 0, #000 var(--row-h)); }
-  .next { position: absolute; right: 11px; bottom: 2px; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1rem; padding: 10px 18px; border-radius: 4px; }
+  .next { position: absolute; left: 8px; bottom: 2px; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1rem; padding: 10px 18px; border-radius: 4px; }
   svg.tree { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .guide { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 5; }
   .path { stroke: var(--gold-line); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; transition: stroke .15s, stroke-width .15s; }
@@ -159,7 +162,6 @@
     <button data-mode="key" aria-pressed="true">Key → Path</button>
     <button data-mode="letter" aria-pressed="false">Letter → Path</button>
     <button data-mode="path" aria-pressed="false">Path → Key</button>
-    <button class="theme" id="theme" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg>Dark mode</button>
   </div>
 
   <div class="prompt" id="prompt"></div>
@@ -167,6 +169,10 @@
   <div class="treebox" id="treebox">
     <svg class="tree" id="tree" viewBox="-132 -242 264 630" aria-label="Tree of Life"></svg>
     <button class="next" id="next" hidden>Next ›</button>
+    <div class="ctrl">
+      <button class="theme" id="theme" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg></button>
+      <button class="mode" id="modebtn">Key → Path</button>
+    </div>
   </div>
   <div class="big" id="big" hidden></div>
 
@@ -239,7 +245,7 @@
   let mode = "key", deck = [], i = 0, hits = 0, missed = [], locked = false;
 
   const $ = id => document.getElementById(id);
-  const tree = $("tree"), prompt = $("prompt"), treebox = $("treebox"), next = $("next");
+  const tree = $("tree"), prompt = $("prompt"), treebox = $("treebox"), next = $("next"), app = document.querySelector(".app");
   const NS = "http://www.w3.org/2000/svg";
   const el = (t,a)=>{ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e; };
 
@@ -306,10 +312,10 @@
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
     treebox.classList.remove("locked", "asking", "hit-yes", "hit-no"); next.hidden = true;
   }
-  const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓ <button class="modebtn" data-open>${MODES[mode]}</button></span>`;
+  const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
   function show(){
     locked = false; clearTree();
-    const old = $("choices"); if (old) old.remove();
+    const old = $("choices"); if (old) old.remove(); app.classList.remove("choosing");
     const k = deck[i];
     if (mode === "key") {
       prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker"><span>Key ${k.key}</span>${prog()}</p><p class="title">${k.title}</p><p class="sub">Tap its path</p></div>`;
@@ -329,7 +335,7 @@
         b.addEventListener("click", ()=>pick(o.id));
         c.appendChild(b);
       });
-      treebox.appendChild(c);
+      treebox.appendChild(c); app.classList.add("choosing");
     }
   }
   function pick(id){
@@ -340,7 +346,7 @@
     lines[k.id].classList.remove("ask"); halos[k.id].classList.remove("ask"); treebox.classList.remove("asking");
     lines[k.id].classList.add("reveal"); lines[k.id].style.stroke = `var(--${k.c})`;
     treebox.classList.add(ok ? "hit-yes" : "hit-no");
-    if (mode === "path") $("choices").remove();
+    if (mode === "path") { $("choices").remove(); app.classList.remove("choosing"); }
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
     // the prompt box becomes the answer box: same height, no reflow
     setTimeout(() => {
@@ -394,12 +400,11 @@
   big.addEventListener("click", () => { big.hidden = true; });
   document.addEventListener("keydown", e => { if (e.key === "Escape") big.hidden = true; });
   document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && locked && !treebox.hidden && document.activeElement.tagName!=="BUTTON") { e.preventDefault(); advance(); } });
-  const app = document.querySelector(".app");
-  prompt.addEventListener("click", e => { if (e.target.closest("[data-open]")) app.classList.add("open"); });
+  $("modebtn").addEventListener("click", () => app.classList.add("open"));
   $("scrim").addEventListener("click", () => app.classList.remove("open"));
   document.querySelectorAll(".panel [data-mode]").forEach(b => b.addEventListener("click", () => {
     app.classList.remove("open");
-    mode = b.dataset.mode;
+    mode = b.dataset.mode; $("modebtn").textContent = MODES[mode];
     document.querySelectorAll(".panel [data-mode]").forEach(x=>x.setAttribute("aria-pressed", x===b));
     start();
   }));
