@@ -18,4 +18,20 @@ Treatment: sticky gold bar with white sans chapter name; centered line-drawn pla
 
 Open: whether ESV gold #B4A67F replaces IHSVH gold #B89131 site-wide; whether blue reference marks become gold on Hebrew-heavy documents.
 
+## Color scale (Tree of Life)
+
+Case / B.O.T.A. attributions, tinted to the paper. Color is used sparingly and only where it carries information (an attribution, a verdict); the lattice itself stays in the neutrals. Reference sheet: `tree-of-life-color-scale.html`.
+
+```
+wheel   yellow #C9A227   yellow-green #8FA23A   green #5F9463   blue-green #4D9B93
+        blue #5B85B5     blue-violet #6B62A8    violet #8A5FA5  violet-red #A94E78
+        red #B4463F      red-orange #C25E36     orange #C97A2E  orange-yellow #CE9330
+malkuth citrine #B9A83A  olive #7A7A3C  russet #8B4A2B  black #46453F
+verdict correct = ref blue #72ABBF   wrong = #B5685C   emphasis (question) = IHSVH gold #B89131
+```
+
+Sephiroth (Queen scale): Kether white · Chokmah grey #9A9283 · Binah black #46453F · Chesed blue · Geburah red · Tiphareth yellow · Netzach green · Hod orange · Yesod violet · Malkuth citrine/olive/russet/black.
+
+Paths by letter — mothers: Aleph yellow, Mem blue, Shin red. Doubles: Beth yellow, Gimel blue, Daleth green, Kaph violet, Peh red, Resh orange, Tav blue-violet. Simples: Heh red, Vav red-orange, Zain orange, Cheth orange-yellow, Teth yellow, Yod yellow-green, Lamed green, Nun blue-green, Samekh blue, Ayin blue-violet, Tzaddi violet, Qoph violet-red.
+
 `logo.psd` — master logo.

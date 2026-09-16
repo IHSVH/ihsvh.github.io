@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tree of Life — Color Scale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Cormorant+Infant:wght@500;600&family=Assistant:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBF9F2; --card: #FFFEFA; --ink: #1F1F1D; --ink-soft: #46453F; --grey: #7D7669; --rule: #E9E4D7;
+    --gold: #B4A67F; --gold-deep: #AC9D71; --gold-line: #BFB18F;
+    --serif: "Crimson Pro", Georgia, serif; --display: "Cormorant Infant", "Crimson Pro", serif; --sans: "Assistant", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    /* the scale: twelve hues, warmed to the paper */
+    --yellow: #C9A227; --yellow-green: #8FA23A; --green: #5F9463; --blue-green: #4D9B93;
+    --blue: #5B85B5; --blue-violet: #6B62A8; --violet: #8A5FA5; --violet-red: #A94E78;
+    --red: #B4463F; --red-orange: #C25E36; --orange: #C97A2E; --orange-yellow: #CE9330;
+    --white: #FFFFFF; --grey-s: #9A9283; --black: #46453F;
+    --citrine: #B9A83A; --olive: #7A7A3C; --russet: #8B4A2B;
+    --tint: 58%;   /* how far a rim colour sits from full hue toward paper */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #1F1F1D; --card: #262624; --ink: #E8E2D0; --ink-soft: #D6CFBC; --grey: #9A9283; --rule: #3A3935; --gold: #BC9836; --gold-deep: #A9892F; --gold-line: #8C7A45; --black: #D6CFBC; --white: #FFFFFF; --tint: 72%; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 22px 60px; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--rule); padding-bottom: 14px; margin-bottom: 26px; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: 2.3rem; letter-spacing: .03em; margin: 0; color: var(--ink-soft); }
+  .sub { font-style: italic; font-size: 1.15rem; color: var(--grey); margin: 4px 0 0; }
+  .tag { font-family: var(--sans); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--grey); text-align: right; line-height: 1.7; }
+  .grid { display: grid; grid-template-columns: 380px 1fr; gap: 34px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  svg.tree { width: 100%; height: auto; display: block; }
+  .guide { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 5; }
+  .path { stroke-width: 3; stroke-linecap: round; }
+  .seph circle { fill: var(--card); stroke-width: 2.2; }
+  .seph text { font-family: var(--sans); font-size: 12.5px; text-anchor: middle; dominant-baseline: central; direction: rtl; fill: var(--ink-soft); }
+  .seph .n { font-family: var(--serif); font-weight: 300; font-size: 10px; fill: var(--grey); direction: ltr; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--grey); margin: 0 0 8px; }
+  .list { border-top: 1px solid var(--rule); margin-bottom: 26px; }
+  .row { display: grid; grid-template-columns: 26px 26px 44px 1fr auto auto; gap: 12px; align-items: center; padding: 6px 2px; border-bottom: 1px solid var(--rule); font-size: 1.05rem; color: var(--ink-soft); }
+  .row.p { grid-template-columns: 26px 26px 34px 1fr auto auto auto; }
+  .sw { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(0,0,0,.08); }
+  .sw.rim { background: var(--card); border: 2.2px solid; }
+  .n { font-family: var(--sans); font-size: .78rem; color: var(--grey); }
+  .heb { font-family: var(--sans); color: var(--gold-deep); direction: rtl; }
+  .name i { color: var(--grey); }
+  .hex { font-family: var(--sans); font-size: .78rem; color: var(--grey); letter-spacing: .04em; }
+  .key { font-family: var(--sans); font-size: .78rem; color: var(--grey); }
+  .wheel { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; margin: 8px 0 26px; }
+  .wheel span { display: block; font-family: var(--sans); font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; color: var(--grey); text-align: center; margin-top: 6px; }
+  .mal i { display: block; }
+  .mal { display: inline-grid; grid-template-columns: 1fr 1fr; width: 22px; height: 22px; border-radius: 50%; overflow: hidden; transform: rotate(45deg); }
+  .note { font-size: 1.12rem; line-height: 1.6; color: var(--ink-soft); max-width: 62ch; margin: 0 0 26px; }
+  .note i { color: var(--grey); }
+  .foot { border-top: 1px solid var(--rule); margin-top: 30px; padding-top: 12px; font-family: var(--sans); font-size: .78rem; color: var(--grey); display: flex; justify-content: space-between; letter-spacing: .1em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>THE TREE OF LIFE — COLOR SCALE</h1><p class="sub">Case / B.O.T.A. attributions, tinted to the IHSVH paper</p></div>
+    <div class="tag">One structure<br>Twelve hues<br>Three primaries</div>
+  </header>
+
+  <div class="grid">
+    <div>
+      <svg class="tree" id="tree" viewBox="-136 -152 272 542"></svg>
+      <p class="note" style="margin-top:18px"><i>Rims at the sephiroth colour, paths at the letter colour. On the drill page the rims sit at </i>tint<i> strength so the lattice stays quiet; a revealed path is drawn at full strength.</i></p>
+    </div>
+    <div>
+      <h2>Sephiroth · Queen scale</h2>
+      <div class="list" id="seph"></div>
+
+      <h2>Paths · by letter</h2>
+      <div class="list" id="paths"></div>
+
+      <h2>The wheel</h2>
+      <div class="wheel" id="wheel"></div>
+
+      <p class="note">The scale is one structure: twelve hues around the wheel for the twelve simples, the three primaries for the three mothers, and the seven doubles taking the primaries and the four remaining points of the wheel. Learning the colour is learning the attribution, which is why an arbitrary palette, however tasteful, teaches nothing.</p>
+    </div>
+  </div>
+
+  <div class="foot"><span>IHSVH</span><span>Form · Colour · Meaning · One</span></div>
+</div>
+
+<script>
+(function () {
+  const R = 120, X = R * Math.sin(Math.PI / 3);
+  const SEPH = [
+    ["Kether","כתר",0,-R,"white","White","#FFFFFF"],["Chokmah","חכמה",X,-R/2,"grey-s","Grey","#9A9283"],["Binah","בינה",-X,-R/2,"black","Black","#46453F"],
+    ["Chesed","חסד",X,R/2,"blue","Blue","#5B85B5"],["Geburah","גבורה",-X,R/2,"red","Red","#B4463F"],["Tiphareth","תפארת",0,R,"yellow","Yellow","#C9A227"],
+    ["Netzach","נצח",X,1.5*R,"green","Green","#5F9463"],["Hod","הוד",-X,1.5*R,"orange","Orange","#C97A2E"],["Yesod","יסוד",0,2*R,"violet","Violet","#8A5FA5"],["Malkuth","מלכות",0,3*R,"mal","Citrine · Olive · Russet · Black","#B9A83A · #7A7A3C · #8B4A2B · #46453F"]
+  ].map(([name,heb,x,y,c,cn,hex],i)=>({name,heb,x,y,c,cn,hex,n:i+1}));
+  const pos = Object.fromEntries(SEPH.map(s=>[s.name,s]));
+  const HEX = {yellow:"#C9A227","yellow-green":"#8FA23A",green:"#5F9463","blue-green":"#4D9B93",blue:"#5B85B5","blue-violet":"#6B62A8",violet:"#8A5FA5","violet-red":"#A94E78",red:"#B4463F","red-orange":"#C25E36",orange:"#C97A2E","orange-yellow":"#CE9330"};
+  const NAME = c => c.split("-").map(w=>w[0].toUpperCase()+w.slice(1)).join("-");
+  // key, title, path, letter, name, from, to, colour, group
+  const P = [
+    [0,"The Fool",11,"א","Aleph","Kether","Chokmah","yellow","M"],[12,"The Hanged Man",23,"מ","Mem","Geburah","Hod","blue","M"],[20,"Judgement",31,"ש","Shin","Hod","Malkuth","red","M"],
+    [1,"The Magician",12,"ב","Beth","Kether","Binah","yellow","D"],[2,"The High Priestess",13,"ג","Gimel","Kether","Tiphareth","blue","D"],[3,"The Empress",14,"ד","Daleth","Chokmah","Binah","green","D"],[10,"Wheel of Fortune",21,"כ","Kaph","Chesed","Netzach","violet","D"],[16,"The Tower",27,"פ","Peh","Netzach","Hod","red","D"],[19,"The Sun",30,"ר","Resh","Hod","Yesod","orange","D"],[21,"The World",32,"ת","Tav","Yesod","Malkuth","blue-violet","D"],
+    [4,"The Emperor",15,"ה","Heh","Chokmah","Tiphareth","red","S"],[5,"The Hierophant",16,"ו","Vav","Chokmah","Chesed","red-orange","S"],[6,"The Lovers",17,"ז","Zain","Binah","Tiphareth","orange","S"],[7,"The Chariot",18,"ח","Cheth","Binah","Geburah","orange-yellow","S"],[8,"Strength",19,"ט","Teth","Chesed","Geburah","yellow","S"],[9,"The Hermit",20,"י","Yod","Chesed","Tiphareth","yellow-green","S"],[11,"Justice",22,"ל","Lamed","Geburah","Tiphareth","green","S"],[13,"Death",24,"נ","Nun","Tiphareth","Netzach","blue-green","S"],[14,"Temperance",25,"ס","Samekh","Tiphareth","Yesod","blue","S"],[15,"The Devil",26,"ע","Ayin","Tiphareth","Hod","blue-violet","S"],[17,"The Star",28,"צ","Tzaddi","Netzach","Yesod","violet","S"],[18,"The Moon",29,"ק","Qoph","Netzach","Malkuth","violet-red","S"]
+  ].map(([key,title,path,heb,letter,from,to,c,g])=>({key,title,path,heb,letter,from,to,c,g}));
+
+  const NS="http://www.w3.org/2000/svg", el=(t,a)=>{const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e;};
+  const tree = document.getElementById("tree");
+  [-R,0,R,2*R].forEach(cy=>tree.appendChild(el("circle",{class:"guide",cx:0,cy,r:R})));
+  P.forEach(k=>{ const a=pos[k.from], b=pos[k.to]; tree.appendChild(el("line",{class:"path",x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:`var(--${k.c})`})); });
+  SEPH.forEach(s=>{
+    const g=el("g",{class:"seph"});
+    if (s.c==="mal") {
+      const cl=el("clipPath",{id:"malc"}); cl.appendChild(el("circle",{cx:s.x,cy:s.y,r:26})); tree.appendChild(cl);
+      const q=el("g",{"clip-path":"url(#malc)"});
+      [["citrine",-1,-1],["olive",1,-1],["russet",-1,1],["black",1,1]].forEach(([c,dx,dy])=>{
+        q.appendChild(el("path",{d:`M${s.x} ${s.y} L${s.x+dx*40} ${s.y} A40 40 0 0 ${dx*dy>0?1:0} ${s.x} ${s.y+dy*40} Z`,fill:`var(--${c})`,opacity:.55}));
+      });
+      g.appendChild(el("circle",{cx:s.x,cy:s.y,r:26,stroke:"var(--gold-line)"})); g.appendChild(q);
+    } else {
+      g.appendChild(el("circle",{cx:s.x,cy:s.y,r:26,stroke:s.c==="white"?"var(--gold-line)":`var(--${s.c})`}));
+    }
+    const t=el("text",{x:s.x,y:s.y+5}); t.textContent=s.heb; g.appendChild(t);
+    const n=el("text",{class:"n",x:s.x,y:s.y-10}); n.textContent=s.n; g.appendChild(n);
+    tree.appendChild(g);
+  });
+
+  document.getElementById("seph").innerHTML = SEPH.map(s=>`<div class="row">
+    ${s.c==="mal" ? `<span class="mal"><i style="background:var(--citrine)"></i><i style="background:var(--olive)"></i><i style="background:var(--russet)"></i><i style="background:var(--black)"></i></span>` : `<span class="sw" style="background:var(--${s.c})"></span>`}
+    <span class="n">${s.n}</span><span class="heb">${s.heb}</span><span class="name">${s.name}</span><span class="key">${s.cn}</span><span class="hex">${s.hex}</span></div>`).join("");
+
+  const GROUP = {M:"Mothers",D:"Doubles",S:"Simples"};
+  let last=null;
+  document.getElementById("paths").innerHTML = P.map(k=>{
+    const h = k.g!==last ? `<div class="row" style="border-bottom:0;padding:10px 2px 2px"><span></span><span></span><span></span><span class="n" style="letter-spacing:.14em;text-transform:uppercase">${GROUP[k.g]}</span></div>` : "";
+    last=k.g;
+    return h+`<div class="row p"><span class="sw" style="background:var(--${k.c})"></span><span class="n">${k.path}</span><span class="heb">${k.heb}</span><span class="name">${k.letter} <i>· ${k.title}</i></span><span class="key">Key ${k.key}</span><span class="key">${NAME(k.c)}</span><span class="hex">${HEX[k.c]}</span></div>`;
+  }).join("");
+
+  document.getElementById("wheel").innerHTML = Object.keys(HEX).map(c=>`<div><div style="background:var(--${c});width:100%;aspect-ratio:1;border-radius:50%"></div><span>${NAME(c)}</span></div>`).join("");
+})();
+</script>
+</body>
+</html>
