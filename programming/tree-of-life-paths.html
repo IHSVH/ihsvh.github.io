@@ -67,7 +67,7 @@
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
   /* fixed, non-scrolling frame: gives iOS no scrolling content to blur under the status bar */
-  .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; inset: env(safe-area-inset-top) 0 0 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
+  .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; top: env(safe-area-inset-top); right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   /* controls: bottom right, stacked — theme above, mode below; Next takes the bottom left */
   /* two round controls on the right edge, above the choice rows so nothing ever collides */
   .ctrl { position: absolute; right: 11px; bottom: 98px; z-index: 3; display: flex; flex-direction: column; gap: 8px; }
@@ -246,6 +246,8 @@
     tree.setAttribute("viewBox", `${-vw/2} ${T} ${vw} ${vh}`);
   }
   addEventListener("resize", fit);
+  addEventListener("pageshow", fit);
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(treebox);   // standalone iOS settles its viewport late
   // ---- draw tree once
   [-R,0,R,2*R].forEach(cy => tree.appendChild(el("circle",{class:"guide",cx:0,cy,r:R})));
   const lines = {}, halos = {};
@@ -391,7 +393,7 @@
     mode = ORDER[(ORDER.indexOf(mode) + 1) % ORDER.length];
     start();
   });
-  start(); fit(); setTimeout(fit, 300);
+  start(); fit(); setTimeout(fit, 300); setTimeout(fit, 1200);
 })();
 </script>
 </body>
