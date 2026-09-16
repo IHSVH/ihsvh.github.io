@@ -27,7 +27,7 @@
     --sans: "Assistant", -apple-system, "Helvetica Neue", Arial, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --paper: #1F1F1D;
       --card: #262624;
       --ink: #E8E2D0;
@@ -38,6 +38,17 @@
       --gold-deep: #A9892F;
       --gold-line: #8C7A45;
     }
+  }
+  :root[data-theme="dark"] {
+      --paper: #1F1F1D;
+      --card: #262624;
+      --ink: #E8E2D0;
+      --ink-soft: #D6CFBC;
+      --grey: #9A9283;
+      --rule: #3A3935;
+      --gold: #BC9836;
+      --gold-deep: #A9892F;
+      --gold-line: #8C7A45;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html { -webkit-text-size-adjust: 100%; height: 100%; }
@@ -50,6 +61,9 @@
   .bar { flex: none; display: flex; background: var(--gold); padding: calc(env(safe-area-inset-top) + 6px) 8px 0; }
   .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 8px 2px 9px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
   .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
+  .bar .theme { flex: none; width: 40px; display: flex; align-items: center; justify-content: center; }
+  .bar .theme svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; }
+  .bar .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
   .prompt { flex: none; display: flex; align-items: center; gap: 12px; height: 100px; padding: 6px 14px 0; }
@@ -72,8 +86,6 @@
   .choices button { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; text-align: left; line-height: 1.05; min-width: 0; }
   .choices .k { font-family: var(--sans); font-size: .62rem; letter-spacing: .1em; color: var(--grey); margin-right: 5px; }
   .choices .t { font-family: var(--display); font-weight: 600; font-size: 1rem; color: var(--ink-soft); }
-  .choices button.answer { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px var(--gold-deep); }
-  .choices button.miss { border-color: var(--miss); box-shadow: inset 0 0 0 1px var(--miss); }
 
   /* tree fills whatever height is left; absolute inside a flexed box so Safari sizes it */
   .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: 2px 8px calc(env(safe-area-inset-bottom) + 6px); }
@@ -83,10 +95,11 @@
   .path { stroke: var(--gold-line); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; transition: stroke .15s, stroke-width .15s; }
   .hit { stroke: transparent; stroke-width: 24; cursor: pointer; pointer-events: stroke; touch-action: manipulation; }
   .hit:hover + .path, .hit:focus-visible + .path { stroke: var(--gold); stroke-width: 3; }
-  .hit:focus-visible { outline: none; }
+  .hit:focus, .hit:focus-visible { outline: none; }
   .locked .hit { pointer-events: none; }
-  .path.answer, .path.ask { stroke: var(--gold-deep); stroke-width: 5; }
-  .path.miss { stroke: var(--miss); stroke-width: 5; stroke-dasharray: 6 5; }
+  .path.ask { stroke: var(--gold-deep); stroke-width: 5; }
+  .path.answer { stroke: var(--ref); stroke-width: 5; }
+  .path.miss { stroke: var(--miss); stroke-width: 5; }
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 50% { stroke-width: 3; } }
   .seph circle { fill: var(--card); stroke: var(--gold-line); stroke-width: 1.2; }
@@ -117,6 +130,7 @@
     <button data-mode="key" aria-pressed="true">Key → Path</button>
     <button data-mode="letter" aria-pressed="false">Letter → Path</button>
     <button data-mode="path" aria-pressed="false">Path → Key</button>
+    <button class="theme" id="theme" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg></button>
   </div>
 
   <div class="prompt" id="prompt"></div>
@@ -261,14 +275,15 @@
     const k = deck[i], ok = id === k.id;
     if (ok) hits++; else missed.push(k);
     treebox.classList.add("locked");
-    lines[k.id].classList.remove("ask"); lines[k.id].classList.add("answer");
-    if (!ok && lines[id]) lines[id].classList.add("miss");
-    sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
-    if (mode === "path") {
-      const picked = KEYS.find(o=>o.id===id);
-      prompt.querySelectorAll("button").forEach(b => { b.disabled = true;
-        if (+b.dataset.key === k.key) b.classList.add("answer"); else if (!ok && +b.dataset.key === picked.key) b.classList.add("miss"); });
+    lines[k.id].classList.remove("ask");
+    if (mode === "path") {            // the line was the question: blue if you named its Key, red if not
+      lines[k.id].classList.add(ok ? "answer" : "miss");
+      prompt.querySelectorAll("button").forEach(b => b.disabled = true);
+    } else {                          // the line was the answer: the right path blue, a wrong tap red
+      lines[k.id].classList.add("answer");
+      if (!ok && lines[id]) lines[id].classList.add("miss");
     }
+    sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
     // the prompt box becomes the answer box: same height, no reflow; tapping it or the tree advances
     const go = i + 1 < deck.length ? "Next ›" : "Finish ›";
     setTimeout(() => {
@@ -295,6 +310,13 @@
     const m = $("again-missed"); if (m) m.addEventListener("click", ()=>start(missed));
   }
 
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("ihsvh.theme"); if (t) root.dataset.theme = t; } catch(e){}
+  $("theme").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("ihsvh.theme", root.dataset.theme); } catch(e){}
+  });
   prompt.addEventListener("click", ()=>{ if (prompt.classList.contains("done")) advance(); });
   treebox.addEventListener("click", ()=>{ if (prompt.classList.contains("done")) advance(); });
   document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && locked && !treebox.hidden && document.activeElement.tagName!=="BUTTON") { e.preventDefault(); advance(); } });
