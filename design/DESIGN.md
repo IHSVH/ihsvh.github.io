@@ -9,7 +9,7 @@ Two artifacts define the house style. When they disagree, the ESV-app treatment 
 
 ```
 faces:  Crimson Pro body · Cormorant Infant title · Assistant chrome
-paper   #F4F1E4   card #FBF9F2   ink #46453F   rule #E1DBC9
+paper   #FBF9F2   card #FFFEFA   ink #46453F   rule #E9E4D7
 gold    #B4A67F (bar)   gold-deep #AC9D71 (button)   line #BFB18F   ref #72ABBF
 dark:   bg #1F1F1D   ink #E8E2D0   gold #BC9836
 ```
