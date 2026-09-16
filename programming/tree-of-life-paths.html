@@ -75,9 +75,8 @@
   .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; top: env(safe-area-inset-top); right: 0; left: 0; height: 100dvh; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   /* controls: bottom right, stacked — theme above, mode below; Next takes the bottom left */
   /* two round controls on the right edge, above the choice rows so nothing ever collides */
-  .ctrl { position: absolute; right: 11px; bottom: 98px; z-index: 3; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  .ctrl .row { display: flex; align-items: center; gap: 8px; }
-  .ctrl .lbl { font-family: var(--sans); font-size: .78rem; color: var(--grey); letter-spacing: .02em; }
+  .ctrl { position: absolute; right: 11px; bottom: 98px; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .ctrl .lbl { font-family: var(--sans); font-size: .74rem; color: var(--grey); letter-spacing: .04em; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; margin-bottom: 2px; }
   .ctrl button { width: 36px; height: 36px; border-radius: 50%; background: var(--card); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; color: var(--grey); }
   .ctrl svg { width: 16px; height: 16px; stroke: var(--grey); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
   .ctrl .theme svg path { fill: var(--grey); stroke: none; }
@@ -159,8 +158,9 @@
     <svg class="tree" id="tree" viewBox="-132 -242 264 630" aria-label="Tree of Life"></svg>
     <button class="next" id="next" hidden>Next ›</button>
     <div class="ctrl">
+      <span class="lbl" id="modelbl">Key → Path</span>
+      <button class="mode" id="modebtn" aria-label="Change drill"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg></button>
       <button class="theme" id="theme" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg></button>
-      <div class="row"><span class="lbl" id="modelbl">Key → Path</span><button class="mode" id="modebtn" aria-label="Change drill"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg></button></div>
     </div>
   </div>
   <div class="big" id="big" hidden></div>
