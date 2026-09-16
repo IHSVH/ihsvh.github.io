@@ -65,8 +65,8 @@
   [hidden] { display: none !important; }
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
-  .app { --row-h: calc(clamp(80px, 14dvh, 132px) + 10px); display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
-  .bar { flex: none; display: flex; background: var(--gold); padding: 4px 8px 0; }
+  .app { --row-h: calc(clamp(96px, 17dvh, 150px) + 10px); display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
+  .bar { flex: none; display: flex; background: var(--gold); padding: 14px 8px 0; }  /* tabs clear the iOS status-bar blur */
   .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 7px 2px 8px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
   .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
   .bar .theme { flex: none; width: 40px; display: flex; align-items: center; justify-content: center; }
@@ -74,14 +74,14 @@
   .bar .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { --card-h: clamp(80px, 14dvh, 132px); position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 10px); padding: 6px 19px 0 8px; }
+  .prompt { --card-h: clamp(96px, 17dvh, 150px); position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 10px); padding: 6px 19px 0 8px; }
   .prompt img { flex: none; width: calc(var(--card-h) * .615); height: var(--card-h); object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); pointer-events: auto; cursor: zoom-in; }
 
   /* the Key, large: tap the card to open, tap anywhere to close */
   .big { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--paper); cursor: zoom-out; padding: calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 16px); }
   .big img { max-height: calc(100% - 34px); max-width: 100%; height: auto; width: auto; border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 8px 30px rgba(0,0,0,.12); }
   .big p { margin: 0; font-family: var(--sans); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); }
-  .prompt .letter { flex: none; width: calc(var(--card-h) * .615); text-align: center; font-family: var(--sans); font-size: calc(var(--card-h) * .72); line-height: 1; color: var(--gold-deep); direction: rtl; }
+  .prompt .letter { flex: none; width: calc(var(--card-h) * .615); text-align: center; font-family: var(--sans); font-weight: 600; font-size: calc(var(--card-h) * .72); line-height: 1; color: var(--gold-deep); direction: rtl; }
   .prompt .txt { min-width: 0; flex: 1; align-self: flex-start; padding-top: 4px; }
   .prompt .kicker { display: flex; justify-content: space-between; font-family: var(--sans); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0 0 2px; }
   .prompt .kicker .prog { letter-spacing: .04em; text-transform: none; }
@@ -89,8 +89,8 @@
   .prompt .kicker.no { color: var(--miss); }
   .prompt .kicker.yes .prog, .prompt .kicker.no .prog { color: var(--grey); }
   .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .prompt .sub .heb { font-family: var(--sans); font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
+  .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; }
+  .prompt .sub .heb { font-family: var(--sans); font-weight: 600; font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
 
   /* path mode: the four choices sit in the empty bottom corners beside Malkuth */
   .choices { position: absolute; left: 0; right: 3px; bottom: 0; display: grid; grid-template-columns: 1fr 112px 1fr; grid-auto-rows: 40px; gap: 6px; }
@@ -121,7 +121,7 @@
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 50% { stroke-width: 4; } }
   .seph circle { fill: var(--card); stroke: var(--gold-line); stroke-width: 1.2; }
-  .seph text { font-family: var(--sans); font-size: 12.5px; fill: var(--gold-deep); text-anchor: middle; dominant-baseline: central; direction: rtl; pointer-events: none; }
+  .seph text { font-family: var(--sans); font-weight: 600; font-size: 13px; fill: var(--gold-deep); text-anchor: middle; dominant-baseline: central; direction: rtl; pointer-events: none; }
   .seph .n { font-family: var(--serif); font-weight: 300; font-size: 10px; fill: var(--grey); direction: ltr; }
   .seph.lit circle { stroke: var(--gold-deep); stroke-width: 2; }
   .asking .seph.lit circle { stroke: var(--ask); stroke-width: 2.6; }
