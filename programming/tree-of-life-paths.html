@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#FBF9F2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1F1F1D" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="tree-of-life-paths-icon.png">
@@ -78,7 +78,7 @@
   .choosing .ctrl { display: none; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 14px); padding: 10px 19px 0 8px; }
+  .prompt { position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 14px); padding: 6px 19px 0 8px; }
   .prompt img { flex: none; width: calc(var(--card-h) * .615); height: var(--card-h); object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); pointer-events: auto; cursor: zoom-in; }
 
   /* the Key, large: tap the card to open, tap anywhere to close */
@@ -235,11 +235,14 @@
 
   // fit: Kether's centre sits on the bottom edge of the card row; everything above rises behind it
   function fit(){
-    const box = treebox.getBoundingClientRect(), txt = prompt.querySelector(".txt") || prompt;
-    const H = box.height, top = txt.getBoundingClientRect().bottom - box.top + 4;   // Kether's rim sits just under the text
-    if (H <= 0) return;
-    const yMax = 3*R + 28, yMin = -R - 27;                       // Malkuth rim, Kether rim (units)
-    const sc = (H - 6 - top) / (yMax - yMin);
+    const box = treebox.getBoundingClientRect(), txt = prompt.querySelector(".txt") || prompt, card = prompt.querySelector("img, .letter");
+    const H = box.height; if (H <= 0) return;
+    const yMax = 3*R + 28;                                        // Malkuth rim (units)
+    // two clearances: Kether's rim under the text; Binah/Chokmah's rims under the card. The tighter one governs.
+    const cons = [[txt.getBoundingClientRect().bottom - box.top + 4, -R - 27]];
+    if (card) cons.push([card.getBoundingClientRect().bottom - box.top + 6, -R/2 - 27]);
+    let sc = Infinity, top = 0, yMin = 0;
+    cons.forEach(([t, y]) => { const k = (H - 6 - t) / (yMax - y); if (k < sc) { sc = k; top = t; yMin = y; } });
     const T = yMin - top / sc, vh = (H - 6) / sc, vw = box.width / sc;
     tree.setAttribute("viewBox", `${-vw/2} ${T} ${vw} ${vh}`);
   }
