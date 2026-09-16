@@ -67,16 +67,23 @@
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
   /* fixed, non-scrolling frame: gives iOS no scrolling content to blur under the status bar */
-  .app { --row-h: calc(clamp(110px, 21dvh, 176px) + 10px); position: fixed; inset: 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
-  .bar { flex: none; display: flex; background: var(--gold); padding: 2px 8px 0; }
-  .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 7px 2px 8px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
-  .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
-  .bar .theme { flex: none; width: 40px; display: flex; align-items: center; justify-content: center; }
-  .bar .theme svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; }
-  .bar .theme svg path { fill: #fff; stroke: none; }
+  .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; inset: env(safe-area-inset-top) 0 0 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
+  /* modes live in a panel that slides in from the right; its handle balances the card on the left */
+  .handle { position: absolute; right: 0; top: 10px; z-index: 4; width: 30px; height: var(--card-h); background: var(--gold); border-radius: 6px 0 0 6px; display: flex; align-items: center; justify-content: center; box-shadow: -1px 0 0 rgba(0,0,0,.04); }
+  .handle svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .scrim { position: absolute; inset: 0; z-index: 5; background: rgba(31,31,29,.18); opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .panel { position: absolute; top: 0; right: 0; bottom: 0; z-index: 6; width: 232px; background: var(--gold); transform: translateX(100%); transition: transform .22s ease; display: flex; flex-direction: column; padding: 18px 0 calc(env(safe-area-inset-bottom) + 18px); }
+  .app.open .scrim { opacity: 1; pointer-events: auto; }
+  .app.open .panel { transform: none; }
+  .panel h2 { margin: 0 18px 8px; font-family: var(--sans); font-weight: 600; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+  .panel button { text-align: left; color: rgba(255,255,255,.78); font-family: var(--sans); font-weight: 500; font-size: 1.08rem; padding: 12px 18px; border-left: 3px solid transparent; }
+  .panel button[aria-pressed="true"] { color: #fff; font-weight: 600; border-left-color: #fff; background: rgba(255,255,255,.08); }
+  .panel .theme { margin-top: auto; display: flex; align-items: center; gap: 10px; }
+  .panel .theme svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; }
+  .panel .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { --card-h: clamp(110px, 21dvh, 176px); position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 10px); padding: 6px 19px 0 8px; }
+  .prompt { position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 14px); padding: 10px 44px 0 8px; }
   .prompt img { flex: none; width: calc(var(--card-h) * .615); height: var(--card-h); object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); pointer-events: auto; cursor: zoom-in; }
 
   /* the Key, large: tap the card to open, tap anywhere to close */
@@ -146,11 +153,14 @@
 </head>
 <body>
 <div class="app">
-  <div class="bar" role="group" aria-label="Drill mode">
+  <button class="handle" id="handle" aria-label="Modes"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <div class="scrim" id="scrim"></div>
+  <div class="panel" id="panel" role="group" aria-label="Drill mode">
+    <h2>Drill</h2>
     <button data-mode="key" aria-pressed="true">Key → Path</button>
     <button data-mode="letter" aria-pressed="false">Letter → Path</button>
     <button data-mode="path" aria-pressed="false">Path → Key</button>
-    <button class="theme" id="theme" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg></button>
+    <button class="theme" id="theme" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg>Dark mode</button>
   </div>
 
   <div class="prompt" id="prompt"></div>
@@ -385,9 +395,13 @@
   big.addEventListener("click", () => { big.hidden = true; });
   document.addEventListener("keydown", e => { if (e.key === "Escape") big.hidden = true; });
   document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && locked && !treebox.hidden && document.activeElement.tagName!=="BUTTON") { e.preventDefault(); advance(); } });
-  document.querySelectorAll(".bar button").forEach(b => b.addEventListener("click", () => {
+  const app = document.querySelector(".app");
+  $("handle").addEventListener("click", () => app.classList.add("open"));
+  $("scrim").addEventListener("click", () => app.classList.remove("open"));
+  document.querySelectorAll(".panel [data-mode]").forEach(b => b.addEventListener("click", () => {
+    app.classList.remove("open");
     mode = b.dataset.mode;
-    document.querySelectorAll(".bar button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+    document.querySelectorAll(".panel [data-mode]").forEach(x=>x.setAttribute("aria-pressed", x===b));
     start();
   }));
   start(); fit(); setTimeout(fit, 300);
