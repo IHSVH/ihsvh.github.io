@@ -97,7 +97,7 @@
   .prompt .kicker.no { color: var(--miss); }
   .prompt .kicker.yes .prog, .prompt .kicker.no .prog { color: var(--grey); }
   .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.08; padding-bottom: .1em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; }
+  .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 0; }
   .prompt .sub .heb { font-family: var(--sans); font-weight: 600; font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
 
   /* path mode: the four choices sit in the empty bottom corners beside Malkuth */
@@ -127,7 +127,7 @@
   .halo.ask { display: inline; }
   .path.reveal { stroke-width: 6; }                        /* the true path, in its letter colour */
   .mark circle { fill: var(--card); stroke-width: 2; }
-  .mark text { font-family: var(--sans); font-weight: 600; font-size: 15px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .mark text { font-family: var(--sans); font-weight: 600; font-size: 15px; text-anchor: middle; dominant-baseline: auto; pointer-events: none; }
 
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 50% { stroke-width: 4; } }
@@ -285,7 +285,7 @@
     });
     if (best) { pick(best.id); e.stopPropagation(); }   // the answering tap must not also advance
   });
-  const mark = el("g",{class:"mark"}); mark.appendChild(el("circle",{r:13})); const markT = el("text",{y:1}); mark.appendChild(markT); mark.setAttribute("visibility","hidden");
+  const mark = el("g",{class:"mark"}); mark.appendChild(el("circle",{r:13})); const markT = el("text",{y:0}); mark.appendChild(markT); mark.setAttribute("visibility","hidden");
   const sephEls = {};
   SEPH.forEach(s => {
     const g = el("g",{class:"seph"});
@@ -349,7 +349,9 @@
     { const a = pos[k.from], b = pos[k.to];                          // the letter, on the line
       mark.setAttribute("transform", `translate(${(a.x+b.x)/2} ${(a.y+b.y)/2})`);
       mark.querySelector("circle").style.stroke = `var(--${k.c})`; markT.style.fill = `var(--${k.c})`;
-      markT.textContent = k.heb; mark.setAttribute("visibility","visible"); }
+      markT.textContent = k.heb; mark.setAttribute("visibility","visible");
+      // centre the glyph's ink, not its em box: lamed rises, qoph descends
+      markT.setAttribute("y", 0); const bb = markT.getBBox(); markT.setAttribute("y", -(bb.y + bb.height / 2)); }
     treebox.classList.add(ok ? "hit-yes" : "hit-no");
     if (choosing()) $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
