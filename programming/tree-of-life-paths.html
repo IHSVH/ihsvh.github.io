@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#B4A67F" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#BC9836" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FBF9F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1F1F1D" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="tree-of-life-paths-icon.png">
 <link rel="icon" type="image/png" href="tree-of-life-paths-icon.png">
 <title>Paths of the Tree</title>
@@ -60,8 +60,8 @@
       --gold-line: #8C7A45;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { -webkit-text-size-adjust: 100%; height: 100%; background: var(--gold); overscroll-behavior: none; }
-  body { margin: 0; background: var(--gold); color: var(--ink); font-family: var(--serif); height: 100%; }
+  html { -webkit-text-size-adjust: 100%; height: 100%; background: var(--paper); overscroll-behavior: none; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); height: 100%; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   [hidden] { display: none !important; }
 
@@ -251,11 +251,10 @@
 
   // fit: Kether's centre sits on the bottom edge of the card row; everything above rises behind it
   function fit(){
-    const box = treebox.getBoundingClientRect(), row = prompt.getBoundingClientRect();
-    const H = box.height, top = row.bottom - box.top + 6;            // px from box top to Kether centre
+    const box = treebox.getBoundingClientRect(), txt = prompt.querySelector(".txt") || prompt;
+    const H = box.height, top = txt.getBoundingClientRect().bottom - box.top + 4;   // Kether's rim sits just under the text
     if (H <= 0) return;
-    const yMax = 3*R + 28, yMin = -R;                            // Malkuth rim, Kether centre (units)
-    // (yMin - T)*sc = top and (yMax - T)*sc = H-6  →  sc = (H-6-top)/(yMax-yMin)
+    const yMax = 3*R + 28, yMin = -R - 27;                       // Malkuth rim, Kether rim (units)
     const sc = (H - 6 - top) / (yMax - yMin);
     const T = yMin - top / sc, vh = (H - 6) / sc, vw = box.width / sc;
     tree.setAttribute("viewBox", `${-vw/2} ${T} ${vw} ${vh}`);
@@ -315,6 +314,7 @@
   const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
   function show(){
     locked = false; clearTree();
+    requestAnimationFrame(fit);
     const old = $("choices"); if (old) old.remove(); app.classList.remove("choosing");
     const k = deck[i];
     if (mode === "key") {
@@ -386,7 +386,7 @@
     if (!root.dataset.theme) return;
     document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
     const m = document.createElement("meta"); m.name = "theme-color";
-    m.content = root.dataset.theme === "dark" ? "#BC9836" : "#B4A67F";
+    m.content = root.dataset.theme === "dark" ? "#1F1F1D" : "#FBF9F2";
     document.head.appendChild(m);
   }
   themeColor();
