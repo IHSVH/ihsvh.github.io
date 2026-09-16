@@ -70,7 +70,6 @@
   .prompt img { flex: none; width: calc(var(--card-h) * .615); height: var(--card-h); object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
   .prompt .letter { flex: none; width: calc(var(--card-h) * .615); text-align: center; font-family: var(--sans); font-size: calc(var(--card-h) * .72); line-height: 1; color: var(--gold-deep); direction: rtl; }
   .prompt .txt { min-width: 0; flex: 1; align-self: center; }
-  .prompt .choices { pointer-events: auto; }
   .prompt .kicker { display: flex; justify-content: space-between; font-family: var(--sans); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0 0 2px; }
   .prompt .kicker .prog { letter-spacing: .04em; text-transform: none; }
   .prompt .kicker.yes { color: var(--gold-deep); }
@@ -80,11 +79,13 @@
   .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt .sub .heb { font-family: var(--sans); font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
 
-  /* path mode: the four choices live in the prompt row */
-  .choices { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-self: stretch; margin: 0 0 4px; }
-  .choices button { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; text-align: left; line-height: 1.05; min-width: 0; }
+  /* path mode: the four choices sit in the empty bottom corners beside Malkuth */
+  .choices { position: absolute; left: 0; right: 3px; bottom: 0; display: grid; grid-template-columns: 1fr 112px 1fr; grid-auto-rows: 40px; gap: 6px; }
+  .choices button { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 6px; text-align: left; line-height: 1.05; min-width: 0; }
+  .choices button:nth-child(1) { grid-area: 1 / 1; } .choices button:nth-child(2) { grid-area: 1 / 3; }
+  .choices button:nth-child(3) { grid-area: 2 / 1; } .choices button:nth-child(4) { grid-area: 2 / 3; }
   .choices .k { font-family: var(--sans); font-size: .62rem; letter-spacing: .1em; color: var(--grey); margin-right: 5px; }
-  .choices .t { font-family: var(--display); font-weight: 600; font-size: 1rem; color: var(--ink-soft); }
+  .choices .t { font-family: var(--display); font-weight: 600; font-size: .95rem; color: var(--ink-soft); }
 
   /* tree fills whatever height is left; absolute inside a flexed box so Safari sizes it */
   .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: calc(-1 * var(--row-h)) 8px calc(env(safe-area-inset-bottom) + 4px); }
@@ -276,6 +277,7 @@
   const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
   function show(){
     locked = false; clearTree();
+    const old = $("choices"); if (old) old.remove();
     const k = deck[i];
     if (mode === "key") {
       prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker"><span>Key ${k.key}</span>${prog()}</p><p class="title">${k.title}</p><p class="sub">Tap its path</p></div>`;
@@ -286,6 +288,7 @@
       sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
       treebox.classList.add("locked");
       const opts = shuffle([k, ...shuffle(KEYS.filter(o=>o!==k)).slice(0,3)]);
+      prompt.innerHTML = `<div class="txt"><p class="kicker"><span>Which Key</span>${prog()}</p><p class="title">walks this path?</p><p class="sub">${k.from} to ${k.to}</p></div>`;
       const c = document.createElement("div"); c.className = "choices"; c.id = "choices";
       opts.forEach(o => {
         const b = document.createElement("button");
@@ -294,7 +297,7 @@
         b.addEventListener("click", ()=>pick(o.id));
         c.appendChild(b);
       });
-      prompt.innerHTML = ""; prompt.appendChild(c);
+      treebox.appendChild(c);
     }
   }
   function pick(id){
@@ -304,7 +307,7 @@
     treebox.classList.add("locked");
     lines[k.id].classList.remove("ask");
     lines[k.id].classList.add(ok ? "answer" : "miss");
-    if (mode === "path") prompt.querySelectorAll("button").forEach(b => b.disabled = true);
+    if (mode === "path") $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
     // the prompt box becomes the answer box: same height, no reflow
     setTimeout(() => {
