@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" id="themeColor" content="#B4A67F">
 <title>Paths of the Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,7 +59,7 @@
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
   .app { --row-h: calc(clamp(80px, 14dvh, 132px) + 10px); display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 640px; margin: 0 auto; overflow: hidden; }
-  .bar { flex: none; display: flex; background: var(--gold); padding: calc(env(safe-area-inset-top) + 4px) 8px 0; }
+  .bar { flex: none; display: flex; background: var(--gold); padding: 4px 8px 0; }
   .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 7px 2px 8px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
   .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
   .bar .theme { flex: none; width: 40px; display: flex; align-items: center; justify-content: center; }
@@ -74,7 +75,7 @@
   .big img { max-height: calc(100% - 34px); max-width: 100%; height: auto; width: auto; border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 8px 30px rgba(0,0,0,.12); }
   .big p { margin: 0; font-family: var(--sans); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); }
   .prompt .letter { flex: none; width: calc(var(--card-h) * .615); text-align: center; font-family: var(--sans); font-size: calc(var(--card-h) * .72); line-height: 1; color: var(--gold-deep); direction: rtl; }
-  .prompt .txt { min-width: 0; flex: 1; align-self: center; }
+  .prompt .txt { min-width: 0; flex: 1; align-self: flex-start; padding-top: 4px; }
   .prompt .kicker { display: flex; justify-content: space-between; font-family: var(--sans); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0 0 2px; }
   .prompt .kicker .prog { letter-spacing: .04em; text-transform: none; }
   .prompt .kicker.yes { color: var(--gold-deep); }
@@ -222,7 +223,7 @@
   // fit: Kether's centre sits on the bottom edge of the card row; everything above rises behind it
   function fit(){
     const box = treebox.getBoundingClientRect(), row = prompt.getBoundingClientRect();
-    const H = box.height, top = row.bottom - box.top;            // px from box top to Kether centre
+    const H = box.height, top = row.bottom - box.top + 6;            // px from box top to Kether centre
     if (H <= 0) return;
     const yMax = 3*R + 28, yMin = -R;                            // Malkuth rim, Kether centre (units)
     // (yMin - T)*sc = top and (yMax - T)*sc = H-6  →  sc = (H-6-top)/(yMax-yMin)
@@ -346,7 +347,13 @@
     const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
     root.dataset.theme = dark ? "light" : "dark";
     try { localStorage.setItem("ihsvh.theme", root.dataset.theme); } catch(e){}
+    themeColor();
   });
+  function themeColor(){
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    $("themeColor").content = dark ? "#BC9836" : "#B4A67F";
+  }
+  themeColor();
   next.addEventListener("click", advance);
   const big = $("big");
   prompt.addEventListener("click", e => {
