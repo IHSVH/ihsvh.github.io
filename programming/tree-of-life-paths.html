@@ -45,31 +45,39 @@
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   [hidden] { display: none !important; }
 
-  /* one screen: bar / modes / prompt / tree (fills) / actions */
+  /* one screen: bar(modes) / prompt row / tree (fills) */
   .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 640px; margin: 0 auto; overflow: hidden; }
-  .bar { flex: none; background: var(--gold); color: #fff; font-family: var(--sans); font-weight: 500; font-size: 1.05rem; text-align: center; padding: calc(env(safe-area-inset-top) + 12px) 16px 12px; letter-spacing: .01em; }
-  .head { flex: none; padding: 10px 16px 0; }
-  .modes { display: flex; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; font-family: var(--sans); font-size: .92rem; }
-  .modes button { flex: 1; padding: 8px 4px; color: var(--grey); border-right: 1px solid var(--rule); }
-  .modes button:last-child { border-right: 0; }
-  .modes button[aria-pressed="true"] { background: var(--card); color: var(--ink-soft); font-weight: 600; }
-  .meta { display: flex; justify-content: space-between; font-family: var(--sans); font-size: .8rem; color: var(--grey); padding: 6px 2px 0; }
+  .bar { flex: none; display: flex; background: var(--gold); padding: calc(env(safe-area-inset-top) + 6px) 8px 0; }
+  .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 8px 2px 9px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
+  .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { flex: none; display: flex; align-items: center; gap: 14px; height: 104px; padding: 4px 16px 0; }
-  .prompt img { flex: none; width: 58px; height: 94px; object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
-  .prompt .letter { flex: none; width: 58px; text-align: center; font-family: var(--sans); font-size: 3.6rem; line-height: 1; color: var(--gold-deep); direction: rtl; }
-  .prompt .txt { min-width: 0; }
-  .prompt .kicker { font-family: var(--sans); font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); margin: 0 0 2px; }
+  .prompt { flex: none; display: flex; align-items: center; gap: 12px; height: 100px; padding: 6px 14px 0; }
+  .prompt.done { cursor: pointer; }
+  .prompt img { flex: none; width: 54px; height: 88px; object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
+  .prompt .letter { flex: none; width: 54px; text-align: center; font-family: var(--sans); font-size: 3.4rem; line-height: 1; color: var(--gold-deep); direction: rtl; }
+  .prompt .txt { min-width: 0; flex: 1; }
+  .prompt .kicker { display: flex; justify-content: space-between; font-family: var(--sans); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0 0 2px; }
+  .prompt .kicker .prog { letter-spacing: .04em; text-transform: none; }
   .prompt .kicker.yes { color: var(--gold-deep); }
   .prompt .kicker.no { color: var(--miss); }
-  .prompt .title { font-family: var(--display); font-weight: 600; font-size: 1.7rem; letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.05; }
-  .prompt .sub { font-style: italic; font-size: 1.08rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; }
+  .prompt .kicker.yes .prog, .prompt .kicker.no .prog { color: var(--grey); }
+  .prompt .title { font-family: var(--display); font-weight: 600; font-size: 1.6rem; letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt .sub .heb { font-family: var(--sans); font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
+  .prompt .sub .go { color: var(--gold-deep); font-style: normal; font-family: var(--sans); font-weight: 600; font-size: .9rem; }
 
-  /* tree fills whatever height is left */
-  /* absolute inside a flexed box: Safari resolves % against the box, not the flex basis */
-  .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: 4px 8px; }
+  /* path mode: the four choices live in the prompt row */
+  .choices { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-self: stretch; margin: 4px 0 2px; }
+  .choices button { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; text-align: left; line-height: 1.05; min-width: 0; }
+  .choices .k { font-family: var(--sans); font-size: .62rem; letter-spacing: .1em; color: var(--grey); margin-right: 5px; }
+  .choices .t { font-family: var(--display); font-weight: 600; font-size: 1rem; color: var(--ink-soft); }
+  .choices button.answer { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px var(--gold-deep); }
+  .choices button.miss { border-color: var(--miss); box-shadow: inset 0 0 0 1px var(--miss); }
+
+  /* tree fills whatever height is left; absolute inside a flexed box so Safari sizes it */
+  .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: 2px 8px calc(env(safe-area-inset-bottom) + 6px); }
+  .treebox.locked { cursor: pointer; }
   svg.tree { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .guide { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 5; }
   .path { stroke: var(--gold-line); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; transition: stroke .15s, stroke-width .15s; }
@@ -86,18 +94,7 @@
   .seph .n { font-family: var(--serif); font-weight: 300; font-size: 10px; fill: var(--grey); direction: ltr; }
   .seph.lit circle { stroke: var(--gold-deep); stroke-width: 2; }
 
-  /* actions */
-  .actions { flex: none; padding: 6px 16px calc(env(safe-area-inset-bottom) + 12px); }
-  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-  .choices button { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 10px; text-align: left; line-height: 1.1; }
-  .choices button:hover { border-color: var(--gold); }
-  .choices .k { font-family: var(--sans); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--grey); margin-right: 6px; }
-  .choices .t { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--ink-soft); }
-  .choices button.answer { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px var(--gold-deep); }
-  .choices button.miss { border-color: var(--miss); box-shadow: inset 0 0 0 1px var(--miss); }
-  .choices button:disabled { cursor: default; }
-  .btn { display: block; width: 100%; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1.05rem; text-align: center; padding: 12px; border-radius: 4px; transition: opacity .15s; }
-  .btn:disabled { opacity: .35; cursor: default; }
+  .btn { display: block; width: 100%; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1.05rem; text-align: center; padding: 12px; border-radius: 4px; }
   .btn.quiet { background: none; color: var(--grey); font-weight: 500; border: 1px solid var(--rule); margin-top: 10px; }
 
   /* summary (scrolls) */
@@ -116,26 +113,16 @@
 </head>
 <body>
 <div class="app">
-  <div class="bar">Paths of the Tree</div>
-
-  <div class="head">
-    <div class="modes" role="group" aria-label="Drill mode">
-      <button data-mode="key" aria-pressed="true">Key → Path</button>
-      <button data-mode="letter" aria-pressed="false">Letter → Path</button>
-      <button data-mode="path" aria-pressed="false">Path → Key</button>
-    </div>
-    <div class="meta"><span id="progress"></span><span id="score"></span></div>
+  <div class="bar" role="group" aria-label="Drill mode">
+    <button data-mode="key" aria-pressed="true">Key → Path</button>
+    <button data-mode="letter" aria-pressed="false">Letter → Path</button>
+    <button data-mode="path" aria-pressed="false">Path → Key</button>
   </div>
 
   <div class="prompt" id="prompt"></div>
 
   <div class="treebox" id="treebox">
     <svg class="tree" id="tree" viewBox="-136 -152 272 542" aria-label="Tree of Life"></svg>
-  </div>
-
-  <div class="actions" id="actions">
-    <div class="choices" id="choices" hidden></div>
-    <button class="btn" id="next" disabled>Next</button>
   </div>
 
   <div class="summary" id="summary" hidden></div>
@@ -205,7 +192,7 @@
   let mode = "key", deck = [], i = 0, hits = 0, missed = [], locked = false;
 
   const $ = id => document.getElementById(id);
-  const tree = $("tree"), prompt = $("prompt"), choices = $("choices"), next = $("next");
+  const tree = $("tree"), prompt = $("prompt"), treebox = $("treebox");
   const NS = "http://www.w3.org/2000/svg";
   const el = (t,a)=>{ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e; };
 
@@ -237,57 +224,57 @@
   function start(list){
     deck = shuffle(list ? list.slice() : KEYS.slice()); i = 0; hits = 0; missed = [];
     $("summary").hidden = true;
-    ["prompt","treebox","actions"].forEach(id => $(id).hidden = false);
+    prompt.hidden = false; treebox.hidden = false;
     show();
   }
   function clearTree(){
     Object.values(lines).forEach(l=>l.classList.remove("answer","miss","ask"));
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
-    $("treebox").classList.remove("locked");
+    treebox.classList.remove("locked"); prompt.classList.remove("done");
   }
+  const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
   function show(){
     locked = false; clearTree();
-    next.disabled = true; next.textContent = "Next"; choices.hidden = true; choices.innerHTML = "";
     const k = deck[i];
-    $("progress").textContent = `${i+1} of ${deck.length}`;
-    $("score").textContent = `${hits} correct`;
     if (mode === "key") {
-      prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker">Key ${k.key}</p><p class="title">${k.title}</p><p class="sub">Tap its path</p></div>`;
+      prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker"><span>Key ${k.key}</span>${prog()}</p><p class="title">${k.title}</p><p class="sub">Tap its path</p></div>`;
     } else if (mode === "letter") {
-      prompt.innerHTML = `<div class="letter">${k.heb}</div><div class="txt"><p class="kicker">Letter</p><p class="title">${k.letter}</p><p class="sub">Tap its path</p></div>`;
+      prompt.innerHTML = `<div class="letter">${k.heb}</div><div class="txt"><p class="kicker"><span>Letter</span>${prog()}</p><p class="title">${k.letter}</p><p class="sub">Tap its path</p></div>`;
     } else {
-      prompt.innerHTML = `<div class="txt"><p class="kicker">Which Key</p><p class="title">walks this path?</p><p class="sub">${k.from} to ${k.to}</p></div>`;
       lines[k.id].classList.add("ask");
       sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
-      $("treebox").classList.add("locked");
+      treebox.classList.add("locked");
       const opts = shuffle([k, ...shuffle(KEYS.filter(o=>o!==k)).slice(0,3)]);
-      choices.hidden = false;
+      const c = document.createElement("div"); c.className = "choices"; c.id = "choices";
       opts.forEach(o => {
         const b = document.createElement("button");
         b.dataset.key = o.key;
         b.innerHTML = `<span class="k">${o.key}</span><span class="t">${o.title}</span>`;
         b.addEventListener("click", ()=>pick(o.id));
-        choices.appendChild(b);
+        c.appendChild(b);
       });
+      prompt.innerHTML = ""; prompt.appendChild(c);
     }
   }
   function pick(id){
     if (locked) return; locked = true;
     const k = deck[i], ok = id === k.id;
     if (ok) hits++; else missed.push(k);
-    $("score").textContent = `${hits} correct`;
-    $("treebox").classList.add("locked");
+    treebox.classList.add("locked");
     lines[k.id].classList.remove("ask"); lines[k.id].classList.add("answer");
     if (!ok && lines[id]) lines[id].classList.add("miss");
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
     if (mode === "path") {
       const picked = KEYS.find(o=>o.id===id);
-      [...choices.children].forEach(b => { b.disabled = true;
+      prompt.querySelectorAll("button").forEach(b => { b.disabled = true;
         if (+b.dataset.key === k.key) b.classList.add("answer"); else if (!ok && +b.dataset.key === picked.key) b.classList.add("miss"); });
     }
-    // the prompt box becomes the answer box: same height, no reflow
-    prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker ${ok?"yes":"no"}">${ok?"Yes":"No"} · Key ${k.key} · Path ${k.path}</p><p class="title">${k.title}</p><p class="sub"><span class="heb">${k.heb}</span> ${k.letter} · ${k.from} to ${k.to}</p></div>`;
-    next.disabled = false; next.textContent = i + 1 < deck.length ? "Next" : "Finish";
+    // the prompt box becomes the answer box: same height, no reflow; tapping it or the tree advances
+    const go = i + 1 < deck.length ? "Next ›" : "Finish ›";
+    setTimeout(() => {
+      prompt.classList.add("done");
+      prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker ${ok?"yes":"no"}"><span>${ok?"Yes":"No"} · Key ${k.key} · Path ${k.path}</span>${prog()}</p><p class="title">${k.title}</p><p class="sub"><span class="heb">${k.heb}</span> ${k.letter} · ${k.from} to ${k.to} &nbsp;<span class="go">${go}</span></p></div>`;
+    }, mode === "path" ? 500 : 0);
   }
   function advance(){
     if (!locked) return;
@@ -296,7 +283,7 @@
   function finish(){
     const total = deck.length, bestKey = "ihsvh.paths.best." + mode;
     let best = 0; try { best = +localStorage.getItem(bestKey) || 0; if (hits/total > best) { best = hits/total; localStorage.setItem(bestKey, best); } } catch(e){}
-    ["prompt","treebox","actions"].forEach(id => $(id).hidden = true);
+    prompt.hidden = true; treebox.hidden = true;
     const s = $("summary"); s.hidden = false; s.scrollTop = 0;
     s.innerHTML = `<div class="card"><h3>${hits} of ${total}</h3>
       <p>${MODES[mode]}${best ? ` · best ${Math.round(best*100)}%` : ""}</p>
@@ -308,11 +295,12 @@
     const m = $("again-missed"); if (m) m.addEventListener("click", ()=>start(missed));
   }
 
-  next.addEventListener("click", advance);
-  document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && locked && !$("treebox").hidden && document.activeElement.tagName!=="BUTTON") { e.preventDefault(); advance(); } });
-  document.querySelectorAll(".modes button").forEach(b => b.addEventListener("click", () => {
+  prompt.addEventListener("click", ()=>{ if (prompt.classList.contains("done")) advance(); });
+  treebox.addEventListener("click", ()=>{ if (prompt.classList.contains("done")) advance(); });
+  document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && locked && !treebox.hidden && document.activeElement.tagName!=="BUTTON") { e.preventDefault(); advance(); } });
+  document.querySelectorAll(".bar button").forEach(b => b.addEventListener("click", () => {
     mode = b.dataset.mode;
-    document.querySelectorAll(".modes button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+    document.querySelectorAll(".bar button").forEach(x=>x.setAttribute("aria-pressed", x===b));
     start();
   }));
   start();
