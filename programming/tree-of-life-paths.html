@@ -69,13 +69,12 @@
   /* fixed, non-scrolling frame: gives iOS no scrolling content to blur under the status bar */
   .app { --card-h: clamp(110px, 21dvh, 176px); --row-h: calc(var(--card-h) + 14px); position: fixed; inset: env(safe-area-inset-top) 0 0 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   /* controls: bottom right, stacked — theme above, mode below; Next takes the bottom left */
-  .ctrl { position: absolute; right: 11px; bottom: 2px; z-index: 3; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-  .ctrl .mode { background: var(--card); color: var(--grey); border: 1px solid var(--rule); font-family: var(--sans); font-weight: 500; font-size: .85rem; padding: 8px 12px; border-radius: 4px; }
-  .ctrl .mode::after { content: " ↻"; color: var(--gold-line); }
-  .ctrl .theme { width: 34px; height: 34px; border-radius: 50%; background: var(--card); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; }
-  .ctrl .theme svg { width: 16px; height: 16px; stroke: var(--grey); fill: none; stroke-width: 1.4; }
+  /* two round controls on the right edge, above the choice rows so nothing ever collides */
+  .ctrl { position: absolute; right: 11px; bottom: 98px; z-index: 3; display: flex; flex-direction: column; gap: 8px; }
+  .ctrl button { width: 36px; height: 36px; border-radius: 50%; background: var(--card); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; color: var(--grey); }
+  .ctrl svg { width: 16px; height: 16px; stroke: var(--grey); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
   .ctrl .theme svg path { fill: var(--grey); stroke: none; }
-  .choosing .ctrl { display: none; }
+  .prompt .kicker .mode { color: var(--gold-deep); font-weight: 600; }
 
   /* prompt row — same box before and after the answer */
   .prompt { position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 14px); padding: 6px 19px 0 8px; }
@@ -155,7 +154,7 @@
     <button class="next" id="next" hidden>Next ›</button>
     <div class="ctrl">
       <button class="theme" id="theme" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg></button>
-      <button class="mode" id="modebtn">Key → Path</button>
+      <button class="mode" id="modebtn" aria-label="Change drill"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg></button>
     </div>
   </div>
   <div class="big" id="big" hidden></div>
@@ -298,11 +297,11 @@
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
     treebox.classList.remove("locked", "asking", "hit-yes", "hit-no"); next.hidden = true;
   }
-  const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
+  const prog = () => `<span class="prog"><span class="mode">${MODES[mode]}</span> · ${i+1}/${deck.length} · ${hits} ✓</span>`;
   function show(){
     locked = false; clearTree();
     requestAnimationFrame(fit);
-    const old = $("choices"); if (old) old.remove(); app.classList.remove("choosing");
+    const old = $("choices"); if (old) old.remove();
     const k = deck[i];
     if (mode === "key") {
       prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker"><span>Key ${k.key}</span>${prog()}</p><p class="title">${k.title}</p><p class="sub">Tap its path</p></div>`;
@@ -322,7 +321,7 @@
         b.addEventListener("click", ()=>pick(o.id));
         c.appendChild(b);
       });
-      treebox.appendChild(c); app.classList.add("choosing");
+      treebox.appendChild(c);
     }
   }
   function pick(id){
@@ -333,7 +332,7 @@
     lines[k.id].classList.remove("ask"); halos[k.id].classList.remove("ask"); treebox.classList.remove("asking");
     lines[k.id].classList.add("reveal"); lines[k.id].style.stroke = `var(--${k.c})`;
     treebox.classList.add(ok ? "hit-yes" : "hit-no");
-    if (mode === "path") { $("choices").remove(); app.classList.remove("choosing"); }
+    if (mode === "path") $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
     // the prompt box becomes the answer box: same height, no reflow
     setTimeout(() => {
@@ -390,7 +389,6 @@
   const ORDER = ["key", "letter", "path"];
   $("modebtn").addEventListener("click", () => {
     mode = ORDER[(ORDER.indexOf(mode) + 1) % ORDER.length];
-    $("modebtn").textContent = MODES[mode];
     start();
   });
   start(); fit(); setTimeout(fit, 300);
