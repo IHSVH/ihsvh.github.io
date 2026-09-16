@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" id="themeColor" content="#B4A67F">
+<link rel="apple-touch-icon" href="tree-of-life-paths-icon.png">
+<link rel="icon" type="image/png" href="tree-of-life-paths-icon.png">
 <title>Paths of the Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +25,7 @@
     --gold-line: #BFB18F;
     --ref: #72ABBF;
     --miss: #B5685C;          /* new token: wrong answer; ESV/IHSVH have no error hue */
+    --ask: #B89131;           /* IHSVH gold: the path in question */
     --serif: "Crimson Pro", Georgia, serif;
     --display: "Cormorant Infant", "Crimson Pro", serif;
     --sans: "Assistant", -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -53,12 +56,12 @@
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html { -webkit-text-size-adjust: 100%; height: 100%; background: var(--gold); }
-  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); height: 100%; }
+  body { margin: 0; background: var(--gold); color: var(--ink); font-family: var(--serif); height: 100%; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   [hidden] { display: none !important; }
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
-  .app { --row-h: calc(clamp(80px, 14dvh, 132px) + 10px); display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 640px; margin: 0 auto; overflow: hidden; }
+  .app { --row-h: calc(clamp(80px, 14dvh, 132px) + 10px); display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   .bar { flex: none; display: flex; background: var(--gold); padding: 4px 8px 0; }
   .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 7px 2px 8px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
   .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
@@ -105,16 +108,18 @@
   .treebox:not(.locked) .hit:hover + .path, .treebox:not(.locked) .hit:focus-visible + .path { stroke: var(--gold); stroke-width: 3; }
   .hit:focus, .hit:focus-visible { outline: none; }
   .locked .hit { pointer-events: none; }
-  .path.ask { stroke: var(--ink); stroke-width: 6; }
+  .path.ask { stroke: var(--ask); stroke-width: 7; }
+  .halo { stroke: var(--paper); stroke-width: 13; stroke-linecap: round; pointer-events: none; display: none; }
+  .halo.ask { display: inline; }
   .path.answer { stroke: var(--ref); stroke-width: 5; }   /* you had it */
   .path.miss { stroke: var(--miss); stroke-width: 5; }    /* the path you were looking for */
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
-  @keyframes pulse { 50% { stroke-width: 3.5; } }
+  @keyframes pulse { 50% { stroke-width: 4; } }
   .seph circle { fill: var(--card); stroke: var(--gold-line); stroke-width: 1.2; }
   .seph text { font-family: var(--sans); font-size: 12.5px; fill: var(--gold-deep); text-anchor: middle; dominant-baseline: central; direction: rtl; pointer-events: none; }
   .seph .n { font-family: var(--serif); font-weight: 300; font-size: 10px; fill: var(--grey); direction: ltr; }
   .seph.lit circle { stroke: var(--gold-deep); stroke-width: 2; }
-  .asking .seph.lit circle { stroke: var(--ink); stroke-width: 2.2; }
+  .asking .seph.lit circle { stroke: var(--ask); stroke-width: 2.6; }
 
   .btn { display: block; width: 100%; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1.05rem; text-align: center; padding: 12px; border-radius: 4px; }
   .btn.quiet { background: none; color: var(--grey); font-weight: 500; border: 1px solid var(--rule); margin-top: 10px; }
@@ -235,14 +240,15 @@
   addEventListener("resize", fit);
   // ---- draw tree once
   [-R,0,R,2*R].forEach(cy => tree.appendChild(el("circle",{class:"guide",cx:0,cy,r:R})));
-  const lines = {};
+  const lines = {}, halos = {};
   KEYS.forEach(k => {
     const a = pos[k.from], b = pos[k.to];
     const hit = el("line",{class:"hit",x1:a.x,y1:a.y,x2:b.x,y2:b.y,tabindex:0,role:"button","aria-label":`${k.from} to ${k.to}`});
     const line = el("line",{class:"path",x1:a.x,y1:a.y,x2:b.x,y2:b.y});
     hit.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(k.id);} });
-    tree.appendChild(hit); tree.appendChild(line);
-    lines[k.id] = line;
+    const halo = el("line",{class:"halo",x1:a.x,y1:a.y,x2:b.x,y2:b.y});
+    tree.appendChild(hit); tree.appendChild(halo); tree.appendChild(line);
+    lines[k.id] = line; halos[k.id] = halo;
   });
   // a tap picks the nearest path, not whichever hit-line happens to be drawn on top where two cross
   tree.addEventListener("click", e => {
@@ -279,6 +285,7 @@
   }
   function clearTree(){
     Object.values(lines).forEach(l=>l.classList.remove("answer","miss","ask"));
+    Object.values(halos).forEach(l=>l.classList.remove("ask"));
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
     treebox.classList.remove("locked", "asking"); next.hidden = true;
   }
@@ -292,7 +299,7 @@
     } else if (mode === "letter") {
       prompt.innerHTML = `<div class="letter">${k.heb}</div><div class="txt"><p class="kicker"><span>Letter</span>${prog()}</p><p class="title">${k.letter}</p><p class="sub">Tap its path</p></div>`;
     } else {
-      lines[k.id].classList.add("ask");
+      lines[k.id].classList.add("ask"); halos[k.id].classList.add("ask");
       sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
       treebox.classList.add("locked", "asking");
       const opts = shuffle([k, ...shuffle(KEYS.filter(o=>o!==k)).slice(0,3)]);
@@ -313,7 +320,7 @@
     const k = deck[i], ok = id === k.id;
     if (ok) hits++; else missed.push(k);
     treebox.classList.add("locked");
-    lines[k.id].classList.remove("ask"); treebox.classList.remove("asking");
+    lines[k.id].classList.remove("ask"); halos[k.id].classList.remove("ask"); treebox.classList.remove("asking");
     lines[k.id].classList.add(ok ? "answer" : "miss");
     if (mode === "path") $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
