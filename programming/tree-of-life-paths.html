@@ -58,18 +58,17 @@
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
   .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 640px; margin: 0 auto; overflow: hidden; }
-  .bar { flex: none; display: flex; background: var(--gold); padding: calc(env(safe-area-inset-top) + 6px) 8px 0; }
-  .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 8px 2px 9px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
+  .bar { flex: none; display: flex; background: var(--gold); padding: calc(env(safe-area-inset-top) + 4px) 8px 0; }
+  .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 7px 2px 8px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
   .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
   .bar .theme { flex: none; width: 40px; display: flex; align-items: center; justify-content: center; }
   .bar .theme svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 1.5; }
   .bar .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { flex: none; display: flex; align-items: center; gap: 12px; height: 100px; padding: 6px 14px 0; }
-  .prompt.done { cursor: pointer; }
-  .prompt img { flex: none; width: 54px; height: 88px; object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
-  .prompt .letter { flex: none; width: 54px; text-align: center; font-family: var(--sans); font-size: 3.4rem; line-height: 1; color: var(--gold-deep); direction: rtl; }
+  .prompt { flex: none; display: flex; align-items: center; gap: 12px; height: 92px; padding: 4px 14px 0; }
+  .prompt img { flex: none; width: 50px; height: 81px; object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
+  .prompt .letter { flex: none; width: 50px; text-align: center; font-family: var(--sans); font-size: 3.2rem; line-height: 1; color: var(--gold-deep); direction: rtl; }
   .prompt .txt { min-width: 0; flex: 1; }
   .prompt .kicker { display: flex; justify-content: space-between; font-family: var(--sans); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0 0 2px; }
   .prompt .kicker .prog { letter-spacing: .04em; text-transform: none; }
@@ -79,7 +78,6 @@
   .prompt .title { font-family: var(--display); font-weight: 600; font-size: 1.6rem; letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt .sub .heb { font-family: var(--sans); font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
-  .prompt .sub .go { color: var(--gold-deep); font-style: normal; font-family: var(--sans); font-weight: 600; font-size: .9rem; }
 
   /* path mode: the four choices live in the prompt row */
   .choices { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-self: stretch; margin: 4px 0 2px; }
@@ -88,8 +86,8 @@
   .choices .t { font-family: var(--display); font-weight: 600; font-size: 1rem; color: var(--ink-soft); }
 
   /* tree fills whatever height is left; absolute inside a flexed box so Safari sizes it */
-  .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: 2px 8px calc(env(safe-area-inset-bottom) + 6px); }
-  .treebox.locked { cursor: pointer; }
+  .treebox { flex: 1 1 0; min-height: 0; position: relative; margin: 2px 8px calc(env(safe-area-inset-bottom) + 4px); }
+  .next { position: absolute; right: 2px; bottom: 2px; background: var(--gold-deep); color: #fff; font-family: var(--sans); font-weight: 600; font-size: 1rem; padding: 10px 18px; border-radius: 4px; }
   svg.tree { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .guide { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 5; }
   .path { stroke: var(--gold-line); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; transition: stroke .15s, stroke-width .15s; }
@@ -98,8 +96,8 @@
   .hit:focus, .hit:focus-visible { outline: none; }
   .locked .hit { pointer-events: none; }
   .path.ask { stroke: var(--gold-deep); stroke-width: 5; }
-  .path.answer { stroke: var(--ref); stroke-width: 5; }
-  .path.miss { stroke: var(--miss); stroke-width: 5; }
+  .path.answer { stroke: var(--ref); stroke-width: 5; }   /* you had it */
+  .path.miss { stroke: var(--miss); stroke-width: 5; }    /* the path you were looking for */
   .path.ask { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 50% { stroke-width: 3; } }
   .seph circle { fill: var(--card); stroke: var(--gold-line); stroke-width: 1.2; }
@@ -136,7 +134,8 @@
   <div class="prompt" id="prompt"></div>
 
   <div class="treebox" id="treebox">
-    <svg class="tree" id="tree" viewBox="-136 -152 272 542" aria-label="Tree of Life"></svg>
+    <svg class="tree" id="tree" viewBox="-132 -148 264 536" aria-label="Tree of Life"></svg>
+    <button class="next" id="next" hidden>Next ›</button>
   </div>
 
   <div class="summary" id="summary" hidden></div>
@@ -206,7 +205,7 @@
   let mode = "key", deck = [], i = 0, hits = 0, missed = [], locked = false;
 
   const $ = id => document.getElementById(id);
-  const tree = $("tree"), prompt = $("prompt"), treebox = $("treebox");
+  const tree = $("tree"), prompt = $("prompt"), treebox = $("treebox"), next = $("next");
   const NS = "http://www.w3.org/2000/svg";
   const el = (t,a)=>{ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e; };
 
@@ -244,7 +243,7 @@
   function clearTree(){
     Object.values(lines).forEach(l=>l.classList.remove("answer","miss","ask"));
     Object.values(sephEls).forEach(g=>g.classList.remove("lit"));
-    treebox.classList.remove("locked"); prompt.classList.remove("done");
+    treebox.classList.remove("locked"); next.hidden = true;
   }
   const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
   function show(){
@@ -276,19 +275,13 @@
     if (ok) hits++; else missed.push(k);
     treebox.classList.add("locked");
     lines[k.id].classList.remove("ask");
-    if (mode === "path") {            // the line was the question: blue if you named its Key, red if not
-      lines[k.id].classList.add(ok ? "answer" : "miss");
-      prompt.querySelectorAll("button").forEach(b => b.disabled = true);
-    } else {                          // the line was the answer: the right path blue, a wrong tap red
-      lines[k.id].classList.add("answer");
-      if (!ok && lines[id]) lines[id].classList.add("miss");
-    }
+    lines[k.id].classList.add(ok ? "answer" : "miss");
+    if (mode === "path") prompt.querySelectorAll("button").forEach(b => b.disabled = true);
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
-    // the prompt box becomes the answer box: same height, no reflow; tapping it or the tree advances
-    const go = i + 1 < deck.length ? "Next ›" : "Finish ›";
+    // the prompt box becomes the answer box: same height, no reflow
     setTimeout(() => {
-      prompt.classList.add("done");
-      prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker ${ok?"yes":"no"}"><span>${ok?"Yes":"No"} · Key ${k.key} · Path ${k.path}</span>${prog()}</p><p class="title">${k.title}</p><p class="sub"><span class="heb">${k.heb}</span> ${k.letter} · ${k.from} to ${k.to} &nbsp;<span class="go">${go}</span></p></div>`;
+      next.textContent = i + 1 < deck.length ? "Next ›" : "Finish ›"; next.hidden = false;
+      prompt.innerHTML = `${img(k)}<div class="txt"><p class="kicker ${ok?"yes":"no"}"><span>${ok?"Yes":"No"} · Key ${k.key} · Path ${k.path}</span>${prog()}</p><p class="title">${k.title}</p><p class="sub"><span class="heb">${k.heb}</span> ${k.letter} · ${k.from} to ${k.to}</p></div>`;
     }, mode === "path" ? 500 : 0);
   }
   function advance(){
@@ -317,8 +310,7 @@
     root.dataset.theme = dark ? "light" : "dark";
     try { localStorage.setItem("ihsvh.theme", root.dataset.theme); } catch(e){}
   });
-  prompt.addEventListener("click", ()=>{ if (prompt.classList.contains("done")) advance(); });
-  treebox.addEventListener("click", ()=>{ if (prompt.classList.contains("done")) advance(); });
+  next.addEventListener("click", advance);
   document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && locked && !treebox.hidden && document.activeElement.tagName!=="BUTTON") { e.preventDefault(); advance(); } });
   document.querySelectorAll(".bar button").forEach(b => b.addEventListener("click", () => {
     mode = b.dataset.mode;
