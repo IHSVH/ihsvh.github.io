@@ -66,7 +66,7 @@
 
   /* one screen: bar(modes) / prompt row / tree (fills) */
   /* fixed, non-scrolling frame: gives iOS no scrolling content to blur under the status bar */
-  .app { --row-h: calc(clamp(96px, 17dvh, 150px) + 10px); position: fixed; inset: 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
+  .app { --row-h: calc(clamp(110px, 21dvh, 176px) + 10px); position: fixed; inset: 0; display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; overflow: hidden; background: var(--paper); }
   .bar { flex: none; display: flex; background: var(--gold); padding: 2px 8px 0; }
   .bar button { flex: 1; color: rgba(255,255,255,.72); font-family: var(--sans); font-weight: 500; font-size: .98rem; padding: 7px 2px 8px; border-bottom: 2px solid transparent; letter-spacing: .01em; }
   .bar button[aria-pressed="true"] { color: #fff; font-weight: 600; border-bottom-color: #fff; }
@@ -75,7 +75,7 @@
   .bar .theme svg path { fill: #fff; stroke: none; }
 
   /* prompt row — same box before and after the answer */
-  .prompt { --card-h: clamp(96px, 17dvh, 150px); position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 10px); padding: 6px 19px 0 8px; }
+  .prompt { --card-h: clamp(110px, 21dvh, 176px); position: relative; z-index: 2; pointer-events: none; flex: none; display: flex; align-items: flex-start; gap: 14px; height: calc(var(--card-h) + 10px); padding: 6px 19px 0 8px; }
   .prompt img { flex: none; width: calc(var(--card-h) * .615); height: var(--card-h); object-fit: cover; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); pointer-events: auto; cursor: zoom-in; }
 
   /* the Key, large: tap the card to open, tap anywhere to close */
@@ -89,7 +89,7 @@
   .prompt .kicker.yes { color: var(--gold-deep); }
   .prompt .kicker.no { color: var(--miss); }
   .prompt .kicker.yes .prog, .prompt .kicker.no .prog { color: var(--grey); }
-  .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.12; padding-bottom: .1em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.3; color: var(--grey); margin: 3px 0 0; }
   .prompt .sub .heb { font-family: var(--sans); font-weight: 600; font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
 
