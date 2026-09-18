@@ -96,7 +96,7 @@
   .prompt .kicker.yes { color: var(--gold-deep); }
   .prompt .kicker.no { color: var(--miss); }
   .prompt .kicker.yes .prog, .prompt .kicker.no .prog { color: var(--grey); }
-  .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.08; padding-bottom: .1em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .prompt .title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, calc(var(--card-h) * .26), 2rem); letter-spacing: .02em; color: var(--ink-soft); margin: 0; line-height: 1.12; padding-bottom: .1em; white-space: nowrap; overflow: hidden; }
   .prompt .sub { font-style: italic; font-size: 1.05rem; line-height: 1.2; color: var(--grey); margin: -.3em 0 0; }
   .prompt .sub .heb { font-family: var(--sans); font-weight: 600; font-style: normal; color: var(--gold-deep); direction: rtl; unicode-bidi: isolate; }
 
@@ -246,12 +246,14 @@
 
   // fit: Kether's centre sits on the bottom edge of the card row; everything above rises behind it
   function fit(){
-    const box = treebox.getBoundingClientRect(), txt = prompt.querySelector(".txt") || prompt, card = prompt.querySelector("img, .letter");
+    const box = treebox.getBoundingClientRect(), row = prompt.getBoundingClientRect(), txt = prompt.querySelector(".txt");
     const H = box.height; if (H <= 0) return;
     const yMax = 3*R + 28;                                        // Malkuth rim (units)
-    // two clearances: Kether's rim under the text; Binah/Chokmah's rims under the card. The tighter one governs.
-    const cons = [[txt.getBoundingClientRect().bottom - box.top + 4, -R - 27]];
-    if (card) cons.push([card.getBoundingClientRect().bottom - box.top + 6, -R/2 - 27]);
+    const gutter = parseFloat(getComputedStyle(prompt).paddingTop), cardH = row.height - gutter;
+    // the same two clearances in every mode, from the row's fixed geometry, so the tree never changes size:
+    // Kether's rim under the (one-line) text block; Binah/Chokmah's rims under the card slot
+    if (txt) fit.txtH = Math.max(fit.txtH || 0, txt.getBoundingClientRect().height);
+    const cons = [[gutter + 4 + (fit.txtH || 0) + 4 - (box.top - row.top), -R - 27], [gutter + cardH + 6 - (box.top - row.top), -R/2 - 27]];
     let sc = Infinity, top = 0, yMin = 0;
     cons.forEach(([t, y]) => { const k = (H - 6 - t) / (yMax - y); if (k < sc) { sc = k; top = t; yMin = y; } });
     const T = yMin - top / sc, vh = (H - 6) / sc, vw = box.width / sc;
@@ -329,9 +331,14 @@
     treebox.classList.remove("locked", "asking", "hit-yes", "hit-no"); next.hidden = true;
   }
   const prog = () => `<span class="prog">${i+1}/${deck.length} · ${hits} ✓</span>`;
+  function fitTitle(){
+    const t = prompt.querySelector(".title"); if (!t) return;
+    t.style.fontSize = ""; let fs = parseFloat(getComputedStyle(t).fontSize);
+    while (t.scrollWidth > t.clientWidth && fs > 17) { fs -= 1; t.style.fontSize = fs + "px"; }
+  }
   function show(){
     locked = false; clearTree();
-    requestAnimationFrame(fit);
+    requestAnimationFrame(() => { fitTitle(); fit(); });
     const old = $("choices"); if (old) old.remove();
     const k = deck[i];
     if (mode === "key") {
@@ -367,6 +374,7 @@
       mark.setAttribute("transform", `translate(${(a.x+b.x)/2} ${(a.y+b.y)/2})`);
       mark.querySelector("circle").style.stroke = `var(--${k.c})`; markT.style.fill = `var(--${k.c})`;
       markT.textContent = k.heb; mark.setAttribute("visibility","visible"); centreMark(k.heb); }
+    setTimeout(fitTitle, choosing() ? 520 : 20);
     treebox.classList.add(ok ? "hit-yes" : "hit-no");
     if (choosing()) $("choices").remove();
     sephEls[k.from].classList.add("lit"); sephEls[k.to].classList.add("lit");
