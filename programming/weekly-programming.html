@@ -32,7 +32,7 @@
    Wk6 Peak    5/3/1 @80/85/90 up, 1/3/5 @80/70/60 down   alt 4×1 @95%
    1RM week    find max or rest
 
-  MAXES (Jul 2026): Back Squat 315 · Front Squat 265 · OH Squat 135 · Clean 225 ·
+  MAXES (Sep 2026): Back Squat 315 · Front Squat 285 · OH Squat 135 · Clean 225 ·
    Hang Clean 155 · Snatch 135 · Bench 225 · Strict Press 125 · Push Jerk 185 · Deadlift 445.
    Verify against Joshua's statements, never against older file values.
 
@@ -1311,6 +1311,183 @@ const MOBILITY_DESCRIPTIONS = {
 };
 
 const WEEKS = [
+  {
+    weekOf: '2026-09-21',
+    cycleWeek: 3,
+    days: [
+      {
+        id: 'monday', name: 'Monday', lift: 'Snatch',
+        cap: '33:00', capLabel: 'Clock',
+        workout: [
+          { t: 'section', v: '(0:00 – 10:00) Barbell Snatch Complex' },
+          { t: 'sub', v: '10-8-6-4-2' },
+          '1 Snatch Grip Deadlift',
+          '1 Hang Snatch',
+          '1 Snatch Power/Squat',
+          { t: 'note', v: 'Start super light for the set of 10 and build from there' },
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 3:00' },
+          { gap: 1 },
+          { t: 'section', v: '(13:00 – 33:00) 20:00 AMRAP' },
+          { t: 'title', v: '"Double Snatcher"' },
+          '2 Cal Row',
+          '2 Right Arm DB Snatches',
+          '2 Left Arm DB Snatches',
+          '2 Burpees',
+          { t: 'note', v: 'Continue increasing reps by 2 each round — 2, 4, 6, etc.' },
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 3 Snatch' },
+          '5 Reps @ 60%',
+          '5 Reps @ 70%',
+          '3 Reps @ 75%',
+          '3 Reps @ 80%',
+          '1 Rep @ 90%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 4 @ 80%'
+        ]
+      },
+      {
+        id: 'tuesday', name: 'Tuesday', lift: 'Bench Press',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          { t: 'sub', v: 'Teams of 3 · 1 Working at a Time' },
+          { gap: 1 },
+          '30 Bench Press (50%)',
+          { t: 'rounds', v: '-6 Rounds of Cindy, Alt. Rounds-' },
+          '5 Pull Ups',
+          '10 Push Ups',
+          '15 Air Squats',
+          { gap: 1 },
+          '24 Bench Press (55%)',
+          { t: 'rounds', v: '-6 Rounds of Cindy, Alt. Rounds-' },
+          { gap: 1 },
+          '18 Bench Press (60%)',
+          { t: 'rounds', v: '-6 Rounds of Cindy, Alt. Rounds-' },
+          { gap: 1 },
+          '12 Bench Press (65%)',
+          { t: 'rounds', v: '-6 Rounds of Cindy, Alt. Rounds-' },
+          { gap: 1 },
+          '6 Bench Press (70%)',
+          { t: 'rounds', v: '-6 Rounds of Cindy, Alt. Rounds-' },
+          { gap: 1 },
+          { t: 'note', v: '* 1 Round of Cindy = 5 Pull Ups, 10 Push Ups, 15 Air Squats' },
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 3 Bench Press' },
+          '5 Reps @ 60%',
+          '5 Reps @ 70%',
+          '3 Reps @ 75%',
+          '3 Reps @ 80%',
+          '1 Rep @ 90%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 4 @ 80%'
+        ]
+      },
+      {
+        id: 'wednesday', name: 'Wednesday', lift: 'Front Squat',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          '20 Russian KB Swings',
+          '30 Cal Bike',
+          { t: 'note', v: '(You Choose a Heavy Weight)' },
+          '40 DB Suitcase Walking Lunges',
+          '50 Ab Mat Sit Ups',
+          { t: 'note', v: '(You Choose a Heavy Weight)' },
+          '40 Alt. Single Box Step Ups (24", 20")',
+          '30 Cal Row',
+          '20 Front Squats (135, 185, 205)',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 3 Front Squat' },
+          '5 Reps @ 60%',
+          '5 Reps @ 70%',
+          '3 Reps @ 75%',
+          '3 Reps @ 80%',
+          '1 Rep @ 90%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 4 @ 80%'
+        ]
+      },
+      {
+        id: 'thursday', name: 'Thursday', lift: 'Deadlift',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          { t: 'rounds', v: '-5 Rounds-' },
+          '300m Run',
+          '15 Deadlift (185, 185, 205)',
+          '10 Handstand Push Ups',
+          '5 Muscle Ups (Ring or Bar)',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 3 Deadlift' },
+          '5 Reps @ 60%',
+          '5 Reps @ 70%',
+          '3 Reps @ 75%',
+          '3 Reps @ 80%',
+          '1 Rep @ 90%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 4 @ 80%'
+        ]
+      },
+      {
+        id: 'friday', name: 'Friday', lift: 'Shoulder to Overhead',
+        cap: '30:00', capLabel: 'Clock',
+        workout: [
+          { t: 'title', v: '"Hyrox Fun Friday"' },
+          { t: 'section', v: '(0:00 – 6:00)' },
+          { t: 'sub', v: '4 × 4' },
+          'Build to a Heavy Push Press',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 2:00' },
+          { gap: 1 },
+          { t: 'section', v: '(8:00 – 30:00) 22:00 Cap' },
+          { t: 'rounds', v: '-4 Rounds-' },
+          '12 DB Strict Press (45)',
+          '200m Ski',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 1:30' },
+          { gap: 1 },
+          { t: 'rounds', v: '-4 Rounds-' },
+          "15 Wall Balls (20/14) (10', 9')",
+          '200m Row',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 3 Strict Press' },
+          '5 Reps @ 60%',
+          '5 Reps @ 70%',
+          '3 Reps @ 75%',
+          '3 Reps @ 80%',
+          '1 Rep @ 90%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 4 @ 80%'
+        ]
+      },
+      {
+        id: 'saturday', name: 'Saturday', lift: 'Back Squat',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          { t: 'sub', v: 'Partner Workout · 1 Working at a Time' },
+          { gap: 1 },
+          { t: 'rounds', v: '-4 Rounds-' },
+          '100 Double Unders',
+          '30 Back Squats (115, 135, 155)',
+          "60' Handstand Walk",
+          '400m Run',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 3 Back Squat' },
+          '5 Reps @ 60%',
+          '5 Reps @ 70%',
+          '3 Reps @ 75%',
+          '3 Reps @ 80%',
+          '1 Rep @ 90%',
+          '1 Rep @ 90%',
+          { gap: 1 },
+          'Or 4 × 4 @ 80%'
+        ]
+      }
+    ]
+  },
   {
     weekOf: '2026-09-14',
     cycleWeek: 2,
@@ -9751,7 +9928,7 @@ const PEAK_PCTS = new Set([70, 80, 90, 95]);
 // Defaults — applied only to empty fields. User edits always win.
 // Remove or update once the user has confirmed their own values.
 const DEFAULT_MAXES = {
-  squat:         { Back: 315, Front: 265, Overhead: 135 },
+  squat:         { Back: 315, Front: 285, Overhead: 135 },
   clean:         { Regular: 225, /* Power: blank */ Hang: 155 },
   snatch:        { Regular: 135 /* Power: blank, Hang: blank */ },
   benchPress:    { pr: 225 },
