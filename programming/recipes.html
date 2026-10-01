@@ -235,7 +235,7 @@ const seed={version:1,recipes:[{
     name:'Batch of 4',
     servings:4,
     ingredients:[
-      '308 g orange juice, fresh squeezed',
+      '260 g orange juice, fresh squeezed (65 g per jar)',
       '144 g Bob\u2019s Protein Oats',
       '320 g Greek yogurt (Siggi\u2019s Skyr 0%)',
       '40 g chia seeds',
@@ -317,6 +317,14 @@ function load(){
         if(oats&&oats.variants&&oats.variants[0]&&oats.variants[0].name==='Batch of 4')
           oats.variants[0]=JSON.parse(JSON.stringify(so.variants[0]));
         d.migrations.push('m4-oats-batch-grams');
+        localStorage.setItem(KEY,JSON.stringify(d));
+      }
+      if(!d.migrations.includes('m5-oats-oj-65g')){
+        const oats=d.recipes.find(x=>x.id==='r-overnightoats');
+        const v=oats&&oats.variants&&oats.variants[0];
+        if(v){const i=v.ingredients.indexOf('308 g orange juice, fresh squeezed');
+          if(i>=0)v.ingredients[i]='260 g orange juice, fresh squeezed (65 g per jar)';}
+        d.migrations.push('m5-oats-oj-65g');
         localStorage.setItem(KEY,JSON.stringify(d));
       }
       return d;
