@@ -235,19 +235,19 @@ const seed={version:1,recipes:[{
     name:'Batch of 4',
     servings:4,
     ingredients:[
-      '10 fl oz orange juice, fresh squeezed (1¼ cups)',
-      '1 cup Bob\u2019s Protein Oats',
-      '320 g Greek yogurt (Siggi\u2019s Skyr 0%) (1⅓ cups)',
-      '¼ cup chia seeds (4 tbsp)',
+      '308 g orange juice, fresh squeezed',
+      '144 g Bob\u2019s Protein Oats',
+      '320 g Greek yogurt (Siggi\u2019s Skyr 0%)',
+      '40 g chia seeds',
       'Monkfruit drops or honey (optional)',
       'Add before eating:',
-      '1 cup blueberries (¼ cup per jar)'
+      '148 g blueberries (37 g per jar)'
     ],
     steps:[
       'Mix everything except the fresh fruit in one bowl until no chia clumps remain.',
       'Divide evenly into 4 jars (weigh the bowl and split by weight for exact portions); seal.',
       'Refrigerate at least 12 hours; eat within 4 days.',
-      'Add ¼ cup blueberries to a jar before eating.'
+      'Add 37 g blueberries to a jar before eating.'
     ]
   }]
 },{
@@ -309,6 +309,14 @@ function load(){
         const so=seed.recipes.find(x=>x.id==='r-overnightoats');
         if(oats&&!oats.variants)oats.variants=JSON.parse(JSON.stringify(so.variants));
         d.migrations.push('m3-oats-batch');
+        localStorage.setItem(KEY,JSON.stringify(d));
+      }
+      if(!d.migrations.includes('m4-oats-batch-grams')){
+        const oats=d.recipes.find(x=>x.id==='r-overnightoats');
+        const so=seed.recipes.find(x=>x.id==='r-overnightoats');
+        if(oats&&oats.variants&&oats.variants[0]&&oats.variants[0].name==='Batch of 4')
+          oats.variants[0]=JSON.parse(JSON.stringify(so.variants[0]));
+        d.migrations.push('m4-oats-batch-grams');
         localStorage.setItem(KEY,JSON.stringify(d));
       }
       return d;
