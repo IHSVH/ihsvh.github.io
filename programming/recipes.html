@@ -477,7 +477,6 @@ function renderDetail(id){
     <div class="detail-actions">
       <button class="btn primary" id="cook">▶ COOK</button>
       <button class="btn" id="edit">EDIT</button>
-      <button class="btn quiet danger" id="del">DELETE</button>
     </div>
     <div class="colophon">IHSVH · RECIPES</div>
   </div>`;
@@ -487,10 +486,6 @@ function renderDetail(id){
   app.querySelectorAll('[data-var]').forEach(b=>b.onclick=()=>{variantIdx=+b.dataset.var;scaleFactor=1;renderDetail(id)});
   $('cook').onclick=()=>go({name:'cook',id});
   $('edit').onclick=()=>go({name:'edit',id});
-  $('del').onclick=()=>{
-    if(confirm('Delete "'+r.title+'"? This cannot be undone.')){
-      db.recipes=db.recipes.filter(x=>x.id!==id);save();go({name:'list'});
-    }};
 }
 
 function renderEdit(id){
