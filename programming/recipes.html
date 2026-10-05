@@ -255,13 +255,14 @@ const seed={version:1,recipes:[{
   title:'Electrolyte Salts',
   category:'other',
   servings:60,
+  serving:'6 g',
   ingredients:[
     '150 g Morton Canning & Pickling Salt',
-    '23 g Nutricost Potassium Chloride',
-    '17.14 g Nutricost Magnesium Malate',
-    '60 g True Lemon, entire canister',
     '65 g True Lime, entire canister',
+    '60 g True Lemon, entire canister',
     '30 g NOW BetterStevia',
+    '23 g Nutricost Potassium Chloride',
+    '17 g Nutricost Magnesium Malate',
     '15 g Nutricost Citric Acid'
   ],
   steps:[
@@ -269,8 +270,8 @@ const seed={version:1,recipes:[{
     'Store sealed at room temperature.',
     'Per serving: 6.0 g mix into 24\u201332 oz water; shake.'
   ],
-  nutrition:{},
-  notes:'Per 6.0 g serving (elemental): ~983\u20131000 mg sodium, 200 mg potassium, 60 mg magnesium, 1.00 g True Lemon, 1.08 g True Lime, 500 mg stevia, 250 mg added citric acid. Batch: 360.14 g \u00f7 60 = 6.00 g/serving. Frozen formulation \u2014 salt/potassium/magnesium ratios fixed; only flavor components (True Lemon/Lime, stevia) are open to adjustment.'
+  nutrition:{calories:0,sodium:59006,potassium:12062,magnesium:3570},
+  notes:'Per 6.00 g serving (elemental): 983 mg sodium, 201 mg potassium, 59.5 mg magnesium, 1.00 g True Lemon, 1.08 g True Lime, 500 mg stevia, 250 mg added citric acid. Batch: 360.00 g \u00f7 60 = 6.00 g/serving. Cost: ~$18.19/batch, ~$0.30/serving (list prices, Oct 2026; stevia priced at the 4 oz jar). Frozen formulation \u2014 salt/potassium/magnesium ratios fixed; only flavor components (True Lemon/Lime, stevia) are open to adjustment.'
 }]};
 function load(){
   try{
@@ -327,6 +328,14 @@ function load(){
         d.migrations.push('m5-oats-oj-65g');
         localStorage.setItem(KEY,JSON.stringify(d));
       }
+      if(!d.migrations.includes('m6-electrolytes-stevia25')){
+        const el=d.recipes.find(x=>x.id==='r-electrolytesalts');
+        const se=seed.recipes.find(x=>x.id==='r-electrolytesalts');
+        if(el&&el.ingredients.includes('30 g NOW BetterStevia'))
+          ['servings','serving','ingredients','steps','nutrition','notes'].forEach(k=>el[k]=JSON.parse(JSON.stringify(se[k])));
+        d.migrations.push('m6-electrolytes-stevia25');
+        localStorage.setItem(KEY,JSON.stringify(d));
+      }
       return d;
     }
   }catch(e){}
@@ -363,7 +372,7 @@ function parseIng(line){
 }
 function fmtQty(q,unit){
   if(q==null)return'';
-  if(/^(g|ml)$/i.test(unit))return String(Math.round(q));
+  if(/^(g|ml)$/i.test(unit))return String(q>=100?Math.round(q):Math.round(q*100)/100);
   if(Number.isInteger(q))return String(q);
   const fr=[[.125,'⅛'],[.25,'¼'],[1/3,'⅓'],[.375,'⅜'],[.5,'½'],[.625,'⅝'],[2/3,'⅔'],[.75,'¾'],[.875,'⅞']];
   const w=Math.floor(q),f=q-w;
@@ -437,17 +446,19 @@ function renderDetail(id){
     .map((t,i)=>`<button class="pill${i===variantIdx?' active':''}" data-var="${i}">${esc(t).toUpperCase()}</button>`).join(''):'';
   const steps=c.steps.map((s,i)=>`<div class="step"><span class="n">${i+1}</span><span class="tx">${esc(s)}</span></div>`).join('');
   const n=r.nutrition||{};
-  const NUTKEYS=[['calories','KCAL'],['protein','PROTEIN'],['fat','FAT'],['carbs','CARBS'],['fiber','FIBER']];
+  const NUTKEYS=[['calories','KCAL'],['protein','PROTEIN'],['fat','FAT'],['carbs','CARBS'],['fiber','FIBER'],['sodium','SODIUM'],['potassium','POTASSIUM'],['magnesium','MAGNESIUM']];
+  const SHORT={calories:'KCAL',protein:'P',fat:'F',carbs:'C',fiber:'FIB',sodium:'g Na',potassium:'g K',magnesium:'g Mg'};
+  const isMg=k=>k==='sodium'||k==='potassium'||k==='magnesium';
   const present=NUTKEYS.filter(([k])=>n[k]!=null&&n[k]!=='');
   const hasNut=present.length>0;
-  const per=k=>Math.round((+n[k]/r.servings)*10)/10;
-  const nutCells=present.map(([k,lbl])=>`<div><div class="v">${per(k)}</div><div class="k">${lbl}</div></div>`).join('');
-  const batchLine=present.map(([k,lbl])=>`${Math.round(per(k)*c.servings*10)/10} ${lbl==='KCAL'?'KCAL':lbl[0]}`).join(' · ');
+  const per=k=>isMg(k)?Math.round(+n[k]/r.servings):Math.round((+n[k]/r.servings)*10)/10;
+  const nutCells=present.map(([k,lbl])=>`<div><div class="v">${per(k)}${isMg(k)?'<small> mg</small>':''}</div><div class="k">${lbl}</div></div>`).join('');
+  const batchLine=present.map(([k])=>{const b=+n[k]/r.servings*c.servings;return`${isMg(k)?(b/1000).toFixed(1):Math.round(b*10)/10} ${SHORT[k]}`}).join(' · ');
   app.innerHTML=`
   <div class="view">
     <button class="back" id="back">← LIBRARY</button>
     <h1 class="page" style="margin-top:10px">${esc(r.title)}</h1>
-    <div class="page-sub">${catOf(r).toUpperCase()} · ${c.servings} SERVING${c.servings===1?'':'S'}</div>
+    <div class="page-sub">${catOf(r).toUpperCase()} · ${c.servings} SERVING${c.servings===1?'':'S'}${r.serving?` · ${esc(r.serving).toUpperCase()} EACH`:''}</div>
     ${tabs?`<div class="genre-row" style="margin:16px 0 0">${tabs}</div>`:''}
     <div class="scale">
       <button id="sc-down" aria-label="Fewer servings">−</button>
@@ -459,7 +470,7 @@ function renderDetail(id){
     <div class="section-label">Steps</div>
     <div class="step-card">${steps}</div>
     ${hasNut?`
-    <div class="section-label">Nutrition · per serving</div>
+    <div class="section-label">Nutrition · per ${r.serving?esc(r.serving)+' ':''}serving</div>
     <div class="nut" style="grid-template-columns:repeat(${present.length},1fr)">${nutCells}</div>
     ${c.servings>1?`<div class="nut-sub">BATCH: ${batchLine}</div>`:''}`:''}
     ${r.notes?`<div class="section-label">Notes</div><div class="notes-body">${esc(r.notes)}</div>`:''}
@@ -493,6 +504,8 @@ function renderEdit(id){
       <input id="f-title" value="${esc(r.title)}" autocomplete="off"></div>
     <div class="fld"><label for="f-serv">Servings</label>
       <input id="f-serv" inputmode="decimal" value="${r.servings}" style="max-width:120px"></div>
+    <div class="fld"><label for="f-size">Serving size</label>
+      <input id="f-size" value="${esc(r.serving||'')}" placeholder="e.g. 6 g (optional)" style="max-width:220px"></div>
     <div class="fld"><label for="f-ing">Ingredients</label>
       <textarea id="f-ing" rows="9">${esc(r.ingredients.join('\n'))}</textarea>
       <div class="hint">ONE PER LINE. LEADING AMOUNT + UNIT SCALES AUTOMATICALLY — "150 g cottage cheese". A LINE ENDING IN ":" BECOMES A SECTION HEADER.</div></div>
@@ -511,6 +524,11 @@ function renderEdit(id){
         <input id="f-fat"  inputmode="decimal" placeholder="F" value="${n.fat??''}">
         <input id="f-carb" inputmode="decimal" placeholder="C" value="${n.carbs??''}">
         <input id="f-fib"  inputmode="decimal" placeholder="FIB" value="${n.fiber??''}">
+      </div>
+      <div class="nut-grid" style="grid-template-columns:repeat(3,1fr);margin-top:8px">
+        <input id="f-na" inputmode="decimal" placeholder="NA MG" value="${n.sodium??''}">
+        <input id="f-k"  inputmode="decimal" placeholder="K MG" value="${n.potassium??''}">
+        <input id="f-mg" inputmode="decimal" placeholder="MG MG" value="${n.magnesium??''}">
       </div></div>
     <div class="fld"><label for="f-notes">Notes</label>
       <textarea id="f-notes" rows="3">${esc(r.notes||'')}</textarea></div>
@@ -529,9 +547,10 @@ function renderEdit(id){
       title:$('f-title').value.trim()||'Untitled',
       category:$('f-cat').value.trim(),
       servings:num($('f-serv').value)||1,
+      serving:$('f-size').value.trim(),
       ingredients:$('f-ing').value.split('\n').map(s=>s.trim()).filter(Boolean),
       steps:$('f-steps').value.split('\n').map(s=>s.trim()).filter(Boolean),
-      nutrition:{calories:num($('f-kcal').value),protein:num($('f-prot').value),fat:num($('f-fat').value),carbs:num($('f-carb').value),fiber:num($('f-fib').value)},
+      nutrition:{calories:num($('f-kcal').value),protein:num($('f-prot').value),fat:num($('f-fat').value),carbs:num($('f-carb').value),fiber:num($('f-fib').value),sodium:num($('f-na').value),potassium:num($('f-k').value),magnesium:num($('f-mg').value)},
       notes:$('f-notes').value.trim()
     };
     if(r.variants)rec.variants=r.variants;
