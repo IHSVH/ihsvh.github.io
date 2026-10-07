@@ -1312,6 +1312,154 @@ const MOBILITY_DESCRIPTIONS = {
 
 const WEEKS = [
   {
+    weekOf: '2026-10-05',
+    cycleWeek: 5,
+    days: [
+      {
+        id: 'monday', name: 'Monday', lift: 'Front Squat',
+        cap: '32:00', capLabel: 'Clock',
+        workout: [
+          { t: 'section', v: '(0:00 – 10:00) Strength' },
+          { t: 'sub', v: '7 × 3' },
+          'Front Squat — Build to a Heavy Load',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 2:00' },
+          { gap: 1 },
+          { t: 'section', v: '(12:00 – 32:00) 20:00 AMRAP' },
+          { t: 'sub', v: '3-6-9-12-etc...' },
+          'Front Squats (95, 115, 135)',
+          'Box-Overs (24", 30")',
+          'Toes to Bar',
+          'Cal Bike',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 5 Front Squat' },
+          '5 Reps @ 70%',
+          '5 Reps @ 80%',
+          '3 Reps @ 90%',
+          '1 Rep @ 95%',
+          { gap: 1 },
+          'Or 4 × 2 @ 90%'
+        ]
+      },
+      {
+        id: 'tuesday', name: 'Tuesday', lift: 'Deadlift',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          { t: 'sub', v: 'Teams of 3 · 1 Working at a Time' },
+          { gap: 1 },
+          { t: 'rounds', v: '-12 Rounds-' },
+          '15 Deadlift (95)',
+          '12 Hang Power Cleans (95)',
+          '9 Shoulder to OH (95)',
+          '6 Rope Climbs',
+          "180' Farmer's Carry (55)",
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 5 Deadlift' },
+          '5 Reps @ 70%',
+          '5 Reps @ 80%',
+          '3 Reps @ 90%',
+          '1 Rep @ 95%',
+          { gap: 1 },
+          'Or 4 × 2 @ 90%'
+        ]
+      },
+      {
+        id: 'wednesday', name: 'Wednesday', lift: 'Shoulder to Overhead',
+        cap: '35:00', capLabel: 'Clock',
+        workout: [
+          { t: 'section', v: 'Buy In: 30 Handstand Push Ups' },
+          { gap: 1 },
+          { t: 'rounds', v: '-4 Rounds-' },
+          '10 KB Sumo DL High Pulls (You Choose a Heavy Weight)',
+          '10 Cal Row',
+          '10 Single DB Hang C&J (55) (R/L = 2)',
+          '10 Pull Ups',
+          { gap: 1 },
+          { t: 'section', v: 'Cash Out: 30 Clean & Jerks (55%)' },
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 5 Strict Press' },
+          '5 Reps @ 70%',
+          '5 Reps @ 80%',
+          '3 Reps @ 90%',
+          '1 Rep @ 95%',
+          { gap: 1 },
+          'Or 4 × 2 @ 90%'
+        ]
+      },
+      {
+        id: 'thursday', name: 'Thursday', lift: 'Back Squat',
+        cap: '34:00', capLabel: 'Clock',
+        workout: [
+          { t: 'section', v: '(0:00 – 8:00) Strength' },
+          'Back Squat — 5, 3, 1 or 4 × 2 @ 90%',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 2:00' },
+          { gap: 1 },
+          { t: 'section', v: '(10:00 – 34:00) 24:00 Cap' },
+          '30 Russian KB Swings (45, 55, 70)',
+          '100 Double Unders',
+          '60 Goblet Squats (55)',
+          '100 Double Unders',
+          '90 Single DB Back Squats (55)',
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 5 Back Squat' },
+          '5 Reps @ 70%',
+          '5 Reps @ 80%',
+          '3 Reps @ 90%',
+          '1 Rep @ 95%',
+          { gap: 1 },
+          'Or 4 × 2 @ 90%'
+        ]
+      },
+      {
+        id: 'friday', name: 'Friday', lift: 'Snatch',
+        cap: '30:00', capLabel: 'EMOM',
+        workout: [
+          { t: 'title', v: '"Hyrox Fun Friday"' },
+          { t: 'sub', v: '"Hyrox EMOM Simulation"' },
+          { gap: 1 },
+          { t: 'rounds', v: '-5 Rounds-' },
+          '1) 200m Run + 5 Burpees',
+          "2) 15 Wall Balls (20/14) (10', 9')",
+          '3) 12 Alt. Goblet Lunges (55)',
+          '4) 14 Alt. DB Snatches (55)',
+          '5) 8 Devil Press (45)',
+          "6) 60' Reverse Bear Crawl",
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 5 Snatch' },
+          '5 Reps @ 70%',
+          '5 Reps @ 80%',
+          '3 Reps @ 90%',
+          '1 Rep @ 95%',
+          { gap: 1 },
+          'Or 4 × 2 @ 90%'
+        ]
+      },
+      {
+        id: 'saturday', name: 'Saturday', lift: 'Bench Press',
+        cap: '—', capLabel: 'Clock',
+        workout: [
+          { t: 'sub', v: 'Partner · 1 working at a time unless specified' },
+          { gap: 1 },
+          { t: 'sub', v: '30-20-10-20-30' },
+          'Bench Press (185)',
+          'Cal Ski',
+          'Dual DB Floor Press (55)',
+          '200m Run (Together)',
+          "Hand Release Push Ups (Thighs Can't Touch Floor)",
+          { gap: 1 },
+          { t: 'strength-h', v: 'Strength: Week 5 Bench Press' },
+          '5 Reps @ 70%',
+          '5 Reps @ 80%',
+          '3 Reps @ 90%',
+          '1 Rep @ 95%',
+          { gap: 1 },
+          'Or 4 × 2 @ 90%'
+        ]
+      }
+    ]
+  },
+  {
     weekOf: '2026-09-28',
     cycleWeek: 4,
     days: [
