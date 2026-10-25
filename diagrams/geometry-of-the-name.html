@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="apple-touch-icon" href="geometry-of-the-name-icon.png">
 <link rel="icon" type="image/png" href="geometry-of-the-name-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="The Name">
 <title>The Geometry of the Name</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -164,6 +166,12 @@ svg.show-man .man{opacity:.55}
 .secret{fill:transparent;cursor:pointer}
 .seg,.pt{transition:opacity .6s}
 svg.show-man .seg,svg.show-man .pt{opacity:0!important}
+.ring.sub{opacity:.18}
+.a2hs{position:fixed;z-index:20;left:max(16px,env(safe-area-inset-left,0px));right:72px;bottom:calc(24px + env(safe-area-inset-bottom,0px));max-width:340px;display:flex;align-items:center;gap:10px;padding:10px 8px 10px 14px;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px -14px rgba(40,36,25,.45);font-family:var(--chrome);font-size:13px;line-height:1.35;color:var(--ink);opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.a2hs.in{opacity:1;transform:none}
+.a2hs span svg{display:inline-block;margin:0 2px;width:15px;height:15px;vertical-align:-3px;stroke:var(--gold-ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.a2hs b{font-weight:600}
+.a2hs-x{flex:none;width:32px;height:32px;border:0;background:none;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;border-radius:50%}
 </style>
 </head>
 <body>
@@ -200,8 +208,8 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
       <line class="div" x1="1" y1="300" x2="399" y2="300"/>
       <line class="axis" x1="200" y1="1" x2="200" y2="399"/>
       <circle class="ring" cx="200" cy="200" r="199"/>
-      <circle class="ring" cx="200" cy="100.5" r="99.5"/>
-      <circle class="ring" cx="200" cy="299.5" r="99.5"/>
+      <circle class="ring sub" cx="200" cy="100.5" r="99.5"/>
+      <circle class="ring sub" cx="200" cy="299.5" r="99.5"/>
       <path class="arc" d="M 1 1 A 199 199 0 0 0 399 1"/>
       <path class="arc" d="M 1 399 A 199 199 0 0 1 399 399"/>
       <path class="arc" d="M 1 345.68 A 398 398 0 0 0 399 345.68"/>
@@ -293,6 +301,8 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
     </div>
 
 </main>
+<div class="a2hs" id="a2hs" role="dialog" aria-label="Add to Home Screen" hidden><span>Save as an app: tap <svg viewBox="0 0 16 16" aria-label="Share"><path d="M8 1.5v8.5M5 4.5l3-3 3 3M4.5 7H3.5v7h9V7h-1"/></svg> then <b>Add to Home Screen</b>.</span><button type="button" class="a2hs-x" id="a2hsX" aria-label="Dismiss">×</button></div>
+
 
 <div class="fab">
   <button type="button" class="fab-btn" id="themeBtn" aria-label="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.2"/><path class="half" d="M10 3.8A6.2 6.2 0 0 1 10 16.2Z"/></svg></button>
@@ -355,6 +365,18 @@ mq.addEventListener&&mq.addEventListener('change',label);label();
 const sec=document.getElementById('secret');let mi=0;sec.addEventListener('click',()=>{mi=(mi+1)%2;svg.classList.toggle('show-man',mi>0);if(mi)svg.dataset.man=String(mi);});
 })();
 </script>
+<script>
+(()=>{const K='gotn.a2hs.dismissed',el=document.getElementById('a2hs');if(!el)return;
+const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const app=navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+let framed=true;try{framed=window.top!==window.self}catch(e){}
+let seen=false;try{seen=localStorage.getItem(K)==='1'}catch(e){}
+if(!ios||app||framed||seen)return;
+const close=()=>{el.classList.remove('in');try{localStorage.setItem(K,'1')}catch(e){}setTimeout(()=>el.hidden=true,350);};
+document.getElementById('a2hsX').addEventListener('click',close);
+setTimeout(()=>{el.hidden=false;requestAnimationFrame(()=>el.classList.add('in'));},1500);})();
+</script>
+
 
 </body>
 </html>
