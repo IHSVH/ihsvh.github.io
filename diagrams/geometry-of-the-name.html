@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Geometry of the Name</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500&family=Crimson+Pro:ital,wght@0,400;1,400&family=Assistant:wght@400;600&family=Frank+Ruhl+Libre:wght@400&display=swap">
@@ -157,6 +162,8 @@ svg.show-man .man{opacity:.55}
 .seg,.pt{transition:opacity .6s}
 svg.show-man .seg,svg.show-man .pt{opacity:0!important}
 </style>
+</head>
+<body>
 
 <main>
   <header>
@@ -173,10 +180,10 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
         <mask id="medge" maskUnits="userSpaceOnUse" x="-140" y="-60" width="680" height="540"><rect x="-140" y="-60" width="680" height="540" fill="url(#fx)" mask="url(#mfy)"/></mask>
       <mask id="lbl" maskUnits="userSpaceOnUse" x="-30" y="-20" width="460" height="440">
         <rect x="-30" y="-20" width="460" height="440" fill="#fff"/>
-        <text class="tagm" x="10" y="92">Atziluth</text>
-        <text class="tagm" x="10" y="192">Briah</text>
-        <text class="tagm" x="10" y="292">Yetzirah</text>
-        <text class="tagm" x="10" y="392">Assiah</text>
+        <text class="tagm" x="10" y="53">Atziluth</text>
+        <text class="tagm" x="10" y="153">Briah</text>
+        <text class="tagm" x="10" y="253">Yetzirah</text>
+        <text class="tagm" x="10" y="353">Assiah</text>
       </mask></defs>
       <rect class="band" data-s="yod" x="1" y="1" width="398" height="99"/>
       <rect class="band" data-s="heh" x="1" y="100" width="398" height="100"/>
@@ -248,10 +255,10 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
       <text class="num" x="-7" y="399">4</text>
       <text class="realm" transform="translate(413 100) rotate(90)">Heaven</text>
       <text class="realm" transform="translate(413 300) rotate(90)">Earth</text>
-      <text class="tag" data-s="yod" x="10" y="92">Atziluth</text>
-      <text class="tag" data-s="heh" x="10" y="192">Briah</text>
-      <text class="tag" data-s="vav" x="10" y="292">Yetzirah</text>
-      <text class="tag" data-s="final" x="10" y="392">Assiah</text>
+      <text class="tag" data-s="yod" x="10" y="53">Atziluth</text>
+      <text class="tag" data-s="heh" x="10" y="153">Briah</text>
+      <text class="tag" data-s="vav" x="10" y="253">Yetzirah</text>
+      <text class="tag" data-s="final" x="10" y="353">Assiah</text>
       <circle class="secret" id="secret" cx="200" cy="399" r="14"><title>Malkuth</title></circle>
     </svg>
     <div class="lt fresh" role="tablist" aria-label="Steps" aria-orientation="vertical">
@@ -275,9 +282,9 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
   </aside>
 
   <div class="lede">
-      <p><span data-s="all">The Name unfolds through four worlds, each expressing what precedes it.</span></p>
-      <p><span data-s="yod">Yod, the Father, marks the originating point in Atziluth.</span> <span data-s="heh">The first Heh, the Mother, receives and gives determination in Briah, reflecting the point to the center.</span> <span data-s="vav">Vav, the Son, extends from that center through Yetzirah, establishing continuity between the upper and lower worlds.</span> <span data-s="final">The final Heh, the Daughter, receives that extension in Assiah and brings it to form.</span></p>
-      <p><span data-s="all">The last point answers the first.<br>From potential to manifestation.</span></p>
+      <p><span data-s="all">The Name unfolds through four worlds as one point in different positions.</span></p>
+      <p><span data-s="yod">Yod, the Father, is the point, set at the head of Atziluth.</span> <span data-s="heh">The first Heh, the Mother, receives it in Briah and reflects it to the center: the Son, the Father's image, born at the midpoint of the whole.</span> <span data-s="vav">Vav extends that image as a line through Yetzirah.</span> <span data-s="final">The final Heh, the Daughter, reflects it once more to the lower edge, where it rests in Assiah.</span></p>
+      <p><span data-s="all">The last point is the first, after another manner.<br>From potential to manifestation.</span></p>
     </div>
 
 </main>
@@ -297,6 +304,7 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
       <li data-s="final"><svg class="ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M4 9H24M24 9V23M4 12.5V23" class="k-ln"/></svg><span class="k-heb">ה</span><div class="k-txt"><span class="k-name">Heh · Daughter <em>Assiah</em></span><span class="k-desc">Receiving bracket, extending to the lower boundary.</span></div></li>
     </ol>
       <p class="k-note"><span class="k-gold">Faint gold:</span> the Tree of Life, Kether to Malkuth.</p>
+      <p class="k-note"><span class="k-gold">Faint circles:</span> they cross exactly on each Heh's roof. The two largest, drawn from the first and last points, each pass through the other.</p>
     </div>
   </div>
 </aside>
@@ -305,10 +313,10 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
 (()=>{const tabs=[...document.querySelectorAll('.lt button')],svg=document.querySelector('.plate svg'),key=document.querySelector('.key'),lede=document.querySelector('.lede');
 const els=[...document.querySelectorAll('[data-s]')];
 const PROOF={
- yod:['The originating point','A point has position and no extension. Set on the upper edge, it lies on the figure\'s boundary rather than inside any world. The circle drawn from it with radius 2 reaches exactly to the center (0 + 2 = 2): the first point already measures the place where the Son will begin.'],
- heh:['The reflection','Her roof lies at 1. Reflect the Father\'s point across it: 1 above becomes 1 below, and 0 lands on 2, the center. The roof is the mirror, and the center is the first point reflected. The inscribed circle and the Father\'s circle cross exactly on her roof, at (2 ± √3, 1).'],
- vav:['The extension','A point has no direction; extended, it becomes a line, the first figure that has one. The line begins at 2, the only point equidistant from the first and last points, where the two hemispheres touch and the inscribed circle is centered. It runs one quarter down, to 3.'],
- final:['The completion','Her roof lies at 3. Reflect the center across it: 2 lands on 4, the lower edge. She repeats the Mother\'s operation one quarter lower, and the inscribed circle crosses the Daughter\'s circle on her roof at (2 ± √3, 3), mirroring the first crossing. The last point is the first point reflected twice.']};
+ yod:['The point','A point has position and no extension. It sits on the upper edge, on the figure\'s boundary rather than inside any world. Every later point is derived from it.'],
+ heh:['The reflection','Her roof lies at 1. Reflect the Father\'s point across it: 0 lands on 2, the center. The roof is the mirror; the center is the first point reflected.'],
+ vav:['The extension','A point has no direction; extended, it becomes a line. The Son begins at the reflected point and extends one quarter down, to 3.'],
+ final:['The completion','Her roof lies at 3. Reflect the center across it: 2 lands on 4, the lower edge. It is the Mother\'s operation, one quarter lower. The last point is the first point reflected twice.']};
 const pt=document.getElementById('proofTitle'),pb=document.getElementById('proofBody'),lg=document.getElementById('legend'),er=document.getElementById('entryRow');
 const pr=document.getElementById('proof'),dr=document.getElementById('drawer'),hd=document.getElementById('kHandle');
 function drawer(o){dr.classList.toggle('open',o);hd.setAttribute('aria-expanded',o);}
@@ -342,3 +350,6 @@ mq.addEventListener&&mq.addEventListener('change',label);label();
 const sec=document.getElementById('secret');let mi=0;sec.addEventListener('click',()=>{mi=(mi+1)%2;svg.classList.toggle('show-man',mi>0);if(mi)svg.dataset.man=String(mi);});
 })();
 </script>
+
+</body>
+</html>
