@@ -164,8 +164,8 @@ html,body{overflow-x:clip}
 .lt.fresh .t-track{opacity:.45}
 .man{opacity:0;transition:opacity .9s ease;pointer-events:none;mix-blend-mode:multiply}
 svg.show-man .man{opacity:.55}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .man{filter:invert(1);mix-blend-mode:screen}}
-:root[data-theme="dark"] .man{filter:invert(1);mix-blend-mode:screen}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .man{filter:url(#inv);mix-blend-mode:normal}}
+:root[data-theme="dark"] .man{filter:url(#inv);mix-blend-mode:normal}
 .secret{fill:transparent;cursor:pointer}
 .seg,.pt{transition:opacity .6s}
 svg.show-man .seg,svg.show-man .pt{opacity:0!important}
@@ -188,7 +188,7 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
   <div class="plate">
    <div class="plate-in">
     <svg data-man="1" viewBox="-22 -14 444 440" role="img" aria-label="Square divided into four equal horizontal rows: Atziluth, Briah, Yetzirah, Assiah, top to bottom">
-      <defs><linearGradient id="fx" gradientUnits="userSpaceOnUse" x1="-42" y1="0" x2="442" y2="0"><stop offset="0" stop-color="#000"/><stop offset="0.045" stop-color="#2a2a2a"/><stop offset="0.075" stop-color="#8a8a8a"/><stop offset="0.100" stop-color="#fff"/><stop offset="0.900" stop-color="#fff"/><stop offset="0.925" stop-color="#8a8a8a"/><stop offset="0.955" stop-color="#2a2a2a"/><stop offset="1" stop-color="#000"/></linearGradient>
+      <defs><filter id="inv" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .9 0 0 0 0 .886 0 0 0 0 .84 -.333 -.333 -.333 0 1"/></filter><linearGradient id="fx" gradientUnits="userSpaceOnUse" x1="-42" y1="0" x2="442" y2="0"><stop offset="0" stop-color="#000"/><stop offset="0.045" stop-color="#2a2a2a"/><stop offset="0.075" stop-color="#8a8a8a"/><stop offset="0.100" stop-color="#fff"/><stop offset="0.900" stop-color="#fff"/><stop offset="0.925" stop-color="#8a8a8a"/><stop offset="0.955" stop-color="#2a2a2a"/><stop offset="1" stop-color="#000"/></linearGradient>
         <linearGradient id="fy" gradientUnits="userSpaceOnUse" x1="0" y1="-60" x2="0" y2="480"><stop offset="0" stop-color="#000"/><stop offset="0.054" stop-color="#2a2a2a"/><stop offset="0.090" stop-color="#8a8a8a"/><stop offset="0.120" stop-color="#fff"/><stop offset="0.880" stop-color="#fff"/><stop offset="0.910" stop-color="#8a8a8a"/><stop offset="0.946" stop-color="#2a2a2a"/><stop offset="1" stop-color="#000"/></linearGradient>
         <mask id="mfy" maskUnits="userSpaceOnUse" x="-140" y="-60" width="680" height="540"><rect x="-140" y="-60" width="680" height="540" fill="url(#fy)"/></mask>
         <mask id="medge" maskUnits="userSpaceOnUse" x="-140" y="-60" width="680" height="540"><rect x="-140" y="-60" width="680" height="540" fill="url(#fx)" mask="url(#mfy)"/></mask>
