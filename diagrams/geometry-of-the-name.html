@@ -180,6 +180,21 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
 .foot .mark-row::before,.foot .mark-row::after{content:"";width:56px;height:1px;background:color-mix(in srgb,var(--muted) 45%,transparent)}
 .foot a{color:inherit;text-decoration:none;padding-left:.24em}
 .foot .verse{margin:12px 0 0;font-family:var(--body);font-style:italic;font-size:15px;letter-spacing:0;text-transform:none;color:var(--gold)}
+#t-read{top:98.2%}
+.plain{box-sizing:border-box;position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:20px;background:color-mix(in srgb,var(--bg) 70%,transparent);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.plain.open{opacity:1;visibility:visible;transition:opacity .3s}
+.plain-card{box-sizing:border-box;position:relative;width:min(520px,100%);max-height:min(82vh,760px);overflow:auto;-webkit-overflow-scrolling:touch;background:var(--card);border:1px solid var(--rule);border-left:2px solid var(--gold);border-radius:4px;padding:20px 22px 22px;box-shadow:0 18px 48px -24px rgba(40,36,25,.5);transform:translateY(8px);transition:transform .3s}
+.plain.open .plain-card{transform:none}
+.plain-card .d-close{position:absolute;top:10px;right:10px}
+.plain-card h2{font-family:var(--display);font-weight:500;font-size:24px;line-height:1.2;margin:2px 0 12px;color:var(--ink)}
+.plain-card p,.plain-card li{font-size:16.5px;line-height:1.6;color:var(--ink)}
+.plain-card p{margin:0 0 12px}
+.plain-card ul,.plain-card ol{margin:0 0 12px;padding-left:1.3em}
+.plain-card li{margin-bottom:6px}
+.plain-card b{font-weight:600}
+.plain-card .heb{font-family:var(--heb);font-size:1.1em}
+.plain-card .last{color:var(--gold-ink);margin-bottom:0}
+@media (prefers-reduced-motion:reduce){.plain,.plain-card{transition:none}}
 </style>
 </head>
 <body>
@@ -288,6 +303,7 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
     </svg>
     <div class="lt fresh" role="tablist" aria-label="Steps" aria-orientation="vertical">
       <span class="t-track" aria-hidden="true"><span class="t-fill" id="tFill"></span><span class="t-hint"></span></span>
+      <button type="button" id="t-read" class="t-all" aria-haspopup="dialog" aria-controls="plain">Plain</button>
       <button type="button" role="tab" id="t-all" class="t-all" data-step="all" aria-selected="true">All</button>
       <button type="button" role="tab" id="t-yod" data-step="yod" aria-selected="false" aria-label="Yod"><span class="t-heb" lang="he">י</span></button>
       <button type="button" role="tab" id="t-heh" data-step="heh" aria-selected="false" aria-label="Heh"><span class="t-heb" lang="he">ה</span></button>
@@ -314,6 +330,30 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
 
 <footer class="foot"><span class="mark-row"><a href="https://ihsvh.github.io/">IHSVH</a></span><p class="verse">The eye is the lamp of the body.</p></footer>
 </main>
+<div class="plain" id="plain" role="dialog" aria-modal="true" aria-labelledby="plainTitle">
+  <div class="plain-card">
+    <button type="button" class="d-close" id="plainX" aria-label="Close">×</button>
+    <span class="p-label">In plain words</span>
+    <h2 id="plainTitle">The Geometry of the Name</h2>
+    <p>The Hebrew name of God is written with four letters: Yod, Heh, Vav, Heh (<span class="heb" lang="he">יהוה</span>). Kabbalah, the Jewish mystical tradition, reads these letters as four stages by which life moves from its divine source into the world. It calls the stages the four worlds:</p>
+    <ul>
+      <li><b>Atziluth:</b> emanation</li>
+      <li><b>Briah:</b> creation</li>
+      <li><b>Yetzirah:</b> formation</li>
+      <li><b>Assiah:</b> action</li>
+    </ul>
+    <p>The tradition also reads the four letters as a family: Father, Mother, Son, Daughter.</p>
+    <p>The diagram draws each letter as a simple shape inside a square divided into those four worlds.</p>
+    <ol>
+      <li><b>Yod, the Father.</b> A single dot at the top. A dot has a place but no size. It stands for the source, before anything has been made.</li>
+      <li><b>Heh, the Mother.</b> A bracket, like a roof with two walls. Her roof acts as a mirror: the dot at the top, reflected in it, appears at the exact center of the square. She receives what the Father is and gives it back in a new place.</li>
+      <li><b>Vav, the Son.</b> From that center, a line runs downward. The Son is the Father's image, born at the middle of everything, and he carries that image toward the world.</li>
+      <li><b>Heh, the Daughter.</b> A second bracket, the same shape as the Mother's but lower. Her roof is a mirror too, and it reflects the center down to the bottom edge. Here the source arrives in the world we live in.</li>
+    </ol>
+    <p class="last">The dot at the bottom is the same dot as the one at the top, carried down through two mirrors. Nothing foreign was added along the way. The world, at its foundation, holds the same light as its source, in another form.</p>
+  </div>
+</div>
+
 <div class="a2hs" id="a2hs" role="dialog" aria-label="Add to Home Screen" hidden><span>Save as an app: tap <svg viewBox="0 0 16 16" aria-label="Share"><path d="M8 1.5v8.5M5 4.5l3-3 3 3M4.5 7H3.5v7h9V7h-1"/></svg> then <b>Add to Home Screen</b>.</span><button type="button" class="a2hs-x" id="a2hsX" aria-label="Dismiss">×</button></div>
 
 
@@ -338,7 +378,7 @@ svg.show-man .seg,svg.show-man .pt{opacity:0!important}
 </aside>
 
 <script>
-(()=>{const tabs=[...document.querySelectorAll('.lt button')],svg=document.querySelector('.plate svg'),key=document.querySelector('.key'),lede=document.querySelector('.lede');
+(()=>{const tabs=[...document.querySelectorAll('.lt button[role="tab"]')],svg=document.querySelector('.plate svg'),key=document.querySelector('.key'),lede=document.querySelector('.lede');
 const els=[...document.querySelectorAll('[data-s]')];
 const PROOF={
  yod:['The origin','A point has position and no extension. It sits on the upper edge, on the figure\'s boundary rather than inside any world. Every later point is derived from it.'],
@@ -389,6 +429,15 @@ const close=()=>{el.classList.remove('in');try{localStorage.setItem(K,'1')}catch
 document.getElementById('a2hsX').addEventListener('click',close);
 setTimeout(()=>{el.hidden=false;requestAnimationFrame(()=>el.classList.add('in'));},1500);})();
 </script>
+<script>
+(()=>{const d=document.getElementById('plain'),b=document.getElementById('t-read');if(!d||!b)return;let last=null;
+const open=()=>{last=document.activeElement;d.classList.add('open');document.getElementById('plainX').focus();};
+const close=()=>{d.classList.remove('open');if(last)last.focus();};
+b.addEventListener('click',open);document.getElementById('plainX').addEventListener('click',close);
+d.addEventListener('click',e=>{if(e.target===d)close();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&d.classList.contains('open'))close();});})();
+</script>
+
 
 
 </body>
