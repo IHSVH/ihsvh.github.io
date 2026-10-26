@@ -162,6 +162,9 @@ html,body{overflow-x:clip}
 .t-hint{position:absolute;left:0;top:0;width:100%;height:0;opacity:0;background:var(--gold);-webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent);mask-image:linear-gradient(to bottom,#000 50%,transparent);-webkit-mask-size:100% 200%;mask-size:100% 200%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0 100%;mask-position:0 100%}
 .lt.is-all .t-fill{opacity:0}
 .lt.fresh .t-track{opacity:.45}
+.lt.fresh #t-yod::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:1.5px solid var(--gold);opacity:0;pointer-events:none;animation:beckon 3.2s 1.6s ease-out infinite}
+@keyframes beckon{0%{transform:scale(1);opacity:.55}60%{transform:scale(1.45);opacity:0}100%{transform:scale(1.45);opacity:0}}
+@media (prefers-reduced-motion:reduce){.lt.fresh #t-yod::after{animation:none}}
 .man{opacity:0;transition:opacity .9s ease;pointer-events:none;mix-blend-mode:multiply}
 svg.show-man .man{opacity:.55}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .man{filter:url(#inv);mix-blend-mode:normal}}
@@ -342,14 +345,14 @@ svg.show-man:not(.dim) .seg,svg.show-man:not(.dim) .pt{opacity:0}
     <button type="button" class="d-close" id="plainX" aria-label="Close">×</button>
     <span class="p-label">In plain words</span>
     <h2 id="plainTitle">The Geometry of the Name</h2>
-    <p>The Hebrew name of God is written with four letters: Yod, Heh, Vav, Heh (<span class="heb" lang="he">יהוה</span>). Kabbalah, the Jewish mystical tradition, reads these letters as four stages by which life moves from its divine source into the world. It calls the stages the four worlds:</p>
+    <p>The Hebrew name of God is written with four letters: Yod, Heh, Vav, Heh (<span class="heb" lang="he">יהוה</span>). Kabbalah (Hebrew for “receiving”) reads creation through number and letter, and reads these four letters as four stages by which life moves from its divine source into the world. It calls the stages the four worlds:</p>
     <ul>
       <li><b>Atziluth:</b> emanation</li>
       <li><b>Briah:</b> creation</li>
       <li><b>Yetzirah:</b> formation</li>
       <li><b>Assiah:</b> action</li>
     </ul>
-    <p>The tradition also reads the four letters as a family: Father, Mother, Son, Daughter.</p>
+    <p>Kabbalah also reads the four letters as a family: Father, Mother, Son, Daughter.</p>
     <p>The diagram draws each letter as a simple shape inside a square divided into those four worlds.</p>
     <ol>
       <li><b>Yod, the Father.</b> A single dot at the top. A dot has a place but no size. It stands for the source, before anything has been made.</li>
@@ -405,9 +408,9 @@ function show(st){if(!tabs.some(t=>t.dataset.step===st))st='all';
  tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.step===st));proof(st);track(st);
  const all=st==='all';svg.classList.toggle('dim',!all);key.classList.toggle('dim',!all);lede.hidden=!all;
  const ord=['yod','heh','vav','final'],n=ord.indexOf(st);els.forEach(e=>{const i=ord.indexOf(e.dataset.s);e.classList.toggle('on',!all&&i>-1&&i<=n);e.classList.toggle('cur',!all&&i===n);});}
-tabs.forEach(t=>t.addEventListener('click',()=>{let st=t.dataset.step;if(st!=='all'&&t.getAttribute('aria-selected')==='true')st='all';if(st!=='all')nav.classList.remove('fresh');show(st);t.dataset.step;try{history.replaceState(null,'','#'+st)}catch(e){}}));
+tabs.forEach(t=>t.addEventListener('click',()=>{let st=t.dataset.step;if(st!=='all'&&t.getAttribute('aria-selected')==='true')st='all';if(st!=='all')nav.classList.remove('fresh');show(st);t.dataset.step;}));
 tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{const d=e.key==='ArrowDown'?1:e.key==='ArrowUp'?-1:0;if(d)e.preventDefault();if(d){const n=tabs[(i+d+tabs.length)%tabs.length];n.focus();n.click();}}));
-show((location.hash||'#all').slice(1));
+try{if(location.hash)history.replaceState(null,'',location.pathname+location.search)}catch(e){}show('all');
 hd.addEventListener('click',()=>drawer(!dr.classList.contains('open')));
 document.getElementById('kClose').addEventListener('click',()=>{drawer(false);hd.focus();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dr.classList.contains('open')){drawer(false);hd.focus();}});
