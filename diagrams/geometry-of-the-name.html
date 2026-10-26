@@ -171,6 +171,7 @@ svg.show-man .man{opacity:.55}
 .seg{transition:opacity .35s,stroke .6s}.pt{transition:opacity .35s,fill .6s}
 svg.show-man .seg{stroke:var(--gold)}
 svg.show-man .pt{fill:var(--gold)}
+svg.show-man:not(.dim) .seg,svg.show-man:not(.dim) .pt{opacity:0}
 .ring.sub{opacity:.18}
 .a2hs{position:fixed;z-index:20;left:max(16px,env(safe-area-inset-left,0px));right:72px;bottom:calc(24px + env(safe-area-inset-bottom,0px));max-width:340px;display:flex;align-items:center;gap:10px;padding:10px 8px 10px 14px;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px -14px rgba(40,36,25,.45);font-family:var(--chrome);font-size:13px;line-height:1.35;color:var(--ink);opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
 .a2hs.in{opacity:1;transform:none}
