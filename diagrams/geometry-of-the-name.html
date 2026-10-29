@@ -51,6 +51,15 @@ html,body{overflow-x:clip}
 .ts{fill:var(--card);stroke:color-mix(in srgb,var(--gold) 30%,var(--card));stroke-width:1.6}
 .td{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-dasharray:2 3;opacity:.3}
 .seg{stroke:var(--ink);stroke-width:3.2;stroke-linecap:round}
+.ltr{stroke:var(--gold-ink);stroke-width:2.2;stroke-linecap:round;opacity:.6}
+.mir{stroke:var(--ink);stroke-width:1.3}
+.rpath{stroke:var(--ink);stroke-width:1.4;stroke-dasharray:1 5;stroke-linecap:round}
+.seg.img{stroke-dasharray:7 7;stroke-linecap:butt}
+.ltr,.mir,.rpath{transition:opacity .35s,stroke .6s}
+svg.show-man .mir,svg.show-man .rpath{stroke:var(--gold)}
+svg.show-man .ltr{opacity:0!important}
+svg.show-man:not(.dim) .mir,svg.show-man:not(.dim) .rpath{opacity:0}
+
 .pt{fill:var(--ink);stroke:none}
 .brk{fill:none;stroke:var(--muted);stroke-width:1;opacity:.25;stroke-linejoin:round}
 .realm{font-family:var(--chrome);font-size:8px;letter-spacing:.3em;text-transform:uppercase;fill:var(--muted);opacity:.45;text-anchor:middle;dominant-baseline:middle}
@@ -284,13 +293,19 @@ svg.show-man:not(.dim) .seg,svg.show-man:not(.dim) .pt{opacity:0}
         <circle class="ts" cx="200.00" cy="399.00" r="11"><title>Malkuth</title></circle>
       </g>
       </g>
+      <g class="letters">
+      <line class="ltr mark" data-s="heh" x1="113.83" y1="100" x2="286.17" y2="100"/>
+      <line class="ltr mark" data-s="heh" x1="113.83" y1="112" x2="113.83" y2="200"/>
+      <line class="ltr mark" data-s="heh" x1="286.17" y1="100" x2="286.17" y2="200"/>
+      <line class="ltr mark" data-s="final" x1="113.83" y1="300" x2="286.17" y2="300"/>
+      <line class="ltr mark" data-s="final" x1="113.83" y1="312" x2="113.83" y2="399"/>
+      <line class="ltr mark" data-s="final" x1="286.17" y1="300" x2="286.17" y2="399"/>
+      </g>
+      <line class="mir mark" data-s="heh" x1="1" y1="100" x2="399" y2="100"/>
+      <line class="mir mark" data-s="final" x1="1" y1="300" x2="399" y2="300"/>
+      <line class="rpath mark" data-s="heh" x1="200" y1="8" x2="200" y2="193"/>
       <line class="seg mark" data-s="vav" x1="200" y1="200" x2="200" y2="300"/>
-      <line class="seg mark" data-s="heh" x1="113.83" y1="100" x2="286.17" y2="100"/>
-      <line class="seg mark" data-s="final" x1="113.83" y1="300" x2="286.17" y2="300"/>
-      <line class="seg mark" data-s="heh" x1="113.83" y1="112" x2="113.83" y2="200"/>
-      <line class="seg mark" data-s="heh" x1="286.17" y1="100" x2="286.17" y2="200"/>
-      <line class="seg mark" data-s="final" x1="113.83" y1="312" x2="113.83" y2="399"/>
-      <line class="seg mark" data-s="final" x1="286.17" y1="300" x2="286.17" y2="399"/>
+      <line class="seg img mark" data-s="final" x1="200" y1="399" x2="200" y2="300"/>
       <circle class="pt mark" data-s="yod" cx="200" cy="1" r="6"/>
       <circle class="pt mark" data-s="heh" cx="200" cy="200" r="6"/>
       <circle class="pt mark" data-s="final" cx="200" cy="399" r="6"/>
@@ -331,7 +346,7 @@ svg.show-man:not(.dim) .seg,svg.show-man:not(.dim) .pt{opacity:0}
 
   <div class="lede">
       <p><span data-s="all">The Name unfolds through four worlds as one point in different positions.</span></p>
-      <p><span data-s="yod">Yod, the Father, is the point, set at the head of Atziluth.</span> <span data-s="heh">The first Heh, the Mother, receives it in Briah and reflects it to the center: the Son, the Father's image, born at the midpoint of the whole.</span> <span data-s="vav">Vav extends that image as a line through Yetzirah.</span> <span data-s="final">The final Heh, the Daughter, reflects it once more to the lower edge, where it rests in Assiah.</span></p>
+      <p><span data-s="yod">Yod, the Father, is the point, set at the head of Atziluth.</span> <span data-s="heh">The first Heh, the Mother, receives it in Briah and reflects it to the center: the Son, the Father's image, born at the midpoint of the whole.</span> <span data-s="vav">Vav extends that image as a line through Yetzirah.</span> <span data-s="final">The final Heh, the Daughter, receives the Son in Assiah and reflects him across her roof: his image rises from the lower edge to meet him.</span></p>
       <p><span data-s="all">The last point is the first, after another manner.<br>From potential to manifestation.</span></p>
     </div>
 
@@ -357,7 +372,7 @@ svg.show-man:not(.dim) .seg,svg.show-man:not(.dim) .pt{opacity:0}
       <li><b>Yod, the Father.</b> A single dot at the top. A dot has a place but no size. It stands for the source, before anything has been made.</li>
       <li><b>Heh, the Mother.</b> A bracket, like a roof with two walls. Her roof acts as a mirror: the dot at the top, reflected in it, appears at the exact center of the square. She receives what the Father is and gives it back in a new place.</li>
       <li><b>Vav, the Son.</b> From that center, a line runs downward. The Son is the Father's image, born at the middle of everything, and he carries that image toward the world.</li>
-      <li><b>Heh, the Daughter.</b> A second bracket, the same shape as the Mother's but lower. Her roof is a mirror too, and it reflects the center down to the bottom edge. Here the source arrives in the world we live in.</li>
+      <li><b>Heh, the Daughter.</b> A second bracket, the same shape as the Mother's but lower. Her roof is a mirror too. She receives the Son and reflects him: his image appears below her roof, rising from the bottom edge to meet him. Here the source arrives in the world we live in.</li>
     </ol>
     <p class="last">The dot at the bottom is the same dot as the one at the top, carried down through two mirrors. Nothing foreign was added along the way. The world, at its foundation, holds the same light as its source, in another form.</p>
   </div>
@@ -393,7 +408,7 @@ const PROOF={
  yod:['The origin','A point has position and no extension. It sits on the upper edge, on the figure\'s boundary rather than inside any world. Every later point is derived from it.'],
  heh:['The reflection','Her roof lies at 1. Reflect the Father\'s point across it: 0 lands on 2, the center. The roof is the mirror; the center is the first point reflected.'],
  vav:['The extension','A point has no direction; extended, it becomes a line. The Son begins at the reflected point and extends one quarter down, to 3.'],
- final:['The fulfillment','Her roof lies at 3. Reflect the center across it: 2 lands on 4, the lower edge. It is the Mother\'s operation, one quarter lower. The last point is the first point reflected twice.']};
+ final:['The fulfillment','Her roof lies at 3. She receives the formed Son and reflects him across it: the center lands on 4, and his line appears as its mirror image, rising from 4 to the boundary where the two meet. It is the Mother\'s operation, one quarter lower; what differs is what she receives. The last point is the first point reflected twice.']};
 const pt=document.getElementById('proofTitle'),pb=document.getElementById('proofBody'),lg=document.getElementById('legend'),er=document.getElementById('entryRow');
 const pr=document.getElementById('proof'),dr=document.getElementById('drawer'),hd=document.getElementById('kHandle');
 function drawer(o){dr.classList.toggle('open',o);hd.setAttribute('aria-expanded',o);}
