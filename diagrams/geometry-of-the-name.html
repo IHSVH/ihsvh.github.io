@@ -212,6 +212,8 @@ svg.show-man:not(.dim) .seg,svg.show-man:not(.dim) .pt{opacity:0}
 .plain-card .heb{font-family:var(--heb);font-size:1.1em;letter-spacing:.3em;margin-left:.15em}
 .plain-card .last{color:var(--gold-ink);margin-bottom:0}
 @media (prefers-reduced-motion:reduce){.plain,.plain-card{transition:none}}
+.read-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:16px}
+.read-row .read-btn{margin-top:0}
 </style>
 </head>
 <body>
@@ -348,10 +350,22 @@ svg.show-man:not(.dim) .seg,svg.show-man:not(.dim) .pt{opacity:0}
       <p><span data-s="all">The last point is the first, after another manner.<br>From potential to manifestation.</span></p>
     </div>
 
-<button type="button" id="t-read" class="read-btn" aria-haspopup="dialog" aria-controls="plain">A Plain Reading</button>
+<div class="read-row"><button type="button" id="t-read" class="read-btn" aria-haspopup="dialog" aria-controls="plain">A Plain Reading</button><button type="button" class="read-btn" aria-haspopup="dialog" aria-controls="halves">Heaven &amp; Earth</button></div>
 </main>
 <footer class="foot"><span class="mark-row"><a href="https://ihsvh.github.io/">IHSVH</a></span><p class="verse">The eye is the lamp of the body.</p></footer>
 
+<div class="plain" id="halves" role="dialog" aria-modal="true" aria-labelledby="halvesTitle">
+  <div class="plain-card">
+    <button type="button" class="d-close" aria-label="Close">×</button>
+    <span class="p-label">Heaven &amp; Earth</span>
+    <h2 id="halvesTitle">The Two Halves</h2>
+    <p>The center divides the square into heaven above and earth below. Each half has a heart at its middle, and each heart is a mirror.</p>
+    <p><b>Heaven, 0 to 2.</b> A point, a mirror, a point. The Father's point does not move; its image is borne across to the center. The line joining them is Gimel, the camel, carrying across the mirror at Daath. Nothing rests on that mirror: Daath is the hidden heart. Its root, <span class="heb" lang="he">ידע</span>, is "to know": union as knowing.</p>
+    <p><b>Earth, 2 to 4.</b> A point, a line, the mirror, a line, a point. The Son extends to the mirror at Yesod and rests on it; his image rises from the lower edge to meet him. Yesod is the held heart. Its root, <span class="heb" lang="he">יסד</span>, is "to found": union as foundation.</p>
+    <p>Both mirrors are lunar: the Moon of Gimel above, the Moon of Yesod below.</p>
+    <p class="last">Above, one line passes through the mirror: union known. Below, two lines meet at the mirror: union embodied.</p>
+  </div>
+</div>
 <div class="plain" id="plain" role="dialog" aria-modal="true" aria-labelledby="plainTitle">
   <div class="plain-card">
     <button type="button" class="d-close" id="plainX" aria-label="Close">×</button>
@@ -452,12 +466,12 @@ document.getElementById('a2hsX').addEventListener('click',close);
 setTimeout(()=>{el.hidden=false;requestAnimationFrame(()=>el.classList.add('in'));},1500);})();
 </script>
 <script>
-(()=>{const d=document.getElementById('plain'),b=document.getElementById('t-read');if(!d||!b)return;let last=null;
-const open=()=>{last=document.activeElement;d.classList.add('open');document.getElementById('plainX').focus();};
+(()=>{let last=null;
+document.querySelectorAll('.read-btn[aria-controls]').forEach(b=>{const d=document.getElementById(b.getAttribute('aria-controls'));if(!d)return;const x=d.querySelector('.d-close');
 const close=()=>{d.classList.remove('open');if(last)last.focus();};
-b.addEventListener('click',open);document.getElementById('plainX').addEventListener('click',close);
-d.addEventListener('click',e=>{if(e.target===d)close();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&d.classList.contains('open'))close();});})();
+b.addEventListener('click',()=>{last=document.activeElement;d.classList.add('open');x.focus();});
+x.addEventListener('click',close);d.addEventListener('click',e=>{if(e.target===d)close();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&d.classList.contains('open'))close();});});})();
 </script>
 
 
