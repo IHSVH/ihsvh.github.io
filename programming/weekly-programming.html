@@ -615,6 +615,19 @@ try {
   .day-lift { font-size: 1rem; color: var(--gray-1); font-weight: 600; letter-spacing: -0.01em; }
   .day-lift::before { content: '·'; margin-right: 0.6rem; color: var(--gray-3); font-weight: 400; }
 
+  /* Favorites — star on each day, list on the Favorites tab */
+  .fav-btn {
+    margin-left: auto; background: none; border: 0; cursor: pointer;
+    font-size: 1.35rem; line-height: 1; color: var(--gray-2);
+    padding: 0.15rem 0.35rem; -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s, transform 0.1s;
+  }
+  .fav-btn:active { transform: scale(0.88); }
+  .fav-btn[aria-pressed="true"] { color: var(--accent); }
+  .index-cycle .fav-btn { margin-left: 0.5rem; font-size: 1.1rem; vertical-align: middle; }
+  .fav-empty { padding: 1.25rem 0.5rem; color: var(--gray-1); font-size: 0.9rem; list-style: none; }
+  body.fav-active .floating-today { display: none; }
+
   .blocks {
     display: flex;
     align-items: flex-start; /* cards size to their own content, not the tallest sibling */
@@ -1047,6 +1060,16 @@ try {
   </main>
 </div>
 
+<!-- ─── FAVORITES TAB ─── -->
+<div class="tab-content" data-tab="favorites" hidden>
+  <div class="section-header">
+    <h1>Favorites</h1>
+  </div>
+  <main class="container">
+    <ul class="index-list" id="fav-list"></ul>
+  </main>
+</div>
+
 <footer>
   <span>IHSVH</span>
   <span class="accent">·</span>
@@ -1071,6 +1094,7 @@ try {
 <!-- Tab picker popover -->
 <div class="tab-popover" id="tab-popover" hidden role="menu">
   <button class="tab-popover-item current" data-tab="programming" role="menuitem">Program</button>
+  <button class="tab-popover-item" data-tab="favorites" role="menuitem">Favorites</button>
   <button class="tab-popover-item" data-tab="maxes" role="menuitem">Maxes</button>
   <button class="tab-popover-item" data-tab="index" role="menuitem">Index</button>
 </div>
@@ -10286,7 +10310,7 @@ function renderWeek(weekIndex) {
   document.getElementById('week-next-sticky').disabled = nextDisabled;
 
   const main = document.getElementById('programming-main');
-  main.innerHTML = week.days.map(renderDay).join('');
+  main.innerHTML = week.days.map(d => renderDay(d, week.weekOf)).join('');
 
   // Rebuild day-nav pills for this week's days
   const dayRow = document.querySelector('.subnav-row[data-for="programming"]');
@@ -10301,7 +10325,7 @@ function renderWeek(weekIndex) {
   setupPagers();
 }
 
-function renderDay(day) {
+function renderDay(day, weekOf) {
   const lineHtml = line => {
     if (typeof line === 'string') return `<div>${escapeHtmlText(line)}</div>`;
     if (line.gap) return `<div class="gap"></div>`;
@@ -10341,6 +10365,7 @@ function renderDay(day) {
       <div class="day-header">
         <h2 class="day-name">${escapeHtmlText(day.name)}</h2>
         <span class="day-lift">${escapeHtmlText(day.lift)}</span>
+        ${favBtnHtml(weekOf + '|' + day.id)}
       </div>
       <div class="blocks">
         <div class="block workout">
@@ -10366,7 +10391,7 @@ function renderDay(day) {
 }
 
 // ─── TAB SWITCHING ───
-const TAB_LABELS = { programming: 'Program', maxes: 'Maxes', index: 'Index' };
+const TAB_LABELS = { programming: 'Program', favorites: 'Favorites', maxes: 'Maxes', index: 'Index' };
 
 function showTab(name) {
   document.querySelectorAll('.tab-content').forEach(el => {
@@ -10380,6 +10405,8 @@ function showTab(name) {
     b.classList.toggle('current', b.dataset.tab === name);
   });
   document.body.classList.toggle('index-active', name === 'index');
+  document.body.classList.toggle('fav-active', name === 'favorites');
+  if (name === 'favorites') renderFavorites();
   if (name === 'index') {
     // Chronological list: land on the current week (last header), not January.
     requestAnimationFrame(() => {
@@ -10393,7 +10420,7 @@ function showTab(name) {
   }
   // Sub-nav: visible for programming/maxes, hidden entirely on index
   const subnavContainer = document.getElementById('menubar-subnav');
-  if (subnavContainer) subnavContainer.style.display = (name === 'index') ? 'none' : '';
+  if (subnavContainer) subnavContainer.style.display = (name === 'index' || name === 'favorites') ? 'none' : '';
   document.querySelectorAll('.subnav-row').forEach(row => {
     row.hidden = row.dataset.for !== name;
   });
@@ -10518,9 +10545,11 @@ function dayDateFor(weekOfIso, dayId) {
 document.getElementById('index-list').addEventListener('click', (e) => {
   const row = e.target.closest('.index-row');
   if (!row) return;
-  const weekIdx = parseInt(row.dataset.week, 10);
-  const dayId = row.dataset.day;
-  // Load the week, switch to Programming, scroll to the day
+  openDay(parseInt(row.dataset.week, 10), row.dataset.day);
+});
+
+// Load a week, switch to Programming, scroll to the day
+function openDay(weekIdx, dayId) {
   renderWeek(weekIdx);
   showTab('programming');
   requestAnimationFrame(() => {
@@ -10529,9 +10558,77 @@ document.getElementById('index-list').addEventListener('click', (e) => {
       window.scrollTo({ top: section.offsetTop - 80, behavior: 'instant' });
     }
   });
-});
+}
 
 renderIndex();
+
+// ─── FAVORITES ───
+// A favorite is a "weekOf|dayId" key, kept in this browser only (like Maxes).
+// The workout itself is read from WEEKS, so nothing is copied.
+const FAV_KEY = 'fav_days_v1';
+function loadFavs() {
+  try {
+    const a = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
+    return Array.isArray(a) ? a : [];
+  } catch (e) { return []; }
+}
+function saveFavs(a) { try { localStorage.setItem(FAV_KEY, JSON.stringify(a)); } catch (e) {} }
+function favBtnHtml(key) {
+  const on = loadFavs().includes(key);
+  return `<button class="fav-btn" data-key="${escapeHtmlText(key)}" aria-pressed="${on}" aria-label="${on ? 'Remove from favorites' : 'Save to favorites'}">${on ? '★' : '☆'}</button>`;
+}
+function toggleFav(key) {
+  const favs = loadFavs();
+  const i = favs.indexOf(key);
+  if (i >= 0) favs.splice(i, 1); else favs.push(key);
+  saveFavs(favs);
+  const on = i < 0;
+  document.querySelectorAll('.fav-btn').forEach(b => {
+    if (b.dataset.key !== key) return;
+    b.setAttribute('aria-pressed', String(on));
+    b.setAttribute('aria-label', on ? 'Remove from favorites' : 'Save to favorites');
+    b.textContent = on ? '★' : '☆';
+  });
+}
+function renderFavorites() {
+  const list = document.getElementById('fav-list');
+  if (!list) return;
+  const favs = loadFavs();
+  const rows = [];
+  WEEKS.forEach((week, weekIdx) => {
+    week.days.forEach(day => {
+      const key = week.weekOf + '|' + day.id;
+      if (!favs.includes(key)) return;
+      const headline = day.workout.find(l => l && l.t === 'title')?.v;
+      const sub = headline ? `<span class="index-lift-sub">${escapeHtmlText(headline)}</span>` : '';
+      const cyc = week.cycleWeek === '1RM' ? '1RM' : (week.cycleWeek ? 'Wk ' + week.cycleWeek : '');
+      rows.push(
+        `<li class="index-row" data-week="${weekIdx}" data-day="${day.id}">
+          <div class="index-date">${escapeHtmlText(dayDateFor(week.weekOf, day.id))}</div>
+          <div><div class="index-lift">${escapeHtmlText(day.lift)}</div>${sub}</div>
+          <div class="index-cycle">${escapeHtmlText(cyc)}${favBtnHtml(key)}</div>
+        </li>`
+      );
+    });
+  });
+  // WEEKS is newest-first; keep that order (newest at top).
+  list.innerHTML = rows.length
+    ? rows.join('')
+    : '<li class="fav-empty">Tap ☆ on any day to save it here.</li>';
+}
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('.fav-btn');
+  if (!b) return;
+  e.stopPropagation();
+  toggleFav(b.dataset.key);
+  if (document.body.classList.contains('fav-active')) renderFavorites();
+}, true);
+document.getElementById('fav-list').addEventListener('click', (e) => {
+  if (e.target.closest('.fav-btn')) return;
+  const row = e.target.closest('.index-row');
+  if (!row) return;
+  openDay(parseInt(row.dataset.week, 10), row.dataset.day);
+});
 
 // ─── MAXES DATA ───
 const LIFTS = [
