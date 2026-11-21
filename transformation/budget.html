@@ -8,8 +8,8 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
 form{background:var(--card);border-radius:14px;padding:22px 20px;width:100%;max-width:340px}
 h1{font-size:20px;margin:0 0 4px;letter-spacing:-.02em}
 p{margin:0 0 14px;color:var(--mute);font-size:13px}
-input{width:100%;font:16px inherit;padding:11px 12px;border:1px solid var(--rule);border-radius:10px;background:transparent;color:inherit}
-button{width:100%;margin-top:10px;font:600 15px inherit;padding:11px;border:0;border-radius:10px;background:var(--ink);color:var(--bg);cursor:pointer}
+input{width:100%;font-family:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--rule);border-radius:10px;background:transparent;color:inherit}
+button{width:100%;margin-top:10px;font-family:inherit;font-size:16px;font-weight:600;padding:11px;border:0;border-radius:10px;background:var(--ink);color:var(--bg);cursor:pointer}
 label{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:13px;color:var(--mute)}
 label input{width:auto}
 #err{color:#d9480f;font-size:13px;min-height:18px;margin-top:8px}
@@ -27,6 +27,7 @@ async function open(pw){
  const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:u(D.s),iterations:D.i,hash:"SHA-256"},k0,{name:"AES-GCM",length:256},false,["decrypt"]);
  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:u(D.v)},k,u(D.c));
  const html=new TextDecoder().decode(pt);
+ document.activeElement&&document.activeElement.blur();
  document.open();document.write(html);document.close();
 }
 let saved=null;try{saved=localStorage.getItem("tg-pass")}catch(e){}
