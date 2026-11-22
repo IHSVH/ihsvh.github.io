@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Thanksgiving for Three</title>
+<style>
+/* VOICE: quiet, exact
+   IDEA: a printed kitchen checklist
+   PICTURE: the timeline itself
+   COLOUR and TYPE: warm grey ground, white cards; system sans (matches budget page)
+   LAYOUT: single narrow column, hairline rules */
+:root{color-scheme:light dark;--bg:light-dark(#f4f3f0,#0e0e0e);--card:light-dark(#fff,#181818);--ink:light-dark(#141414,#efeeeb);--mut:light-dark(#77736d,#9a968f);--line:light-dark(#e2dfd9,#2c2c2c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;overflow-x:clip}
+.band{padding:8px max(4vw,16px)}
+section .wrap{background:var(--card);border-radius:14px;padding:20px}
+header{padding-top:28px!important;padding-bottom:12px!important}
+header .wrap{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.tg{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border:0;border-radius:20px;background:var(--card);color:var(--ink);font:500 13px inherit;cursor:pointer}
+.wrap{max-width:640px;margin:0 auto}
+h1{font-size:28px;font-weight:600;letter-spacing:-.01em;line-height:1.2;margin:0 0 8px}
+h2{font-size:20px;font-weight:600;margin:0 0 4px}
+h3{font-size:16px;font-weight:600;margin:0 0 6px}
+.grp{margin:24px 0 0;color:var(--mut);font-weight:500;font-size:14px}
+p{margin:6px 0}
+.lede{color:var(--mut);margin:0 0 16px}
+.menu{color:var(--mut);margin:0 0 24px}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.ctl label{font-weight:500}
+input[type=time]{font:500 16px inherit;padding:8px 10px;border:1px solid var(--line);border-radius:6px;min-height:44px;background:var(--bg);color:var(--ink)}
+button{font:500 15px inherit;min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.scroll{overflow-x:auto;display:flex;gap:2px;padding:6px max(5vw,20px);max-width:680px;margin:0 auto}
+.scroll a{flex:none;color:var(--mut);text-decoration:none;font-weight:500;padding:10px 12px}
+.scroll a:hover{color:var(--ink)}
+.prog{height:2px}.prog i{display:block;height:100%;background:var(--ink);width:0;transition:width .3s}
+.step:last-child,.card:last-child{border-bottom:0}
+.step{display:grid;grid-template-columns:6.5em minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.step:has(.t:empty){grid-template-columns:1fr}.t:empty{display:none}
+.t{font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.t small{display:block;font-size:13px;font-weight:400;color:var(--mut)}
+.chk{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.chk input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--ink);flex:none}
+.chk b{display:block;font-weight:500}
+.chk span{color:var(--mut)}
+.done .chk b,.done .chk span{text-decoration:line-through;opacity:.45}
+.oven{color:var(--mut);font-weight:400;margin-left:8px;white-space:nowrap}
+.note{color:var(--mut);margin:16px 0}
+.card{padding:16px 0;border-bottom:1px solid var(--line)}
+.card ul{padding-left:1.1em;margin:4px 0 8px}
+.card li{margin:2px 0}
+footer{color:var(--mut);font-size:14px;padding-bottom:48px}
+@media(max-width:600px){.step{grid-template-columns:1fr;gap:4px}}
+@media(prefers-reduced-motion:reduce){.prog i{transition:none}}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap">
+<div><h1>Thanksgiving for Three</h1>
+<p class="menu">Spatchcock turkey · Pan gravy · Mashed potatoes · Wild rice pilaf · Brussels sprouts · Cranberry sauce</p></div><button id="theme" class="tg" type="button" aria-label="Switch light or dark"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span id="tgl"></span></button>
+<div class="ctl" style="flex-basis:100%"><label for="dinner">Dinner at</label><input id="dinner" type="time" value="19:00"><button id="reset" type="button">Clear checks</button></div>
+</div></header>
+
+<nav><div class="scroll"><a href="#ingredients">Ingredients</a><a href="#timeline">Timeline</a><a href="#recipes">Recipes</a><a href="#labels">Labels</a></div><div class="prog"><i id="bar"></i></div></nav>
+
+<section class="band" id="ingredients"><div class="wrap">
+<h2>Ingredients</h2>
+<div id="shop"></div>
+</div></section>
+
+<section class="band" id="timeline"><div class="wrap">
+<h2>Timeline</h2>
+<p class="lede">Times follow the dinner time above. Use a thermometer, not the clock, to decide when the turkey is done.</p>
+<div id="day"></div>
+<p class="note">Turkey temp: pull at 155°F in the thickest part of the breast; it climbs while resting. USDA's safety guideline is 165°F, so cook to that if you prefer. Thighs should read 170°F or more.</p>
+</div></section>
+
+<section class="band" id="recipes"><div class="wrap">
+<h2>Recipes</h2>
+
+<div class="card"><h3>Turkey rub</h3>
+<p>Butterball is pre-brined, so use little salt or none.</p>
+<ul><li>3 tbsp soft butter</li><li>2 garlic cloves, grated</li><li>1 tbsp chopped thyme and sage</li><li>Zest of 1 lemon</li><li>1 tsp black pepper, ½ tsp salt at most</li><li>1 tsp baking powder (gluten-free label), dusted on the skin</li></ul>
+<p>Butter goes under the skin, not on top, so the skin stays crisp. Tuck the wing tips behind the breast so they don't burn.</p></div>
+
+<div class="card"><h3>Gravy stock</h3>
+<ul><li>Backbone and neck (if Hy-Vee packed them)</li><li>½ onion, 1 carrot, 1 celery rib</li><li>4 cups water, or gluten-free broth for more flavor</li></ul>
+<p>Brown the bones and vegetables, add liquid, simmer 90 minutes, strain. No bones? Use 3 cups gluten-free broth.</p></div>
+
+<div class="card"><h3>Gravy</h3>
+<ul><li>2 tbsp turkey fat + 2 tbsp butter</li><li>3 tbsp cornstarch whisked into ¼ cup cold stock</li><li>3 cups warm stock + pan drippings</li><li>1 tsp cider vinegar, salt to taste</li></ul>
+<p>Bring the warm stock, drippings, fat and butter to a simmer. Whisk in the cornstarch slurry and simmer 2–3 minutes until thick. Never add dry cornstarch to hot liquid.</p></div>
+
+<div class="card"><h3>Wild rice pilaf</h3>
+<ul><li>1 cup Canoe wild rice, cooked in 3 cups broth</li><li>8 oz cremini mushrooms, sliced</li><li>1 onion and 2 celery ribs, diced</li><li>2 tbsp butter, 1 tbsp thyme, 1 tsp salt</li><li>⅓ cup plain Original Craisins</li><li>½ cup toasted pepitas, ¼ cup parsley, 2 tsp cider vinegar (add at the end)</li></ul>
+<p>Toast the dry rice in a little butter for 1–2 minutes, add the broth, cover and simmer 45–55 minutes until the grains split open; drain any extra liquid. Separately, brown the mushrooms in butter without stirring, add the onion, celery, thyme and salt and cook until soft, then fold in the rice and Craisins.</p></div>
+
+<div class="card"><h3>Mashed potatoes</h3>
+<ul><li>1½ lb bite-size gold potatoes (Cal-Organic, 24 oz), whole, skins on</li><li>4 garlic cloves, peeled</li><li>4 tbsp butter</li><li>½–¾ cup heavy cream, warmed</li><li>1 tbsp salt for the water, more to taste</li></ul>
+<p>Cover the potatoes and garlic with cold water, add the salt, and bring to a boil. Simmer 12–15 minutes until a knife slides in. The skins are thin, so leave them on. Drain, return to the hot pot for 1 minute to dry, then mash by hand with the garlic, butter and warm cream. Never use a mixer or blender; it turns them gluey. Season and keep covered.</p></div>
+
+<div class="card"><h3>Cranberry sauce</h3>
+<ul><li>12 oz fresh cranberries</li><li>½ cup sugar</li><li>½ cup orange juice and ¼ cup water</li><li>Zest of ½ orange, pinch of salt</li></ul>
+<p>Zest the orange before juicing it. Bring the juice, water and sugar to a boil, add the cranberries, zest and salt, and simmer about 10 minutes, until most berries pop. It thickens as it cools. Serve cold or at room temperature.</p></div>
+
+<div class="card"><h3>Brussels sprouts</h3>
+<ul><li>12 oz sprouts, halved</li><li>2 tbsp oil, ½ tsp salt</li><li>Lemon zest and juice, 1 tsp maple syrup</li></ul>
+<p>Spread in one layer with space between them, cut side down. Roast at 450°F for about 20 minutes, flipping once halfway, then toss with the lemon and maple.</p></div>
+</div></section>
+
+<section class="band" id="labels"><div class="wrap">
+<h2>Check labels for</h2>
+<div id="lab"></div>
+</div></section>
+
+<footer class="band"><div class="wrap">Your checks are saved in this browser only.</div></footer>
+
+<script>
+{
+const shop=[
+["Meat",[["Butterball turkey, 10 lb, spatchcocked","check the bag for the backbone and neck"]]],
+["Produce",[["Cal-Organic bite-size gold potatoes","24 oz"],["Brussels sprouts","12 oz bag"],["Cremini mushrooms","8 oz"],["Yellow onions","3"],["Carrots","3"],["Celery","1 bunch"],["Fresh cranberries","12 oz"],["Oranges","2"],["Lemons","2"],["Garlic","1 head"],["Fresh thyme","1 package"],["Fresh sage","1 package"],["Parsley","1 bunch"]]],
+["Dairy",[["Butter","3 sticks"],["Heavy cream","¾ cup"]]],
+["Pantry",[["Sugar","½ cup"],["Canoe wild rice","12 oz box; use 1 cup"],["Hy-Vee chicken broth, gluten-free","2 cartons, 32 oz each"],["Original Craisins","⅓ cup"],["Go Raw pumpkin seeds (pepitas)","½ cup"],["Cornstarch","3 tbsp"],["Baking powder, gluten-free","1 tsp"],["Maple syrup","1 tsp"],["Cider vinegar","1 tbsp"],["Olive or neutral oil","2 tbsp"],["Kosher salt and black pepper",""]]]
+];
+const day=[
+[480,"Prep the turkey","Pat dry. Rub the butter under the breast and thigh skin, dust baking powder over the skin, and refrigerate uncovered on a rack."],
+[450,"Make the gravy stock","Brown the backbone and neck with the vegetables, add liquid, simmer 90 minutes, strain."],
+[420,"Make the cranberry sauce","10 minutes on the stove. Cool, then refrigerate."],
+[240,"Cook the wild rice","Simmer 45–55 minutes in broth while you brown the mushrooms, onion and celery. Combine and cover. Hold the pepitas and parsley."],
+[150,"Take the turkey out","Let it sit at room temperature while the oven heats."],
+[125,"Heat the oven","Heat to 450°F. Spread the onion, carrot and celery in the roasting pan."],
+[105,"Roast the turkey","Skin up, on the vegetables. Start checking at 50 minutes. A 10 lb bird usually takes 60–70 minutes.","450°F"],
+[55,"Start the potatoes","Potatoes and garlic in cold salted water, bring to a boil, then simmer 12–15 minutes."],
+[30,"Rest the turkey; roast the sprouts","Turkey on a board, loosely tented. Sprouts in for 20 minutes. Rewarm the rice on the stove.","450°F"],
+[25,"Mash the potatoes","Drain, dry in the pot 1 minute, mash with garlic, butter and warm cream. Cover."],
+[15,"Make the gravy","Use the fat and drippings from the pan."],
+[5,"Finish and carve","Lemon and maple on the sprouts, pepitas and parsley on the rice. Carve the breast across the grain."],
+[0,"Eat",""]
+];
+const labels=[
+["Pepitas","Look for a nut-free facility statement."],
+["Broth","Should say gluten-free."],
+["Baking powder","No wheat starch."],
+["Craisins","Plain Original only; flavored and coated ones carry warnings."],
+["Spices","Single-ingredient or labeled gluten-free."]
+];
+const K='tg3-';
+const get=k=>{try{return localStorage.getItem(K+k)}catch(e){return null}};
+const set=(k,v)=>{try{v==null?localStorage.removeItem(K+k):localStorage.setItem(K+k,v)}catch(e){}};
+const fmt=m=>{m=((m%1440)+1440)%1440;let h=Math.floor(m/60),mm=m%60,ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(mm).padStart(2,'0')+' '+ap};
+const rel=b=>b===0?'Dinner':(b>=60?(Math.floor(b/60)+'h'+(b%60?' '+b%60+'m':'')):b+'m')+' before';
+const row=(id,t,sub,title,body,oven)=>`<div class="step${get(id)?' done':''}" data-id="${id}"><div class="t">${t}${sub?`<small>${sub}</small>`:''}</div><label class="chk"><input type="checkbox" data-id="${id}"${get(id)?' checked':''}><div><b>${title}${oven?`<span class="oven">${oven}</span>`:''}</b><span>${body}</span></div></label></div>`;
+const din=document.getElementById('dinner');
+const saved=get('dinner');if(saved)din.value=saved;
+function render(){
+const [h,m]=din.value.split(':').map(Number);const D=h*60+m;
+document.getElementById('shop').innerHTML=shop.map((g,gi)=>`<h3 class="grp">${g[0]}</h3>`+g[1].map((it,i)=>row('s'+gi+'-'+i,'','',it[0],it[1])).join('')).join('');
+document.getElementById('day').innerHTML=day.map((s,i)=>row('d'+i,fmt(D-s[0]),rel(s[0]),s[1],s[2],s[3])).join('');
+document.getElementById('lab').innerHTML=labels.map((s,i)=>row('l'+i,'','',s[0],s[1])).join('');
+prog();
+}
+function prog(){const all=document.querySelectorAll('.chk input'),n=[...all].filter(x=>x.checked).length;document.getElementById('bar').style.width=(all.length?n/all.length*100:0)+'%'}
+document.addEventListener('change',e=>{const c=e.target;if(c.matches('.chk input')){set(c.dataset.id,c.checked?'1':null);c.closest('.step').classList.toggle('done',c.checked);prog()}});
+din.addEventListener('change',()=>{set('dinner',din.value);render()});
+document.getElementById('reset').addEventListener('click',()=>{document.querySelectorAll('.chk input').forEach(c=>set(c.dataset.id,null));render()});
+render();
+const root=document.documentElement,tb=document.getElementById("theme"),tl=document.getElementById("tgl"),mq=matchMedia("(prefers-color-scheme: dark)");
+const cur=()=>root.dataset.theme||(mq.matches?"dark":"light");
+const lab=()=>{tl.textContent=cur()==="dark"?"Light":"Dark"};
+tb.addEventListener("click",()=>{root.dataset.theme=cur()==="dark"?"light":"dark";lab()});
+mq.addEventListener("change",lab);lab();
+}
+</script>
+</body>
+</html>
