@@ -1337,213 +1337,6 @@ const MOBILITY_DESCRIPTIONS = {
 const WEEKS = [
   {
     weekOf: '2026-11-23',
-    variant: 'Modified · Ankle & Wrists',
-    cycleWeek: 5,
-    days: [
-      {
-        id: 'monday', name: 'Monday', lift: 'Deadlift',
-        cap: '33:00', capLabel: 'Clock',
-        workout: [
-          { t: 'section', v: '(0:00 – 7:00) Deadlift Strength' },
-          { t: 'sub', v: 'Week 5 of 5, 3, 1 · or 4 × 2 @ 90%' },
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 3:00' },
-          { gap: 1 },
-          { t: 'section', v: '(10:00 – 33:00) 23:00 Cap' },
-          { t: 'rounds', v: '-5 Rounds-' },
-          '15 Barbell Floor Press (Light)',
-          '12 Barbell Romanian Deadlifts (Light)',
-          '9 Cal Bike',
-          '6 Barbell Bent Over Rows (Light)',
-          '3 Deadlift (75-80%)',
-          { gap: 1 },
-          { t: 'strength-h', v: 'Strength: Week 5 Deadlift' },
-          '5 Reps @ 70%',
-          '5 Reps @ 80%',
-          '3 Reps @ 90%',
-          '1 Rep @ 95%',
-          { gap: 1 },
-          'Or 4 × 2 @ 90%'
-        ]
-      },
-      {
-        id: 'tuesday', name: 'Tuesday', lift: 'Shoulder to Overhead',
-        cap: '35:00', capLabel: 'Clock',
-        workout: [
-          { t: 'sub', v: 'Teams of 3 · 1 Working at a Time' },
-          { gap: 1 },
-          { t: 'rounds', v: '-4 Rounds-' },
-          '30 Cal Bike',
-          '15 Strict Press (75, 95, 115)',
-          '30 Sit-Ups',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 1:30' },
-          { gap: 1 },
-          { t: 'rounds', v: '-4 Rounds-' },
-          '30 Cal Ski',
-          '21 Push Press (95, 115, 135)',
-          '30 Barbell Hip Thrusts (You Choose a Heavy Weight)',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 1:30' },
-          { gap: 1 },
-          { t: 'rounds', v: '-4 Rounds-' },
-          '30 Cal Row',
-          '27 Push Press (95, 115, 135)',
-          '30 Barbell Good Mornings (Light)',
-          { gap: 1 },
-          { t: 'strength-h', v: 'Strength: Week 5 Strict Press' },
-          '5 Reps @ 70%',
-          '5 Reps @ 80%',
-          '3 Reps @ 90%',
-          '1 Rep @ 95%',
-          { gap: 1 },
-          'Or 4 × 2 @ 90%'
-        ]
-      },
-      {
-        id: 'wednesday', name: 'Wednesday', lift: 'Back Squat',
-        cap: '28:00', capLabel: 'Clock',
-        workout: [
-          { t: 'section', v: '(0:00 – 18:00) 18:00 AMRAP' },
-          '3 Barbell Bent Over Rows (Light)',
-          '3 Back Squats (40%)',
-          '3 Cal Bike',
-          '3 Strict Press (Light)',
-          '3 Barbell Good Mornings (Light)',
-          { t: 'note', v: '* Add 1 Rep to Each Movement Every Round Through the List' },
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 3:00' },
-          { gap: 1 },
-          { t: 'section', v: '(21:00 – 28:00) 7:00 Minutes of Heaven' },
-          { gap: 1 },
-          { t: 'strength-h', v: 'Strength: Week 5 Back Squat' },
-          '5 Reps @ 70%',
-          '5 Reps @ 80%',
-          '3 Reps @ 90%',
-          '1 Rep @ 95%',
-          { gap: 1 },
-          'Or 4 × 2 @ 90%'
-        ]
-      },
-      {
-        id: 'thursday', name: 'Thursday', lift: 'Clean',
-        cap: '35:00', capLabel: 'Clock',
-        workout: [
-          { t: 'title', v: '"Burn the Bird"' },
-          { t: 'sub', v: 'Buy In' },
-          '30 Power Cleans (135)',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 3:00' },
-          { gap: 1 },
-          { t: 'rounds', v: '-4 Rounds-' },
-          '12 Cal Bike',
-          '12 Barbell Romanian Deadlifts (Light)',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 2:30' },
-          { gap: 1 },
-          { t: 'rounds', v: '-3 Rounds-' },
-          '15 Barbell Hip Thrusts',
-          '15 Cal Row',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 2:00' },
-          { gap: 1 },
-          { t: 'rounds', v: '-2 Rounds-' },
-          '20 Barbell Push Press (Light)',
-          '30 Sit-Ups',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 1:30' },
-          { gap: 1 },
-          { t: 'sub', v: 'Cash Out' },
-          '30 Power Cleans (135)',
-          { gap: 1 },
-          { t: 'strength-h', v: 'Strength: Week 5 Clean' },
-          '5 Reps @ 70%',
-          '5 Reps @ 80%',
-          '3 Reps @ 90%',
-          '1 Rep @ 95%',
-          { gap: 1 },
-          'Or 4 × 2 @ 90%'
-        ]
-      },
-      {
-        id: 'friday', name: 'Friday', lift: 'Bench Press',
-        cap: '35:00', capLabel: 'Clock',
-        workout: [
-          { t: 'sub', v: 'No Hyrox · Just Post T.G. Fun!' },
-          { gap: 1 },
-          { t: 'rounds', v: '-2 Rounds-' },
-          '21 Bench Press (40%)',
-          '15 Barbell Skull Crushers (Light)',
-          '12 Barbell Bent Over Rows (Light)',
-          { gap: 1 },
-          { t: 'rounds', v: '-2 Rounds-' },
-          '15 Bench Press (50%)',
-          '15 Barbell Floor Press (Light)',
-          '12 Barbell Curls (You Choose a Heavy Weight)',
-          { gap: 1 },
-          { t: 'rounds', v: '-2 Rounds-' },
-          '12 Bench Press (60%)',
-          '15 Barbell Skull Crushers (Light)',
-          '12 Barbell Bent Over Rows (Light)',
-          { gap: 1 },
-          { t: 'rounds', v: '-2 Rounds-' },
-          '9 Bench Press (65%)',
-          '15 Barbell Pull Overs (Light)',
-          '12 Barbell Floor Press (Light)',
-          { gap: 1 },
-          { t: 'rounds', v: '-2 Rounds-' },
-          '6 Bench Press (70%)',
-          '8 Barbell Bent Over Rows (Light)',
-          '12 Barbell Floor Press (You Choose a Heavy Weight)',
-          { gap: 1 },
-          { t: 'strength-h', v: 'Strength: Week 5 Bench Press' },
-          '5 Reps @ 70%',
-          '5 Reps @ 80%',
-          '3 Reps @ 90%',
-          '1 Rep @ 95%',
-          { gap: 1 },
-          'Or 4 × 2 @ 90%'
-        ]
-      },
-      {
-        id: 'saturday', name: 'Saturday', lift: 'Front Squat',
-        cap: '40:00', capLabel: 'Clock',
-        workout: [
-          { t: 'title', v: '"Post Thanksgiving Partner Mini Chippers"' },
-          { t: 'sub', v: 'Teams of 2 · 1 Working at a Time' },
-          { gap: 1 },
-          '1000m Bike',
-          '20 Barbell Bent Over Rows (Light)',
-          '40 Barbell Hang Power Snatches (Light)',
-          '80 Air Squats',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 1:00' },
-          { gap: 1 },
-          '60 Cal Bike',
-          '120 Barbell Good Mornings (Light)',
-          '40 Barbell Hang Power Cleans (Light)',
-          '60 Barbell Front Squats (Light)',
-          { gap: 1 },
-          { t: 'rest', v: 'Rest 1:00' },
-          { gap: 1 },
-          '40 Cal Row',
-          '12 Barbell Strict Press (Light)',
-          '40 Barbell Push Press (Light)',
-          '40 Front Squats (115, 135, 185)',
-          { gap: 1 },
-          { t: 'strength-h', v: 'Strength: Week 5 Front Squat' },
-          '5 Reps @ 70%',
-          '5 Reps @ 80%',
-          '3 Reps @ 90%',
-          '1 Rep @ 95%',
-          { gap: 1 },
-          'Or 4 × 2 @ 90%'
-        ]
-      }
-    ]
-  },
-  {
-    weekOf: '2026-11-23',
     cycleWeek: 5,
     days: [
       {
@@ -1570,6 +1363,20 @@ const WEEKS = [
           '1 Rep @ 95%',
           { gap: 1 },
           'Or 4 × 2 @ 90%'
+        ],
+        mod: [
+          { t: 'section', v: '(0:00 – 7:00) Deadlift Strength' },
+          { t: 'sub', v: 'Week 5 of 5, 3, 1 · or 4 × 2 @ 90%' },
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 3:00' },
+          { gap: 1 },
+          { t: 'section', v: '(10:00 – 33:00) 23:00 Cap' },
+          { t: 'rounds', v: '-5 Rounds-' },
+          '15 Barbell Floor Press (Light)',
+          '12 Barbell Romanian Deadlifts (Light)',
+          '9 Cal Bike',
+          '6 Barbell Bent Over Rows (Light)',
+          '3 Deadlift (75-80%)'
         ]
       },
       {
@@ -1604,6 +1411,28 @@ const WEEKS = [
           '1 Rep @ 95%',
           { gap: 1 },
           'Or 4 × 2 @ 90%'
+        ],
+        mod: [
+          { t: 'sub', v: 'Teams of 3 · 1 Working at a Time' },
+          { gap: 1 },
+          { t: 'rounds', v: '-4 Rounds-' },
+          '30 Cal Bike',
+          '15 Strict Press (75, 95, 115)',
+          '30 Sit-Ups',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 1:30' },
+          { gap: 1 },
+          { t: 'rounds', v: '-4 Rounds-' },
+          '30 Cal Ski',
+          '21 Push Press (95, 115, 135)',
+          '30 Barbell Hip Thrusts (You Choose a Heavy Weight)',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 1:30' },
+          { gap: 1 },
+          { t: 'rounds', v: '-4 Rounds-' },
+          '30 Cal Row',
+          '27 Push Press (95, 115, 135)',
+          '30 Barbell Good Mornings (Light)'
         ]
       },
       {
@@ -1629,6 +1458,19 @@ const WEEKS = [
           '1 Rep @ 95%',
           { gap: 1 },
           'Or 4 × 2 @ 90%'
+        ],
+        mod: [
+          { t: 'section', v: '(0:00 – 18:00) 18:00 AMRAP' },
+          '3 Barbell Bent Over Rows (Light)',
+          '3 Back Squats (40%)',
+          '3 Cal Bike',
+          '3 Strict Press (Light)',
+          '3 Barbell Good Mornings (Light)',
+          { t: 'note', v: '* Add 1 Rep to Each Movement Every Round Through the List' },
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 3:00' },
+          { gap: 1 },
+          { t: 'section', v: '(21:00 – 28:00) 7:00 Minutes of Heaven' }
         ]
       },
       {
@@ -1669,6 +1511,34 @@ const WEEKS = [
           '1 Rep @ 95%',
           { gap: 1 },
           'Or 4 × 2 @ 90%'
+        ],
+        mod: [
+          { t: 'title', v: '"Burn the Bird"' },
+          { t: 'sub', v: 'Buy In' },
+          '30 Power Cleans (135)',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 3:00' },
+          { gap: 1 },
+          { t: 'rounds', v: '-4 Rounds-' },
+          '12 Cal Bike',
+          '12 Barbell Romanian Deadlifts (Light)',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 2:30' },
+          { gap: 1 },
+          { t: 'rounds', v: '-3 Rounds-' },
+          '15 Barbell Hip Thrusts',
+          '15 Cal Row',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 2:00' },
+          { gap: 1 },
+          { t: 'rounds', v: '-2 Rounds-' },
+          '20 Barbell Push Press (Light)',
+          '30 Sit-Ups',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 1:30' },
+          { gap: 1 },
+          { t: 'sub', v: 'Cash Out' },
+          '30 Power Cleans (135)'
         ]
       },
       {
@@ -1709,6 +1579,34 @@ const WEEKS = [
           '1 Rep @ 95%',
           { gap: 1 },
           'Or 4 × 2 @ 90%'
+        ],
+        mod: [
+          { t: 'sub', v: 'No Hyrox · Just Post T.G. Fun!' },
+          { gap: 1 },
+          { t: 'rounds', v: '-2 Rounds-' },
+          '21 Bench Press (40%)',
+          '15 Barbell Skull Crushers (Light)',
+          '12 Barbell Bent Over Rows (Light)',
+          { gap: 1 },
+          { t: 'rounds', v: '-2 Rounds-' },
+          '15 Bench Press (50%)',
+          '15 Barbell Floor Press (Light)',
+          '12 Barbell Curls (You Choose a Heavy Weight)',
+          { gap: 1 },
+          { t: 'rounds', v: '-2 Rounds-' },
+          '12 Bench Press (60%)',
+          '15 Barbell Skull Crushers (Light)',
+          '12 Barbell Bent Over Rows (Light)',
+          { gap: 1 },
+          { t: 'rounds', v: '-2 Rounds-' },
+          '9 Bench Press (65%)',
+          '15 Barbell Pull Overs (Light)',
+          '12 Barbell Floor Press (Light)',
+          { gap: 1 },
+          { t: 'rounds', v: '-2 Rounds-' },
+          '6 Bench Press (70%)',
+          '8 Barbell Bent Over Rows (Light)',
+          '12 Barbell Floor Press (You Choose a Heavy Weight)'
         ]
       },
       {
@@ -1744,6 +1642,29 @@ const WEEKS = [
           '1 Rep @ 95%',
           { gap: 1 },
           'Or 4 × 2 @ 90%'
+        ],
+        mod: [
+          { t: 'title', v: '"Post Thanksgiving Partner Mini Chippers"' },
+          { t: 'sub', v: 'Teams of 2 · 1 Working at a Time' },
+          { gap: 1 },
+          '1000m Bike',
+          '20 Barbell Bent Over Rows (Light)',
+          '40 Barbell Hang Power Snatches (Light)',
+          '80 Air Squats',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 1:00' },
+          { gap: 1 },
+          '60 Cal Bike',
+          '120 Barbell Good Mornings (Light)',
+          '40 Barbell Hang Power Cleans (Light)',
+          '60 Barbell Front Squats (Light)',
+          { gap: 1 },
+          { t: 'rest', v: 'Rest 1:00' },
+          { gap: 1 },
+          '40 Cal Row',
+          '12 Barbell Strict Press (Light)',
+          '40 Barbell Push Press (Light)',
+          '40 Front Squats (115, 135, 185)'
         ]
       }
     ]
@@ -11240,7 +11161,6 @@ function renderWeek(weekIndex) {
   } else {
     heroText = 'Week of ' + fmtWeekOf(week.weekOf);
   }
-  if (week.variant) heroText += ' · ' + week.variant;
   document.getElementById('week-meta').textContent = heroText;
   document.getElementById('week-meta-sticky').textContent = heroText;
   document.getElementById('week-range').textContent = fmtWeekRange(week.weekOf);
@@ -11252,7 +11172,7 @@ function renderWeek(weekIndex) {
   document.getElementById('week-next-sticky').disabled = nextDisabled;
 
   const main = document.getElementById('programming-main');
-  main.innerHTML = week.days.map(d => renderDay(d, week.weekOf + (week.variant ? '~mod' : ''))).join('');
+  main.innerHTML = week.days.map(d => renderDay(d, week.weekOf)).join('');
 
   // Rebuild day-nav pills for this week's days
   const dayRow = document.querySelector('.subnav-row[data-for="programming"]');
@@ -11301,6 +11221,9 @@ function renderDay(day, weekOf) {
   const workoutHtml = trim(wod).map(lineHtml).join('');
   const strengthLines = trim(str);
   const strengthHtml = strengthLines.map(lineHtml).join('');
+  const modLines = day.mod ? trim(day.mod.slice()) : [];
+  const modHtml = modLines.map(lineHtml).join('');
+  const panes = ['Workout'].concat(strengthLines.length ? ['Strength'] : [], modLines.length ? ['Modified'] : []);
 
   return `
     <section class="day" id="${day.id}">
@@ -11324,11 +11247,15 @@ function renderDay(day, weekOf) {
           </div>
           <div class="prose">${strengthHtml}</div>
         </div>` : ''}
+        ${modLines.length ? `<div class="block workout mod-block">
+          <div class="block-header">
+            <div class="block-label"><span class="dot"></span>Modified</div>
+            <div class="block-cap"><span class="label">Ankle &amp; Wrists · Barbell</span></div>
+          </div>
+          <div class="prose">${modHtml}</div>
+        </div>` : ''}
       </div>
-      ${strengthLines.length ? `<div class="pager-dots" aria-hidden="true">
-        <button class="pager-dot current" data-pane="0" aria-label="Workout"></button>
-        <button class="pager-dot" data-pane="1" aria-label="Strength"></button>
-      </div>` : ''}
+      ${panes.length > 1 ? `<div class="pager-dots" aria-hidden="true">${panes.map((p, i) => `<button class="pager-dot${i === 0 ? ' current' : ''}" data-pane="${i}" aria-label="${p}"></button>`).join('')}</div>` : ''}
     </section>`;
 }
 
@@ -11430,7 +11357,7 @@ function renderIndex() {
     const cycleLabel = week.cycleWeek
       ? (meta ? `Week ${week.cycleWeek} · ${meta.word}` : `Week ${week.cycleWeek}`)
       : `Week of ${fmtWeekOf(week.weekOf)}`;
-    html.push(`<li class="index-group-header">${escapeHtmlText(cycleLabel)}${week.variant ? ' · ' + escapeHtmlText(week.variant) : ''} · ${escapeHtmlText(fmtWeekRange(week.weekOf))}</li>`);
+    html.push(`<li class="index-group-header">${escapeHtmlText(cycleLabel)} · ${escapeHtmlText(fmtWeekRange(week.weekOf))}</li>`);
     week.days.forEach(day => {
       const dayDate = dayDateFor(week.weekOf, day.id);
       const headline = day.workout.find(l => l && l.t === 'title')?.v;
@@ -11539,11 +11466,11 @@ function renderFavorites() {
   const rows = [];
   WEEKS.forEach((week, weekIdx) => {
     week.days.forEach(day => {
-      const key = week.weekOf + (week.variant ? '~mod' : '') + '|' + day.id;
+      const key = week.weekOf + '|' + day.id;
       if (!favs.includes(key)) return;
       const headline = day.workout.find(l => l && l.t === 'title')?.v;
       const sub = headline ? `<span class="index-lift-sub">${escapeHtmlText(headline)}</span>` : '';
-      const cyc = (week.cycleWeek === '1RM' ? '1RM' : (week.cycleWeek ? 'Wk ' + week.cycleWeek : '')) + (week.variant ? ' · Mod' : '');
+      const cyc = week.cycleWeek === '1RM' ? '1RM' : (week.cycleWeek ? 'Wk ' + week.cycleWeek : '');
       rows.push(
         `<li class="index-row" data-week="${weekIdx}" data-day="${day.id}">
           <div class="index-date">${escapeHtmlText(dayDateFor(week.weekOf, day.id))}</div>
